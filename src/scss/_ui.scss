@@ -1,0 +1,137 @@
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+}
+::placeholder {
+}
+
+:-ms-input-placeholder {
+}
+
+::-ms-input-placeholder {
+}
+input:focus,
+button:focus,
+input,
+button {
+  outline: none;
+}
+
+label {
+  position: relative;
+  &::before,
+  &::after {
+    //transition: opacity 0.2s ease-in-out;
+  }
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+table,
+th,
+td {
+  border-collapse: collapse;
+}
+
+body {
+  margin: 0;
+  font-family: Helvetica, sans-serif;
+}
+
+.container {
+  padding: 0 20px;
+  max-width: $maxWidth;
+  margin: 0 auto;
+  height: calc(100vh - 40px);
+}
+.todo {
+  max-width: 720px;
+  height: 100%;
+  margin: 0 auto;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+
+  &__heading {
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+  }
+  &__controls {
+    //width: 100%;
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+  }
+  &__list {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__item {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #fff;
+    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+    //text-transform: uppercase;
+    span {
+      //text-transform: lowercase;
+      flex: 1;
+      padding: 0 10px;
+      line-height: 1;
+    }
+  }
+  &__item:nth-child(odd) {
+    background: #008080;
+  }
+  &__item:nth-child(even) {
+    background: #20b2aa;
+  }
+  &__input {
+    flex: 1;
+    padding: 0 10px;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+  &__add,
+  &__reset,
+  &__reset-checked {
+    background: #32cd32;
+    color: #fff;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  &__reset {
+    background: #ff4500;
+    color: #fff;
+  }
+  &__reset-checked {
+    background: orange;
+  }
+  &__wrapper {
+    flex: 1px;
+    overflow: auto;
+    border: 1px solid #000;
+  }
+}
