@@ -1,6 +1,6 @@
 import './scss/style.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ToDo from './homework-9/ToDo'
+import ToDo from './component/todo/ToDo'
 
 function App() {
   return (

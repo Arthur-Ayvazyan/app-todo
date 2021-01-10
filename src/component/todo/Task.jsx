@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 
 class Task extends Component {
   render() {
-    const { id, number, title, text, classname } = this.props;
+    const { id, title, text, classname } = this.props;
     return (
       <div id={id}>
-        <span>{number} {title} </span>
+        <span> {title} </span>
         <span className={classname}>{text}</span>
       </div>
     )
