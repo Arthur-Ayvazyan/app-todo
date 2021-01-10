@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Task from './Task';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
 import idGenerator from '../../helpers/idGenerator';
 
 class ToDo extends Component {
@@ -69,21 +69,18 @@ class ToDo extends Component {
 
     const { taskText, taskTitle, arrTaskas } = this.state;
     const list = arrTaskas.map((task, index) => {
-      return <Col xs={12} id={index} key={index} className="todo__list" >
-        <Row >
-          <Col xs={8}>
-            <Task id={task.id} title={task.title} text={task.text} />
-          </Col>
-          <Col xs={4}>
-            <Form.Group>
-              <Row>
-                <Form.Check type="checkbox" id={index} onChange={this.checkDone} />
-                <Button variant={"danger"} value={index} onClick={(e) => this.removeCurrentTask(task.id)}>remove</Button>
-              </Row>
-            </Form.Group>
-          </Col>
-        </Row>
-      </Col >
+      return (
+        <Col xs={3} id={index} key={index} className="todo__list" >
+          <Card>
+            <Card.Body>
+              <Form.Check type="checkbox" id={index} onChange={this.checkDone} />
+              <Card.Title>{task.title}</Card.Title>
+              <Card.Text>{task.text}</Card.Text>
+              <Button variant="danger" onClick={(e) => this.removeCurrentTask(task.id)}>remove</Button>
+            </Card.Body>
+          </Card>
+        </Col >
+      )
     });
 
     return (
