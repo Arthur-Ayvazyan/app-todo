@@ -9,7 +9,8 @@ class ToDo extends Component {
     taskText: '',
     taskTitle: '',
     arrTaskas: [],
-    arrChecked: []
+    arrChecked: [],
+    taskIds: []
 
   }
 
@@ -50,13 +51,18 @@ class ToDo extends Component {
   }
 
   removeCurrentTask = (taskId) => {
-    const { arrTaskas } = this.state;
+    const { arrTaskas, arrChecked } = this.state;
     const copyArrTasks = arrTaskas.filter((task) => {
       return taskId !== task.id;
     });
-    this.setState({ arrTaskas: copyArrTasks });
+    const copyArrChecked = arrChecked.filter((task) => {
+      return task !== taskId;
+    });
+    this.setState({
+      arrTaskas: copyArrTasks,
+      arrChecked: copyArrChecked
+    });
   }
-
 
   checkDone = (e, taskId) => {
     const { arrChecked } = this.state;
