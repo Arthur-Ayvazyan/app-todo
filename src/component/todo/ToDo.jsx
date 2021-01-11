@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Task from './Task';
 import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
 import idGenerator from '../../helpers/idGenerator';
 
@@ -8,7 +7,7 @@ class ToDo extends Component {
   state = {
     taskText: '',
     taskTitle: '',
-    arrTaskas: [],
+    arrTasks: [],
     arrChecked: [],
     taskIds: []
 
@@ -35,33 +34,11 @@ class ToDo extends Component {
       id: idGenerator(),
     };
     this.setState({
-      arrTaskas: [...this.state.arrTaskas, task],
+      arrTasks: [...this.state.arrTasks, task],
       taskTitle: '',
       taskText: '',
     });
 
-  }
-
-  resetAllTasks = () => {
-    this.setState({
-      arrTaskas: [],
-      taskTitle: '',
-      taskText: '',
-    });
-  }
-
-  removeCurrentTask = (taskId) => {
-    const { arrTaskas, arrChecked } = this.state;
-    const copyArrTasks = arrTaskas.filter((task) => {
-      return taskId !== task.id;
-    });
-    const copyArrChecked = arrChecked.filter((task) => {
-      return task !== taskId;
-    });
-    this.setState({
-      arrTaskas: copyArrTasks,
-      arrChecked: copyArrChecked
-    });
   }
 
   checkDone = (e, taskId) => {
@@ -81,10 +58,45 @@ class ToDo extends Component {
     });
   }
 
+  removeCurrentTask = (taskId) => {
+    const { arrTasks, arrChecked } = this.state;
+    const copyArrTasks = arrTasks.filter((task) => {
+      return taskId !== task.id;
+    });
+    const copyArrChecked = arrChecked.filter((task) => {
+      return task !== taskId;
+    });
+    this.setState({
+      arrTasks: copyArrTasks,
+      arrChecked: copyArrChecked
+    });
+  }
+
+  resetAllTasks = () => {
+    this.setState({
+      arrTasks: [],
+      arrChecked: [],
+      taskTitle: '',
+      taskText: '',
+    });
+  }
+
+  resetCheckedTasks = () => {
+    const { arrTasks, arrChecked } = this.state;
+    if (arrChecked.length === 0) return;
+    const restArrTasks = arrTasks.filter((task) => {
+      return !arrChecked.includes(task.id);
+    })
+    this.setState({
+      arrTasks: [...restArrTasks],
+      arrChecked: []
+    });
+  }
+
   render() {
 
-    const { taskText, taskTitle, arrTaskas } = this.state;
-    const list = arrTaskas.map((task, index) => {
+    const { taskText, taskTitle, arrTasks } = this.state;
+    const list = arrTasks.map((task, index) => {
       return (
         <Col xs={3} id={index} key={index} className="todo__list" >
           <Card>
@@ -102,7 +114,6 @@ class ToDo extends Component {
     return (
 
       <Container>
-        {/*<div className="todo">*/}
         < h1 className="todo__heading" > Create To - Do list, be more productive!</h1>
         <Row>
           <Col xs={7}>
@@ -111,17 +122,14 @@ class ToDo extends Component {
           </Col>
           <Col xs={5}>
             <Button variant={"success"} onClick={this.addTask}>Add Task</Button>
+            <Button className="todo__reset-checked" onClick={this.resetCheckedTasks} > Reset Checked Tasks</Button>
             <Button variant={"danger"} onClick={this.resetAllTasks}>Reset All Tasks</Button>
           </Col>
 
         </Row>
-        {/*<div className="todo__wrapper">*/}
         <Row>
           {list}
-
         </Row>
-        {/*</div>*/}
-        {/*</div >*/}
       </Container >
     );
   }
