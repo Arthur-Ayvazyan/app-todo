@@ -9,6 +9,7 @@ class ToDo extends Component {
     taskText: '',
     taskTitle: '',
     arrTaskas: [],
+    arrChecked: []
 
   }
 
@@ -57,13 +58,22 @@ class ToDo extends Component {
   }
 
 
-  //checkDone = (e) => {
-
-  //  this.setState({
-  //    //isDone: !this.state.isDone,
-
-  //  });
-  //}
+  checkDone = (e, taskId) => {
+    const { arrChecked } = this.state;
+    let copyChecked = [...arrChecked];
+    if (e.target.checked) {
+      this.setState({
+        arrChecked: [...copyChecked, taskId],
+      });
+      return;
+    }
+    copyChecked = arrChecked.filter((elem) => {
+      return elem !== taskId;
+    })
+    this.setState({
+      arrChecked: [...copyChecked],
+    });
+  }
 
   render() {
 
@@ -73,7 +83,7 @@ class ToDo extends Component {
         <Col xs={3} id={index} key={index} className="todo__list" >
           <Card>
             <Card.Body>
-              <Form.Check type="checkbox" id={index} onChange={this.checkDone} />
+              <Form.Check type="checkbox" id={index} onChange={(e) => this.checkDone(e, task.id)} />
               <Card.Title>{task.title}</Card.Title>
               <Card.Text>{task.text}</Card.Text>
               <Button variant="danger" onClick={(e) => this.removeCurrentTask(task.id)}>remove</Button>
