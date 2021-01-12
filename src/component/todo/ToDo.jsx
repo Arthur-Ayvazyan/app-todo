@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
-import Task from './Task';
-import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
-import idGenerator from '../../helpers/idGenerator';
-
-import React, { Component } from 'react';
 import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
 import idGenerator from '../../helpers/idGenerator';
 
 class ToDo extends Component {
-
   state = {
     taskText: '',
     taskTitle: '',
     arrTasks: [],
     selectedTasks: new Set(),
-
   }
 
   setValue = (e) => {
@@ -22,6 +15,7 @@ class ToDo extends Component {
       taskText: e.target.value,
     });
   }
+
   setTitle = (e) => {
     this.setState({
       taskTitle: e.target.value,
@@ -87,7 +81,6 @@ class ToDo extends Component {
   }
 
   render() {
-
     const { taskText, taskTitle, arrTasks, selectedTasks } = this.state;
     const list = arrTasks.map((task, index) => {
       return (
@@ -105,7 +98,6 @@ class ToDo extends Component {
     });
 
     return (
-
       <Container>
         < h1 className="todo__heading" > Create To - Do list, be more productive!</h1>
         <Row>
@@ -118,7 +110,6 @@ class ToDo extends Component {
             <Button variant={"warning"} onClick={this.deleteSelectedTasks} disabled={!selectedTasks.size}>delete selected</Button>
             <Button variant={"danger"} onClick={this.resetAllTasks}>Reset All Tasks</Button>
           </Col>
-
         </Row>
         <Row>
           {list}
