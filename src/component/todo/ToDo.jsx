@@ -98,10 +98,10 @@ class ToDo extends Component {
     const { taskText, taskTitle, arrTasks } = this.state;
     const list = arrTasks.map((task, index) => {
       return (
-        <Col xs={3} id={index} key={index} className="todo__list" >
+        <Col xs={3} id={task.id} key={task.id} className="todo__list" >
           <Card>
             <Card.Body>
-              <Form.Check type="checkbox" id={index} onChange={(e) => this.checkDone(e, task.id)} />
+              <Form.Check type="checkbox" id={task.id} onChange={(e) => this.checkDone(e, task.id)} />
               <Card.Title>{task.title}</Card.Title>
               <Card.Text>{task.text}</Card.Text>
               <Button variant="danger" onClick={(e) => this.removeCurrentTask(task.id)}>remove</Button>
