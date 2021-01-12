@@ -84,13 +84,29 @@ class ToDo extends Component {
     const { taskText, taskTitle, arrTasks, selectedTasks } = this.state;
     const list = arrTasks.map((task, index) => {
       return (
-        <Col xs={3} id={task.id} key={task.id} className="todo__list" >
+        <Col
+          xs={6}
+          md={4}
+          lg={4}
+          xl={3}
+          id={task.id}
+          key={task.id}
+          className={"mb-4"}>
           <Card>
             <Card.Body>
-              <Form.Check type="checkbox" id={index} onChange={() => this.selectTasks(task.id)} />
+              <Form.Check
+                type="checkbox"
+                id={index}
+                onChange={() => this.selectTasks(task.id)}
+              />
               <Card.Title>{task.title}</Card.Title>
               <Card.Text>{task.text}</Card.Text>
-              <Button variant="danger" onClick={() => this.deleteCurrentTask(task.id)} disabled={!!selectedTasks.size}>remove</Button>
+              <Button
+                variant="danger"
+                onClick={() => this.deleteCurrentTask(task.id)}
+                disabled={!!selectedTasks.size}>
+                remove
+              </Button>
             </Card.Body>
           </Card>
         </Col >
@@ -99,16 +115,61 @@ class ToDo extends Component {
 
     return (
       <Container>
-        < h1 className="todo__heading" > Create To - Do list, be more productive!</h1>
-        <Row>
-          <Col xs={7}>
-            <Form.Control value={taskTitle} onChange={this.setTitle} onKeyDown={this.addTaskByEnter} type="text" placeholder="Set task title" disabled={!!selectedTasks.size} />
-            <Form.Control value={taskText} onChange={this.setValue} onKeyDown={this.addTaskByEnter} type="text" placeholder="Create new task..." disabled={!!selectedTasks.size} />
+        <Row className={"mt-2 mb-2"}>
+          <Col>
+            <h1> Create To - Do list, be more productive!</h1>
           </Col>
-          <Col xs={5}>
-            <Button variant={"success"} onClick={this.addTask} disabled={!!selectedTasks.size}>Add Task</Button>
-            <Button variant={"warning"} onClick={this.deleteSelectedTasks} disabled={!selectedTasks.size}>delete selected</Button>
-            <Button variant={"danger"} onClick={this.resetAllTasks} disabled={!!selectedTasks.size || !arrTasks.length}>Reset All Tasks</Button>
+        </Row>
+        <Row className={"mb-3"}>
+          <Col>
+            <Form.Control
+              type="text"
+              className={"mb-2"}
+              value={taskTitle}
+              placeholder="Set task title"
+              disabled={!!selectedTasks.size}
+              onChange={this.setTitle}
+              onKeyDown={this.addTaskByEnter}
+            />
+            <Form.Control
+              type="text"
+              className={"mb-2"}
+              value={taskText}
+              placeholder="Create new task..."
+              onChange={this.setValue}
+              onKeyDown={this.addTaskByEnter}
+              disabled={!!selectedTasks.size}
+            />
+          </Col>
+        </Row>
+        <Row className="justify-content-center mb-5">
+          <Col>
+            <Button
+              className={"w-100"}
+              variant={"danger"}
+              onClick={this.resetAllTasks}
+              disabled={!!selectedTasks.size || !arrTasks.length}>
+              Reset All Tasks
+            </Button>
+          </Col>
+          <Col>
+            <Button
+              className={"w-100"}
+              variant={"warning"}
+              onClick={this.deleteSelectedTasks}
+              disabled={!selectedTasks.size}>
+              delete selected
+            </Button>
+          </Col >
+          <Col>
+            <Button
+              className={"w-100"}
+              variant={"success"}
+              onClick={this.addTask}
+              disabled={!!selectedTasks.size}
+            >
+              Add Task
+            </Button>
           </Col>
         </Row>
         <Row>
