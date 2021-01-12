@@ -90,7 +90,7 @@ class ToDo extends Component {
               <Form.Check type="checkbox" id={index} onChange={() => this.selectTasks(task.id)} />
               <Card.Title>{task.title}</Card.Title>
               <Card.Text>{task.text}</Card.Text>
-              <Button variant="danger" onClick={(e) => this.deleteCurrentTask(task.id)} disabled={!!selectedTasks.size}>remove</Button>
+              <Button variant="danger" onClick={() => this.deleteCurrentTask(task.id)} disabled={!!selectedTasks.size}>remove</Button>
             </Card.Body>
           </Card>
         </Col >
