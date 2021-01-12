@@ -108,7 +108,7 @@ class ToDo extends Component {
           <Col xs={5}>
             <Button variant={"success"} onClick={this.addTask} disabled={!!selectedTasks.size}>Add Task</Button>
             <Button variant={"warning"} onClick={this.deleteSelectedTasks} disabled={!selectedTasks.size}>delete selected</Button>
-            <Button variant={"danger"} onClick={this.resetAllTasks}>Reset All Tasks</Button>
+            <Button variant={"danger"} onClick={this.resetAllTasks} disabled={!!selectedTasks.size || !arrTasks.length}>Reset All Tasks</Button>
           </Col>
         </Row>
         <Row>
