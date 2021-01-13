@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap';
+import Task from './Task';
+import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import idGenerator from '../../helpers/idGenerator';
 
-class ToDo extends Component {
+export class ToDo extends Component {
   state = {
     taskText: '',
     taskTitle: '',
@@ -82,7 +83,7 @@ class ToDo extends Component {
 
   render() {
     const { taskText, taskTitle, arrTasks, selectedTasks } = this.state;
-    const list = arrTasks.map((task, index) => {
+    const list = arrTasks.map((task) => {
       return (
         <Col
           xs={6}
@@ -92,23 +93,14 @@ class ToDo extends Component {
           id={task.id}
           key={task.id}
           className={"mb-4"}>
-          <Card>
-            <Card.Body>
-              <Form.Check
-                type="checkbox"
-                id={index}
-                onChange={() => this.selectTasks(task.id)}
-              />
-              <Card.Title>{task.title}</Card.Title>
-              <Card.Text>{task.text}</Card.Text>
-              <Button
-                variant="danger"
-                onClick={() => this.deleteCurrentTask(task.id)}
-                disabled={!!selectedTasks.size}>
-                remove
-              </Button>
-            </Card.Body>
-          </Card>
+          <Task
+            id={task.id}
+            selectTasks={() => this.selectTasks(task.id)}
+            taskTitle={task.title}
+            taskText={task.text}
+            deleteCurrentTask={() => this.deleteCurrentTask(task.id)}
+            disabledTask={!!selectedTasks.size}
+          />
         </Col >
       )
     });
@@ -179,5 +171,3 @@ class ToDo extends Component {
     );
   }
 }
-
-export default ToDo;
