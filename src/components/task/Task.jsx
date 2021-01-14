@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Button, Form } from 'react-bootstrap';
 import styles from './task.module.scss';
+
 class Task extends Component {
 
   state = {
@@ -15,11 +16,16 @@ class Task extends Component {
     })
   }
 
+  hendleDelete = () => {
+    const { onDelete, data } = this.props;
+    onDelete(data.id);
+  }
+
   render() {
     const task = this.props.data;
-    const { disabled, onDelete } = this.props;
+    const { disabled } = this.props;
     const { selected } = this.state;
-    //console.log(task);
+
     return (
       <Card
         className={`mb-4 ${selected ? styles.selected : ''}`}
@@ -33,7 +39,7 @@ class Task extends Component {
           <Card.Text>{task.text}</Card.Text>
           <Button
             variant="danger"
-            onClick={() => onDelete(task.id)}
+            onClick={this.hendleDelete}
             disabled={disabled}
           >
             Delete

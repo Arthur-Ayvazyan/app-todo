@@ -104,7 +104,6 @@ export class ToDo extends Component {
       )
     });
 
-
     return (
       < Container >
         <Row className={"mt-2 mb-2"}>
