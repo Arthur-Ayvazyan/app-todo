@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Task from './Task';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import idGenerator from '../../helpers/idGenerator';
+import Task from '../task/Task';
 
 export class ToDo extends Component {
   state = {
@@ -92,15 +92,13 @@ export class ToDo extends Component {
           xl={3}
           id={task.id}
           key={task.id}
-          className={"mb-4"}>
-
+        >
           <Task
             data={task}
             onSelect={this.selectTasks}
             disabled={!!selectedTasks.size}
             onDelete={this.deleteCurrentTask}
           />
-
         </Col >
       )
     });
@@ -124,7 +122,8 @@ export class ToDo extends Component {
               onKeyDown={this.addTaskByEnter}
             />
             <Form.Control
-              type="text"
+              as="textarea"
+              rows={3}
               className={"mb-2"}
               value={taskText}
               placeholder="Create new task..."
