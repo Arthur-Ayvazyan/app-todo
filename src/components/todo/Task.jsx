@@ -3,22 +3,24 @@ import { Card, Button, Form } from 'react-bootstrap';
 
 class Task extends Component {
   render() {
-    const { id, taskTitle, taskText, selectTasks, deleteCurrentTask, disableTask } = this.props;
+    const task = this.props.data;
+    const { onSelect, disabled, onDelete } = this.props
+    console.log(task);
     return (
-      <Card>
+      <Card id={task.id}>
         <Card.Body>
           <Form.Check
             type="checkbox"
-            id={id}
-            onChange={selectTasks}
+            onChange={() => onSelect(task.id)}
           />
-          <Card.Title>{taskTitle}</Card.Title>
-          <Card.Text>{taskText}</Card.Text>
+          <Card.Title>{task.title}</Card.Title>
+          <Card.Text>{task.text}</Card.Text>
           <Button
             variant="danger"
-            onClick={deleteCurrentTask}
-            disabled={disableTask}>
-            remove
+            onClick={() => onDelete(task.id)}
+            disabled={disabled}
+          >
+            Delete
         </Button>
         </Card.Body>
       </Card>

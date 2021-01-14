@@ -93,14 +93,14 @@ export class ToDo extends Component {
           id={task.id}
           key={task.id}
           className={"mb-4"}>
+
           <Task
-            id={task.id}
-            selectTasks={() => this.selectTasks(task.id)}
-            taskTitle={task.title}
-            taskText={task.text}
-            deleteCurrentTask={() => this.deleteCurrentTask(task.id)}
-            disabledTask={!!selectedTasks.size}
+            data={task}
+            onSelect={this.selectTasks}
+            disabled={!!selectedTasks.size}
+            onDelete={this.deleteCurrentTask}
           />
+
         </Col >
       )
     });
