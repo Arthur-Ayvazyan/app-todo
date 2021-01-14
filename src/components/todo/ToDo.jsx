@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import idGenerator from '../../helpers/idGenerator';
 import Task from '../task/Task';
+import NewTask from '../new-task/NewTask';
 
 export class ToDo extends Component {
   state = {
@@ -103,8 +104,9 @@ export class ToDo extends Component {
       )
     });
 
+
     return (
-      <Container>
+      < Container >
         <Row className={"mt-2 mb-2"}>
           <Col>
             <h1> Create To - Do list, be more productive!</h1>
@@ -112,23 +114,13 @@ export class ToDo extends Component {
         </Row>
         <Row className={"mb-3"}>
           <Col>
-            <Form.Control
-              type="text"
-              className={"mb-2"}
-              value={taskTitle}
-              placeholder="Set task title"
-              disabled={!!selectedTasks.size}
-              onChange={this.setTitle}
+            <NewTask
+              taskTitle={taskTitle}
+              taskText={taskText}
+              onChangeTitle={this.setTitle}
+              onChangeValue={this.setValue}
               onKeyDown={this.addTaskByEnter}
-            />
-            <Form.Control
-              as="textarea"
-              rows={3}
-              className={"mb-2"}
-              value={taskText}
-              placeholder="Create new task..."
-              onChange={this.setValue}
-              onKeyDown={this.addTaskByEnter}
+              addTask={this.addTask}
               disabled={!!selectedTasks.size}
             />
           </Col>
@@ -152,21 +144,12 @@ export class ToDo extends Component {
               delete selected
             </Button>
           </Col >
-          <Col>
-            <Button
-              className={"w-100"}
-              variant={"success"}
-              onClick={this.addTask}
-              disabled={!!selectedTasks.size}
-            >
-              Add Task
-            </Button>
-          </Col>
+
         </Row>
         <Row>
           {list}
         </Row>
-      </Container >
+      </  Container>
     );
   }
 }

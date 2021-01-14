@@ -16,10 +16,8 @@ class Task extends Component {
   }
 
   render() {
-    console.log(this.props);
-    console.log(styles);
     const task = this.props.data;
-    const { onSelect, disabled, onDelete } = this.props;
+    const { disabled, onDelete } = this.props;
     const { selected } = this.state;
     //console.log(task);
     return (
