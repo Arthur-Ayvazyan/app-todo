@@ -54,7 +54,7 @@ class ToDo extends Component {
       return elem !== taskId;
     })
     this.setState({
-      arrChecked: [...copyChecked],
+      arrChecked: copyChecked,
     });
   }
 
