@@ -33,7 +33,8 @@ class NewTask extends Component {
       taskText: '',
       taskTitle: ''
     });
-    return task;
+
+    this.props.addTask(task)
   }
 
   createTaskByEnter = (e) => {
@@ -43,7 +44,7 @@ class NewTask extends Component {
   }
 
   render() {
-    const data = this.props;
+    const { disabled } = this.props;
     const { taskText, taskTitle } = this.state;
 
     return (
@@ -54,7 +55,7 @@ class NewTask extends Component {
           value={taskTitle}
           onChange={this.setTitle}
           onKeyDown={this.createTaskByEnter}
-          disabled={!!data.disabled}
+          disabled={disabled}
           placeholder="Set task title"
         />
         <Form.Control
@@ -64,14 +65,14 @@ class NewTask extends Component {
           value={taskText}
           onChange={this.setValue}
           onKeyDown={this.createTaskByEnter}
-          disabled={!!data.disabled}
+          disabled={disabled}
           placeholder="Create new task..."
         />
         <Button
           className={"w-100"}
           variant={"success"}
-          onClick={() => data.addTask(this.createTask())}
-          disabled={!!data.disabled}
+          onClick={this.createTask}
+          disabled={disabled}
         >
           Add Task
         </Button>

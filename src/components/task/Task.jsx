@@ -5,7 +5,6 @@ import styles from './task.module.scss';
 class Task extends Component {
 
   state = {
-
     selected: false
   }
 

@@ -10,7 +10,7 @@ export class ToDo extends Component {
   }
 
   addTask = (task) => {
-    if (!task) return;
+    //if (!task) return;
     this.setState({
       arrTasks: [...this.state.arrTasks, task],
     });
