@@ -1,6 +1,8 @@
 import './scss/style.scss';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToDo } from './components';
+
 
 function App() {
   return (
@@ -9,5 +11,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
