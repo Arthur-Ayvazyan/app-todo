@@ -1,17 +1,14 @@
 import './scss/style.scss';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ToDo from './component/todo/ToDo'
+import { ToDo } from './components';
 
 
 function App() {
   return (
     <div className="App">
-      <div className="container">
-        <ToDo />
-      </div>
+      <ToDo />
     </div>
-    //some comment
   );
 }
 

@@ -88,7 +88,7 @@ class ToDo extends Component {
       return !arrChecked.includes(task.id);
     })
     this.setState({
-      arrTasks: [...restArrTasks],
+      arrTasks: restArrTasks,
       arrChecked: []
     });
   }
