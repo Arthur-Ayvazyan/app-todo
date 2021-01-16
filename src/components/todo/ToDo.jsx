@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Task from '../task/Task';
 import NewTask from '../new-task/NewTask';
+import Confirm from '../confirm';
 
 export class ToDo extends Component {
   state = {
     arrTasks: [],
     selectedTasks: new Set(),
+    showConfirm: false,
   }
 
   addTask = (task) => {
-    //if (!task) return;
     this.setState({
       arrTasks: [...this.state.arrTasks, task],
     });
@@ -46,14 +47,23 @@ export class ToDo extends Component {
     const restArrTasks = arrTasks.filter((task) => {
       return !selectedTasks.has(task.id);
     })
+
     this.setState({
       arrTasks: restArrTasks,
       selectedTasks: new Set(),
+      showConfirm: false
     });
   }
 
+  confirmHendle = () => {
+    this.setState({
+      showConfirm: !this.state.showConfirm,
+    })
+  }
+
   render() {
-    const { arrTasks, selectedTasks } = this.state;
+
+    const { arrTasks, selectedTasks, showConfirm } = this.state;
     const list = arrTasks.map((task) => {
       return (
         <Col
@@ -75,7 +85,8 @@ export class ToDo extends Component {
     });
 
     return (
-      < Container >
+
+      <Container Container >
         <Row className={"mt-2 mb-2"}>
           <Col>
             <h1> Create To - Do list, be more productive!</h1>
@@ -103,7 +114,7 @@ export class ToDo extends Component {
             <Button
               className={"w-100"}
               variant={"warning"}
-              onClick={this.deleteSelectedTasks}
+              onClick={this.confirmHendle}
               disabled={!selectedTasks.size}>
               delete selected
             </Button>
@@ -113,7 +124,15 @@ export class ToDo extends Component {
         <Row>
           {list}
         </Row>
-      </  Container>
+
+        {
+          showConfirm && <Confirm
+            onClose={this.confirmHendle}
+            onDeleteTasks={this.deleteSelectedTasks}
+            deletableTasksSize={selectedTasks.size} />
+        }
+
+      </Container>
     );
   }
 }
