@@ -1,46 +1,19 @@
 import React, { Component } from 'react';
-import Task from './Task';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
-import idGenerator from '../../helpers/idGenerator';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import Task from '../task/Task';
+import NewTask from '../new-task/NewTask';
 
 export class ToDo extends Component {
   state = {
-    taskText: '',
-    taskTitle: '',
     arrTasks: [],
     selectedTasks: new Set(),
   }
 
-  setValue = (e) => {
-    this.setState({
-      taskText: e.target.value,
-    });
-  }
-
-  setTitle = (e) => {
-    this.setState({
-      taskTitle: e.target.value,
-    });
-  }
-
-  addTask = () => {
-    const taskText = this.state.taskText.trim();
-    const taskTitle = this.state.taskTitle.trim();
-    if (!taskText || !taskTitle) return;
-    const task = {
-      title: taskText,
-      text: taskTitle,
-      id: idGenerator(),
-    };
+  addTask = (task) => {
+    //if (!task) return;
     this.setState({
       arrTasks: [...this.state.arrTasks, task],
-      taskTitle: '',
-      taskText: '',
     });
-  }
-
-  addTaskByEnter = (e) => {
-    (e.key === "Enter") && this.addTask();
   }
 
   selectTasks = (taskId) => {
@@ -65,8 +38,6 @@ export class ToDo extends Component {
     this.setState({
       arrTasks: [],
       selectedTasks: new Set(),
-      taskTitle: '',
-      taskText: '',
     });
   }
 
@@ -76,13 +47,13 @@ export class ToDo extends Component {
       return !selectedTasks.has(task.id);
     })
     this.setState({
-      arrTasks: [...restArrTasks],
+      arrTasks: restArrTasks,
       selectedTasks: new Set(),
     });
   }
 
   render() {
-    const { taskText, taskTitle, arrTasks, selectedTasks } = this.state;
+    const { arrTasks, selectedTasks } = this.state;
     const list = arrTasks.map((task) => {
       return (
         <Col
@@ -92,21 +63,19 @@ export class ToDo extends Component {
           xl={3}
           id={task.id}
           key={task.id}
-          className={"mb-4"}>
-
+        >
           <Task
             data={task}
             onSelect={this.selectTasks}
             disabled={!!selectedTasks.size}
             onDelete={this.deleteCurrentTask}
           />
-
         </Col >
       )
     });
 
     return (
-      <Container>
+      < Container >
         <Row className={"mt-2 mb-2"}>
           <Col>
             <h1> Create To - Do list, be more productive!</h1>
@@ -114,22 +83,8 @@ export class ToDo extends Component {
         </Row>
         <Row className={"mb-3"}>
           <Col>
-            <Form.Control
-              type="text"
-              className={"mb-2"}
-              value={taskTitle}
-              placeholder="Set task title"
-              disabled={!!selectedTasks.size}
-              onChange={this.setTitle}
-              onKeyDown={this.addTaskByEnter}
-            />
-            <Form.Control
-              type="text"
-              className={"mb-2"}
-              value={taskText}
-              placeholder="Create new task..."
-              onChange={this.setValue}
-              onKeyDown={this.addTaskByEnter}
+            <NewTask
+              addTask={this.addTask}
               disabled={!!selectedTasks.size}
             />
           </Col>
@@ -153,21 +108,12 @@ export class ToDo extends Component {
               delete selected
             </Button>
           </Col >
-          <Col>
-            <Button
-              className={"w-100"}
-              variant={"success"}
-              onClick={this.addTask}
-              disabled={!!selectedTasks.size}
-            >
-              Add Task
-            </Button>
-          </Col>
+
         </Row>
         <Row>
           {list}
         </Row>
-      </Container >
+      </  Container>
     );
   }
 }
