@@ -12,6 +12,7 @@ class Task extends Component {
   hendleSelect = () => {
     const { onSelect, data } = this.props;
     onSelect(data.id);
+
     this.setState({
       selected: !this.state.selected
     })
