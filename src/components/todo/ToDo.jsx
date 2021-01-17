@@ -9,11 +9,13 @@ export class ToDo extends Component {
     tasks: [],
     selectedTasks: new Set(),
     showConfirm: false,
+    showTaskCreator: false,
   }
 
   addTask = (task) => {
     this.setState({
       tasks: [...this.state.tasks, task],
+      showTaskCreator: false
     });
   }
 
@@ -60,10 +62,15 @@ export class ToDo extends Component {
       showConfirm: !this.state.showConfirm,
     })
   }
+  newTaskHendle = () => {
+    this.setState({
+      showTaskCreator: !this.state.showTaskCreator,
+    })
+  }
 
   render() {
 
-    const { tasks, selectedTasks, showConfirm } = this.state;
+    const { tasks, selectedTasks, showConfirm, showTaskCreator } = this.state;
     const list = tasks.map((task) => {
       return (
         <Col
@@ -86,53 +93,65 @@ export class ToDo extends Component {
 
     return (
 
-      <Container>
-        <Row className={"mt-2 mb-2"}>
-          <Col>
-            <h1> Create To - Do list, be more productive!</h1>
-          </Col>
-        </Row>
-        <Row className={"mb-3"}>
-          <Col>
+      <>
+        <Container>
+          <Row className={"mt-2 mb-2"}>
+            <Col>
+              <h1> Create To - Do list, be more productive!</h1>
+            </Col>
+          </Row>
+          <Row className="justify-content-center mb-5">
+            <Col>
+              <Button
+                className={"w-100"}
+                variant={"danger"}
+                onClick={this.resetAllTasks}
+                disabled={!!selectedTasks.size || !tasks.length}>
+                Reset All Tasks
+            </Button>
+            </Col>
+            <Col>
+              <Button
+                className={"w-100"}
+                variant={"warning"}
+                onClick={this.confirmHendle}
+                disabled={!selectedTasks.size}>
+                delete selected
+            </Button>
+            </Col >
+          </Row>
+          <Row className={"justify-content-end"}>
+            <Col xs="auto mb-3">
+              <Button
+                variant="primary"
+                onClick={this.newTaskHendle}
+                disabled={selectedTasks.size}
+              >
+                Create Task
+              </Button>
+            </Col>
+          </Row>
+          <Row>
+            {list}
+          </Row>
+
+          {
+            showConfirm && <Confirm
+              onClose={this.confirmHendle}
+              onDeleteTasks={this.deleteSelectedTasks}
+              deletableTasksSize={selectedTasks.size} />
+          }
+
+          {
+            showTaskCreator &&
             <NewTask
               addTask={this.addTask}
-              disabled={!!selectedTasks.size}
+              onClose={this.newTaskHendle}
             />
-          </Col>
-        </Row>
-        <Row className="justify-content-center mb-5">
-          <Col>
-            <Button
-              className={"w-100"}
-              variant={"danger"}
-              onClick={this.resetAllTasks}
-              disabled={!!selectedTasks.size || !tasks.length}>
-              Reset All Tasks
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              className={"w-100"}
-              variant={"warning"}
-              onClick={this.confirmHendle}
-              disabled={!selectedTasks.size}>
-              delete selected
-            </Button>
-          </Col >
+          }
 
-        </Row>
-        <Row>
-          {list}
-        </Row>
-
-        {
-          showConfirm && <Confirm
-            onClose={this.confirmHendle}
-            onDeleteTasks={this.deleteSelectedTasks}
-            deletableTasksSize={selectedTasks.size} />
-        }
-
-      </Container>
+        </Container >
+      </>
     );
   }
 }
