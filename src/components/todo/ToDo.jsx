@@ -38,7 +38,7 @@ export class ToDo extends Component {
   resetAllTasks = () => {
     this.setState({
       tasks: [],
-      selectedTasks: new Set(),
+      selectedTasks: new Set()
     });
   }
 
