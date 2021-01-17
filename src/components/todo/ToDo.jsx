@@ -14,7 +14,7 @@ export class ToDo extends Component {
 
   addTask = (task) => {
     this.setState({
-      arrTasks: [...this.state.arrTasks, task],
+      tasks: [...this.state.tasks, task],
       showTaskCreator: false
     });
   }
@@ -70,8 +70,8 @@ export class ToDo extends Component {
 
   render() {
 
-    const { arrTasks, selectedTasks, showConfirm, showTaskCreator } = this.state;
-    const list = arrTasks.map((task) => {
+    const { tasks, selectedTasks, showConfirm, showTaskCreator } = this.state;
+    const list = tasks.map((task) => {
       return (
         <Col
           xs={6}
@@ -106,7 +106,7 @@ export class ToDo extends Component {
                 className={"w-100"}
                 variant={"danger"}
                 onClick={this.resetAllTasks}
-                disabled={!!selectedTasks.size || !arrTasks.length}>
+                disabled={!!selectedTasks.size || !tasks.length}>
                 Reset All Tasks
             </Button>
             </Col>
@@ -121,7 +121,7 @@ export class ToDo extends Component {
             </Col >
           </Row>
           <Row className={"justify-content-end"}>
-            <Col xs="auto">
+            <Col xs="auto mb-3">
               <Button
                 variant="primary"
                 onClick={this.newTaskHendle}
@@ -150,7 +150,7 @@ export class ToDo extends Component {
             />
           }
 
-        </Container>
+        </Container >
       </>
     );
   }
