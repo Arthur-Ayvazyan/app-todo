@@ -6,14 +6,14 @@ import Confirm from '../confirm';
 
 export class ToDo extends Component {
   state = {
-    arrTasks: [],
+    tasks: [],
     selectedTasks: new Set(),
     showConfirm: false,
   }
 
   addTask = (task) => {
     this.setState({
-      arrTasks: [...this.state.arrTasks, task],
+      tasks: [...this.state.tasks, task],
     });
   }
 
@@ -26,30 +26,30 @@ export class ToDo extends Component {
   }
 
   deleteCurrentTask = (taskId) => {
-    const { arrTasks } = this.state;
-    const copyArrTasks = arrTasks.filter((task) => {
+    const { tasks } = this.state;
+    const copyTasks = tasks.filter((task) => {
       return taskId !== task.id;
     });
     this.setState({
-      arrTasks: copyArrTasks,
+      tasks: copyTasks,
     });
   }
 
   resetAllTasks = () => {
     this.setState({
-      arrTasks: [],
+      tasks: [],
       selectedTasks: new Set(),
     });
   }
 
   deleteSelectedTasks = () => {
-    const { arrTasks, selectedTasks } = this.state;
-    const restArrTasks = arrTasks.filter((task) => {
+    const { tasks, selectedTasks } = this.state;
+    const restTasks = tasks.filter((task) => {
       return !selectedTasks.has(task.id);
     })
 
     this.setState({
-      arrTasks: restArrTasks,
+      tasks: restTasks,
       selectedTasks: new Set(),
       showConfirm: false
     });
@@ -63,8 +63,8 @@ export class ToDo extends Component {
 
   render() {
 
-    const { arrTasks, selectedTasks, showConfirm } = this.state;
-    const list = arrTasks.map((task) => {
+    const { tasks, selectedTasks, showConfirm } = this.state;
+    const list = tasks.map((task) => {
       return (
         <Col
           xs={6}
@@ -86,7 +86,7 @@ export class ToDo extends Component {
 
     return (
 
-      <>
+      <div>
         <Container Container >
           <Row className={"mt-2 mb-2"}>
             <Col>
@@ -107,7 +107,7 @@ export class ToDo extends Component {
                 className={"w-100"}
                 variant={"danger"}
                 onClick={this.resetAllTasks}
-                disabled={!!selectedTasks.size || !arrTasks.length}>
+                disabled={!!selectedTasks.size || !tasks.length}>
                 Reset All Tasks
             </Button>
             </Col>
@@ -134,7 +134,7 @@ export class ToDo extends Component {
           }
 
         </Container>
-      </>
+      </div>
     );
   }
 }

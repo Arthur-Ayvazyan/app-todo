@@ -52,10 +52,10 @@ class Task extends Component {
 }
 
 Task.propTypes = {
-  data: PropTypes.object,
-  onSelect: PropTypes.func,
-  disabled: PropTypes.bool,
-  onDelete: PropTypes.func,
+  data: PropTypes.object.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func.isRequired,
 }
 
 export default Task;

@@ -25,10 +25,10 @@ function Confirm(props) {
   )
 }
 
-Confirm.prototype = {
-  onClose: PropTypes.func,
-  onDeleteTasks: PropTypes.func,
-  deletableTasksSize: PropTypes.number,
+Confirm.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  onDeleteTasks: PropTypes.func.isRequired,
+  deletableTasksSize: PropTypes.number.isRequired,
 }
 
 export default Confirm;

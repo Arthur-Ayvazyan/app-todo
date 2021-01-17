@@ -83,8 +83,8 @@ class NewTask extends Component {
 }
 
 NewTask.propTypes = {
-  addTask: PropTypes.func,
-  disabled: PropTypes.bool,
+  addTask: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
 }
 
 export default NewTask;
