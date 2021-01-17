@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Form } from 'react-bootstrap';
-//import styles from './newTask.module.scss';
 import idGenerator from '../../helpers/idGenerator';
+import PropTypes from 'prop-types';
+
 class NewTask extends Component {
   state = {
     taskText: '',
@@ -79,6 +80,11 @@ class NewTask extends Component {
       </>
     )
   }
+}
+
+NewTask.propTypes = {
+  addTask: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
 }
 
 export default NewTask;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Button, Form } from 'react-bootstrap';
 import styles from './task.module.scss';
+import PropTypes from 'prop-types';
 
 class Task extends Component {
 
@@ -11,6 +12,7 @@ class Task extends Component {
   hendleSelect = () => {
     const { onSelect, data } = this.props;
     onSelect(data.id);
+
     this.setState({
       selected: !this.state.selected
     })
@@ -48,6 +50,13 @@ class Task extends Component {
       </Card >
     )
   }
+}
+
+Task.propTypes = {
+  data: PropTypes.object.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func.isRequired,
 }
 
 export default Task;

@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Task from '../task/Task';
 import NewTask from '../new-task/NewTask';
+import Confirm from '../confirm';
 
 export class ToDo extends Component {
   state = {
-    arrTasks: [],
+    tasks: [],
     selectedTasks: new Set(),
+    showConfirm: false,
   }
 
   addTask = (task) => {
-    //if (!task) return;
     this.setState({
-      arrTasks: [...this.state.arrTasks, task],
+      tasks: [...this.state.tasks, task],
     });
   }
 
@@ -25,36 +26,45 @@ export class ToDo extends Component {
   }
 
   deleteCurrentTask = (taskId) => {
-    const { arrTasks } = this.state;
-    const copyArrTasks = arrTasks.filter((task) => {
+    const { tasks } = this.state;
+    const copyTasks = tasks.filter((task) => {
       return taskId !== task.id;
     });
     this.setState({
-      arrTasks: copyArrTasks,
+      tasks: copyTasks,
     });
   }
 
   resetAllTasks = () => {
     this.setState({
-      arrTasks: [],
-      selectedTasks: new Set(),
+      tasks: [],
+      selectedTasks: new Set()
     });
   }
 
   deleteSelectedTasks = () => {
-    const { arrTasks, selectedTasks } = this.state;
-    const restArrTasks = arrTasks.filter((task) => {
+    const { tasks, selectedTasks } = this.state;
+    const restTasks = tasks.filter((task) => {
       return !selectedTasks.has(task.id);
     })
+
     this.setState({
-      arrTasks: restArrTasks,
+      tasks: restTasks,
       selectedTasks: new Set(),
+      showConfirm: false
     });
   }
 
+  confirmHendle = () => {
+    this.setState({
+      showConfirm: !this.state.showConfirm,
+    })
+  }
+
   render() {
-    const { arrTasks, selectedTasks } = this.state;
-    const list = arrTasks.map((task) => {
+
+    const { tasks, selectedTasks, showConfirm } = this.state;
+    const list = tasks.map((task) => {
       return (
         <Col
           xs={6}
@@ -75,7 +85,8 @@ export class ToDo extends Component {
     });
 
     return (
-      < Container >
+
+      <Container>
         <Row className={"mt-2 mb-2"}>
           <Col>
             <h1> Create To - Do list, be more productive!</h1>
@@ -95,7 +106,7 @@ export class ToDo extends Component {
               className={"w-100"}
               variant={"danger"}
               onClick={this.resetAllTasks}
-              disabled={!!selectedTasks.size || !arrTasks.length}>
+              disabled={!!selectedTasks.size || !tasks.length}>
               Reset All Tasks
             </Button>
           </Col>
@@ -103,7 +114,7 @@ export class ToDo extends Component {
             <Button
               className={"w-100"}
               variant={"warning"}
-              onClick={this.deleteSelectedTasks}
+              onClick={this.confirmHendle}
               disabled={!selectedTasks.size}>
               delete selected
             </Button>
@@ -113,7 +124,15 @@ export class ToDo extends Component {
         <Row>
           {list}
         </Row>
-      </  Container>
+
+        {
+          showConfirm && <Confirm
+            onClose={this.confirmHendle}
+            onDeleteTasks={this.deleteSelectedTasks}
+            deletableTasksSize={selectedTasks.size} />
+        }
+
+      </Container>
     );
   }
 }
