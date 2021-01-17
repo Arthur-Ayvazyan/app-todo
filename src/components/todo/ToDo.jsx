@@ -9,11 +9,13 @@ export class ToDo extends Component {
     arrTasks: [],
     selectedTasks: new Set(),
     showConfirm: false,
+    showTaskCreator: false,
   }
 
   addTask = (task) => {
     this.setState({
       arrTasks: [...this.state.arrTasks, task],
+      showTaskCreator: false
     });
   }
 
@@ -60,10 +62,15 @@ export class ToDo extends Component {
       showConfirm: !this.state.showConfirm,
     })
   }
+  newTaskHendle = () => {
+    this.setState({
+      showTaskCreator: !this.state.showTaskCreator,
+    })
+  }
 
   render() {
 
-    const { arrTasks, selectedTasks, showConfirm } = this.state;
+    const { arrTasks, selectedTasks, showConfirm, showTaskCreator } = this.state;
     const list = arrTasks.map((task) => {
       return (
         <Col
@@ -93,14 +100,6 @@ export class ToDo extends Component {
               <h1> Create To - Do list, be more productive!</h1>
             </Col>
           </Row>
-          <Row className={"mb-3"}>
-            <Col>
-              <NewTask
-                addTask={this.addTask}
-                disabled={!!selectedTasks.size}
-              />
-            </Col>
-          </Row>
           <Row className="justify-content-center mb-5">
             <Col>
               <Button
@@ -120,7 +119,17 @@ export class ToDo extends Component {
                 delete selected
             </Button>
             </Col >
-
+          </Row>
+          <Row className={"justify-content-end"}>
+            <Col xs="auto">
+              <Button
+                variant="primary"
+                onClick={this.newTaskHendle}
+                disabled={selectedTasks.size}
+              >
+                Create Task
+              </Button>
+            </Col>
           </Row>
           <Row>
             {list}
@@ -131,6 +140,14 @@ export class ToDo extends Component {
               onClose={this.confirmHendle}
               onDeleteTasks={this.deleteSelectedTasks}
               deletableTasksSize={selectedTasks.size} />
+          }
+
+          {
+            showTaskCreator &&
+            <NewTask
+              addTask={this.addTask}
+              onClose={this.newTaskHendle}
+            />
           }
 
         </Container>
