@@ -86,53 +86,55 @@ export class ToDo extends Component {
 
     return (
 
-      <Container Container >
-        <Row className={"mt-2 mb-2"}>
-          <Col>
-            <h1> Create To - Do list, be more productive!</h1>
-          </Col>
-        </Row>
-        <Row className={"mb-3"}>
-          <Col>
-            <NewTask
-              addTask={this.addTask}
-              disabled={!!selectedTasks.size}
-            />
-          </Col>
-        </Row>
-        <Row className="justify-content-center mb-5">
-          <Col>
-            <Button
-              className={"w-100"}
-              variant={"danger"}
-              onClick={this.resetAllTasks}
-              disabled={!!selectedTasks.size || !arrTasks.length}>
-              Reset All Tasks
+      <>
+        <Container Container >
+          <Row className={"mt-2 mb-2"}>
+            <Col>
+              <h1> Create To - Do list, be more productive!</h1>
+            </Col>
+          </Row>
+          <Row className={"mb-3"}>
+            <Col>
+              <NewTask
+                addTask={this.addTask}
+                disabled={!!selectedTasks.size}
+              />
+            </Col>
+          </Row>
+          <Row className="justify-content-center mb-5">
+            <Col>
+              <Button
+                className={"w-100"}
+                variant={"danger"}
+                onClick={this.resetAllTasks}
+                disabled={!!selectedTasks.size || !arrTasks.length}>
+                Reset All Tasks
             </Button>
-          </Col>
-          <Col>
-            <Button
-              className={"w-100"}
-              variant={"warning"}
-              onClick={this.confirmHendle}
-              disabled={!selectedTasks.size}>
-              delete selected
+            </Col>
+            <Col>
+              <Button
+                className={"w-100"}
+                variant={"warning"}
+                onClick={this.confirmHendle}
+                disabled={!selectedTasks.size}>
+                delete selected
             </Button>
-          </Col >
+            </Col >
 
-        </Row>
-        <Row>
-          {list}
-        </Row>
+          </Row>
+          <Row>
+            {list}
+          </Row>
 
-        {
-          showConfirm && <Confirm
-            onClose={this.confirmHendle}
-            onDeleteTasks={this.deleteSelectedTasks}
-            deletableTasksSize={selectedTasks.size} />
-        }
+          {
+            showConfirm && <Confirm
+              onClose={this.confirmHendle}
+              onDeleteTasks={this.deleteSelectedTasks}
+              deletableTasksSize={selectedTasks.size} />
+          }
 
-      </Container>
+        </Container>
+      </>
     );
   }
 }

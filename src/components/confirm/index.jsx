@@ -1,7 +1,8 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
-export default function Confirm(props) {
+function Confirm(props) {
 
   return (
     <Modal
@@ -23,3 +24,11 @@ export default function Confirm(props) {
     </Modal>
   )
 }
+
+Confirm.prototype = {
+  onClose: PropTypes.func,
+  onDeleteTasks: PropTypes.func,
+  deletableTasksSize: PropTypes.number,
+}
+
+export default Confirm;

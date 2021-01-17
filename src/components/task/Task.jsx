@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Button, Form } from 'react-bootstrap';
 import styles from './task.module.scss';
+import PropTypes from 'prop-types';
 
 class Task extends Component {
 
@@ -48,6 +49,13 @@ class Task extends Component {
       </Card >
     )
   }
+}
+
+Task.propTypes = {
+  data: PropTypes.object,
+  onSelect: PropTypes.func,
+  disabled: PropTypes.bool,
+  onDelete: PropTypes.func,
 }
 
 export default Task;
