@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Card, Button, Form } from 'react-bootstrap';
 import styles from './task.module.scss';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 class Task extends Component {
 
@@ -44,8 +46,8 @@ class Task extends Component {
             onClick={this.hendleDelete}
             disabled={disabled}
           >
-            Delete
-        </Button>
+            <FontAwesomeIcon icon={faTrash} />
+          </Button>
         </Card.Body>
       </Card >
     )
