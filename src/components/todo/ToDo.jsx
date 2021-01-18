@@ -3,6 +3,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import Task from '../task/Task';
 import NewTask from '../new-task/NewTask';
 import Confirm from '../confirm';
+import ModalEdit from '../modal/ModalEdit';
 
 export class ToDo extends Component {
   state = {
@@ -10,6 +11,7 @@ export class ToDo extends Component {
     selectedTasks: new Set(),
     showConfirm: false,
     showTaskCreator: false,
+    showTaskEditor: false,
   }
 
   addTask = (task) => {
@@ -34,6 +36,36 @@ export class ToDo extends Component {
     });
     this.setState({
       tasks: copyTasks,
+    });
+  }
+
+  editTaskHendle = () => {
+    this.setState({
+      showTaskEditor: !this.state.showTaskEditor,
+      editableTask: ''
+    });
+  }
+
+  editCurrentTask = (task) => {
+    this.setState({
+      editableTask: task,
+    })
+
+  }
+  editTask = (editedTask) => {
+    const { tasks } = this.state;
+    const copyTasks = [...tasks];
+
+    const index = copyTasks.findIndex((elem) => {
+      return elem.id === editedTask.id
+    });
+
+    copyTasks.splice(index, 1, editedTask);
+
+    this.setState({
+      tasks: copyTasks,
+      showTaskEditor: false,
+      editableTask: ''
     });
   }
 
@@ -62,15 +94,18 @@ export class ToDo extends Component {
       showConfirm: !this.state.showConfirm,
     })
   }
+
   newTaskHendle = () => {
     this.setState({
       showTaskCreator: !this.state.showTaskCreator,
     })
   }
 
+
+
   render() {
 
-    const { tasks, selectedTasks, showConfirm, showTaskCreator } = this.state;
+    const { tasks, selectedTasks, editableTask, showConfirm, showTaskCreator, showTaskEditor } = this.state;
     const list = tasks.map((task) => {
       return (
         <Col
@@ -86,6 +121,8 @@ export class ToDo extends Component {
             onSelect={this.selectTasks}
             disabled={!!selectedTasks.size}
             onDelete={this.deleteCurrentTask}
+            onShow={this.editTaskHendle}
+            onEdit={this.editCurrentTask}
           />
         </Col >
       )
@@ -147,6 +184,15 @@ export class ToDo extends Component {
             <NewTask
               addTask={this.addTask}
               onClose={this.newTaskHendle}
+            />
+          }
+          {
+            showTaskEditor &&
+            <ModalEdit
+              task={editableTask}
+              onEdit={this.editTask}
+              onClose={this.editTaskHendle}
+
             />
           }
 

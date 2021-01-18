@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
-import idGenerator from '../../helpers/idGenerator';
 import PropTypes from 'prop-types';
 
-class NewTask extends Component {
+class ModalEdit extends Component {
+  state = {
+    title: this.props.task.title,
+    discription: this.props.task.discription,
+  }
 
   setValue = (e) => {
     const { name, value } = e.target;
@@ -12,29 +15,32 @@ class NewTask extends Component {
     });
   }
 
-  createTask = () => {
+  editTask = () => {
     const title = this.state.title.trim();
     const discription = this.state.discription.trim();
+    const id = this.props.task.id;
 
     if (!title || !discription) return;
 
-    const task = {
+    const editedTask = {
       title,
       discription,
-      id: idGenerator(),
+      id,
     };
-    this.props.addTask(task);
-    return task;
+    this.props.onEdit(editedTask);
+
+    return editedTask;
   }
 
-  createTaskByEnter = (e) => {
+  editTaskByEnter = (e) => {
     if (e.key === "Enter") {
-      this.props.addTask(this.createTask())
+      this.props.onEdit(this.editTask())
     }
   }
 
   render() {
     const { onClose } = this.props;
+    const { title, discription } = this.state;
 
     return (
       <>
@@ -47,26 +53,26 @@ class NewTask extends Component {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Task creator
+              Task editor
             </Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
             <Form.Control
+              value={title}
               type="text"
               className={"mb-2"}
               onChange={this.setValue}
-              onKeyPress={this.createTaskByEnter}
-              placeholder="Set task title"
+              onKeyPress={this.editTaskByEnter}
               name="title"
             />
             <Form.Control
+              value={discription}
               as="textarea"
               rows={3}
               className={"mb-2"}
               onChange={this.setValue}
-              onKeyPress={this.createTaskByEnter}
-              placeholder="Create new task..."
+              onKeyPress={this.editTaskByEnter}
               name="discription"
             />
           </Modal.Body>
@@ -74,9 +80,9 @@ class NewTask extends Component {
           <Modal.Footer>
             <Button
               variant={"success"}
-              onClick={this.createTask}
+              onClick={this.editTask}
             >
-              Add Task
+              Edit
            </Button>
             <Button
               variant="warning"
@@ -91,10 +97,10 @@ class NewTask extends Component {
   }
 }
 
-NewTask.propTypes = {
-  addTask: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
+//ModalEdit.propTypes = {
+//addTask: PropTypes.func.isRequired,
+//onClose: PropTypes.func.isRequired,
 
-}
+//}
 
-export default NewTask;
+export default ModalEdit;

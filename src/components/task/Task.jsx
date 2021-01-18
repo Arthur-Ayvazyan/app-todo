@@ -3,7 +3,7 @@ import { Card, Button, Form } from 'react-bootstrap';
 import styles from './task.module.scss';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 class Task extends Component {
 
@@ -25,6 +25,19 @@ class Task extends Component {
     onDelete(data.id);
   }
 
+  hendleShowEdit = () => {
+    const { onShow, onEdit, data } = this.props;
+    onShow();
+    onEdit(data);
+  }
+
+  //hendleEdit = () => {
+  //  const { onEdit, data } = this.props;
+  //  onEdit(data);
+  //}
+
+
+
   render() {
     const task = this.props.data;
     const { disabled } = this.props;
@@ -40,13 +53,22 @@ class Task extends Component {
             onChange={this.hendleSelect}
           />
           <Card.Title>{task.title}</Card.Title>
-          <Card.Text>{task.text}</Card.Text>
+          <Card.Text>{task.discription}</Card.Text>
           <Button
+            className="m-1"
             variant="danger"
             onClick={this.hendleDelete}
             disabled={disabled}
           >
             <FontAwesomeIcon icon={faTrash} />
+          </Button>
+          <Button
+            className="m-1"
+            variant="warning"
+            onClick={this.hendleShowEdit}
+            disabled={disabled}
+          >
+            <FontAwesomeIcon icon={faEdit} />
           </Button>
         </Card.Body>
       </Card >
