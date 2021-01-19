@@ -6,6 +6,7 @@ import Confirm from '../confirm';
 import ModalEdit from '../modal/ModalEdit';
 
 export class ToDo extends Component {
+
   state = {
     tasks: [],
     selectedTasks: new Set(),
@@ -27,6 +28,21 @@ export class ToDo extends Component {
     copySelectedTasks.has(taskId) ? copySelectedTasks.delete(taskId) : copySelectedTasks.add(taskId);
     this.setState({
       selectedTasks: copySelectedTasks,
+    });
+  }
+
+  selectAll = () => {
+    const taskIds = this.state.tasks.map((task) => {
+      return task.id;
+    })
+    this.setState({
+      selectedTasks: new Set(taskIds),
+    });
+  }
+
+  unselectAll = () => {
+    this.setState({
+      selectedTasks: new Set(),
     });
   }
 
@@ -119,6 +135,7 @@ export class ToDo extends Component {
           <Task
             task={task}
             onSelect={this.selectTasks}
+            selected={selectedTasks.has(task.id)}
             disabled={!!selectedTasks.size}
             onDelete={this.deleteCurrentTask}
             onShow={this.editTaskHendle}
@@ -143,7 +160,8 @@ export class ToDo extends Component {
                 className={"w-100"}
                 variant={"danger"}
                 onClick={this.resetAllTasks}
-                disabled={!!selectedTasks.size || !tasks.length}>
+                disabled={!!selectedTasks.size || !tasks.length}
+              >
                 Reset All Tasks
             </Button>
             </Col>
@@ -152,11 +170,34 @@ export class ToDo extends Component {
                 className={"w-100"}
                 variant={"warning"}
                 onClick={this.confirmHendle}
-                disabled={!selectedTasks.size}>
+                disabled={!selectedTasks.size}
+              >
                 delete selected
             </Button>
             </Col >
+            <Col>
+              <Button
+                className={"w-100"}
+                variant={"warning"}
+                onClick={this.selectAll}
+                disabled={!tasks.length && !selectedTasks.size}
+              //disabled={!(tasks.length > 1) && !selectedTasks.size}
+              >
+                Select All
+            </Button>
+            </Col >
+            <Col>
+              <Button
+                className={"w-100"}
+                variant={"warning"}
+                onClick={this.unselectAll}
+                disabled={!selectedTasks.size}
+              >
+                Unselect All
+            </Button>
+            </Col >
           </Row>
+
           <Row className={"justify-content-end"}>
             <Col xs="auto mb-3">
               <Button
@@ -167,6 +208,7 @@ export class ToDo extends Component {
                 Create Task
               </Button>
             </Col>
+
           </Row>
           <Row>
             {list}

@@ -7,17 +7,9 @@ import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 class Task extends Component {
 
-  state = {
-    selected: false
-  }
-
   hendleSelect = () => {
     const { onSelect, task } = this.props;
     onSelect(task.id);
-
-    this.setState({
-      selected: !this.state.selected
-    })
   }
 
   hendleDelete = () => {
@@ -33,8 +25,7 @@ class Task extends Component {
 
   render() {
     const task = this.props.task;
-    const { disabled } = this.props;
-    const { selected } = this.state;
+    const { disabled, selected } = this.props;
 
     return (
       <Card
@@ -44,6 +35,7 @@ class Task extends Component {
           <Form.Check
             type="checkbox"
             onChange={this.hendleSelect}
+            checked={selected}
           />
           <Card.Title>{task.title}</Card.Title>
           <Card.Text>{task.discription}</Card.Text>
@@ -74,6 +66,8 @@ Task.propTypes = {
   onSelect: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  selected: PropTypes.bool.isRequired,
 }
 
 export default Task;
