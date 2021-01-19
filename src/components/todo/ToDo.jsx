@@ -23,7 +23,7 @@ export class ToDo extends Component {
     });
   }
 
-  selectTasks = (taskId) => {
+  selectTask = (taskId) => {
     const copySelectedTasks = new Set(this.state.selectedTasks);
     copySelectedTasks.has(taskId) ? copySelectedTasks.delete(taskId) : copySelectedTasks.add(taskId);
     this.setState({
@@ -46,7 +46,7 @@ export class ToDo extends Component {
     });
   }
 
-  deleteCurrentTask = (taskId) => {
+  deleteTask = (taskId) => {
     const { tasks } = this.state;
     const copyTasks = tasks.filter((task) => {
       return taskId !== task.id;
@@ -56,12 +56,26 @@ export class ToDo extends Component {
     });
   }
 
-  editTaskHendle = () => {
+  deleteSelected = () => {
+    const { tasks, selectedTasks } = this.state;
+    const restTasks = tasks.filter((task) => {
+      return !selectedTasks.has(task.id);
+    })
+
     this.setState({
-      showTaskEditor: !this.state.showTaskEditor,
-      editableTask: null,
+      tasks: restTasks,
+      selectedTasks: new Set(),
+      showConfirm: false
     });
   }
+
+  deleteAllTasks = () => {
+    this.setState({
+      tasks: [],
+      selectedTasks: new Set()
+    });
+  }
+
 
   getEditableTask = (task) => {
     this.setState({
@@ -86,23 +100,10 @@ export class ToDo extends Component {
     });
   }
 
-  resetAllTasks = () => {
+  editTaskHendle = () => {
     this.setState({
-      tasks: [],
-      selectedTasks: new Set()
-    });
-  }
-
-  deleteSelectedTasks = () => {
-    const { tasks, selectedTasks } = this.state;
-    const restTasks = tasks.filter((task) => {
-      return !selectedTasks.has(task.id);
-    })
-
-    this.setState({
-      tasks: restTasks,
-      selectedTasks: new Set(),
-      showConfirm: false
+      showTaskEditor: !this.state.showTaskEditor,
+      editableTask: null,
     });
   }
 
@@ -134,10 +135,10 @@ export class ToDo extends Component {
         >
           <Task
             task={task}
-            onSelect={this.selectTasks}
+            onSelect={this.selectTask}
             selected={selectedTasks.has(task.id)}
             disabled={!!selectedTasks.size}
-            onDelete={this.deleteCurrentTask}
+            onDelete={this.deleteTask}
             onShow={this.editTaskHendle}
             onEdit={this.getEditableTask}
           />
@@ -159,7 +160,7 @@ export class ToDo extends Component {
               <Button
                 className={"w-100"}
                 variant={"danger"}
-                onClick={this.resetAllTasks}
+                onClick={this.deleteAllTasks}
                 disabled={!!selectedTasks.size || !tasks.length}
               >
                 Reset All Tasks
@@ -217,7 +218,7 @@ export class ToDo extends Component {
           {
             showConfirm && <Confirm
               onClose={this.confirmHendle}
-              onDeleteTasks={this.deleteSelectedTasks}
+              onDeleteTasks={this.deleteSelected}
               deletableTasksSize={selectedTasks.size} />
           }
 

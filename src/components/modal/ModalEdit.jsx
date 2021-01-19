@@ -3,6 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 class ModalEdit extends Component {
+
   state = {
     title: this.props.task.title,
     discription: this.props.task.discription,
@@ -16,9 +17,11 @@ class ModalEdit extends Component {
   }
 
   editTask = () => {
+
     const title = this.state.title.trim();
     const discription = this.state.discription.trim();
-    const id = this.props.task.id;
+    const { task, onEdit } = this.props;
+    const id = task.id;
 
     if (!title || !discription) return;
 
@@ -27,14 +30,12 @@ class ModalEdit extends Component {
       discription,
       id,
     };
-    this.props.onEdit(editedTask);
-
-    return editedTask;
+    onEdit(editedTask);
   }
 
   editTaskByEnter = (e) => {
     if (e.key === "Enter") {
-      this.props.onEdit(this.editTask())
+      this.editTask();
     }
   }
 

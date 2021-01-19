@@ -5,6 +5,11 @@ import PropTypes from 'prop-types';
 
 class NewTask extends Component {
 
+  state = {
+    title: '',
+    discription: '',
+  }
+
   setValue = (e) => {
     const { name, value } = e.target;
     this.setState({
@@ -15,7 +20,6 @@ class NewTask extends Component {
   createTask = () => {
     const title = this.state.title.trim();
     const discription = this.state.discription.trim();
-
     if (!title || !discription) return;
 
     const task = {
@@ -24,18 +28,18 @@ class NewTask extends Component {
       id: idGenerator(),
     };
     this.props.addTask(task);
-    return task;
+
   }
 
   createTaskByEnter = (e) => {
     if (e.key === "Enter") {
-      this.props.addTask(this.createTask())
+      this.createTask();
     }
   }
 
   render() {
-    const { onClose } = this.props;
 
+    const { onClose } = this.props;
     return (
       <>
         <Modal
@@ -81,7 +85,9 @@ class NewTask extends Component {
             <Button
               variant="warning"
               onClick={onClose}
-            >Cancel</Button>
+            >
+              Cancel
+            </Button>
           </Modal.Footer>
 
         </Modal>
