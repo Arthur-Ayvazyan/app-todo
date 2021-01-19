@@ -97,10 +97,10 @@ class ModalEdit extends Component {
   }
 }
 
-//ModalEdit.propTypes = {
-//addTask: PropTypes.func.isRequired,
-//onClose: PropTypes.func.isRequired,
-
-//}
+ModalEdit.propTypes = {
+  task: PropTypes.object.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+}
 
 export default ModalEdit;

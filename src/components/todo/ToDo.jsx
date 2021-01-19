@@ -12,6 +12,7 @@ export class ToDo extends Component {
     showConfirm: false,
     showTaskCreator: false,
     showTaskEditor: false,
+    editableTask: null,
   }
 
   addTask = (task) => {
@@ -42,16 +43,16 @@ export class ToDo extends Component {
   editTaskHendle = () => {
     this.setState({
       showTaskEditor: !this.state.showTaskEditor,
-      editableTask: ''
+      editableTask: null,
     });
   }
 
-  editCurrentTask = (task) => {
+  getEditableTask = (task) => {
     this.setState({
       editableTask: task,
     })
-
   }
+
   editTask = (editedTask) => {
     const { tasks } = this.state;
     const copyTasks = [...tasks];
@@ -65,7 +66,7 @@ export class ToDo extends Component {
     this.setState({
       tasks: copyTasks,
       showTaskEditor: false,
-      editableTask: ''
+      editableTask: null,
     });
   }
 
@@ -102,7 +103,6 @@ export class ToDo extends Component {
   }
 
 
-
   render() {
 
     const { tasks, selectedTasks, editableTask, showConfirm, showTaskCreator, showTaskEditor } = this.state;
@@ -117,12 +117,12 @@ export class ToDo extends Component {
           key={task.id}
         >
           <Task
-            data={task}
+            task={task}
             onSelect={this.selectTasks}
             disabled={!!selectedTasks.size}
             onDelete={this.deleteCurrentTask}
             onShow={this.editTaskHendle}
-            onEdit={this.editCurrentTask}
+            onEdit={this.getEditableTask}
           />
         </Col >
       )

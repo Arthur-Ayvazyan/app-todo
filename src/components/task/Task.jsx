@@ -12,8 +12,8 @@ class Task extends Component {
   }
 
   hendleSelect = () => {
-    const { onSelect, data } = this.props;
-    onSelect(data.id);
+    const { onSelect, task } = this.props;
+    onSelect(task.id);
 
     this.setState({
       selected: !this.state.selected
@@ -21,25 +21,18 @@ class Task extends Component {
   }
 
   hendleDelete = () => {
-    const { onDelete, data } = this.props;
-    onDelete(data.id);
+    const { onDelete, task } = this.props;
+    onDelete(task.id);
   }
 
   hendleShowEdit = () => {
-    const { onShow, onEdit, data } = this.props;
+    const { onShow, onEdit, task } = this.props;
     onShow();
-    onEdit(data);
+    onEdit(task);
   }
 
-  //hendleEdit = () => {
-  //  const { onEdit, data } = this.props;
-  //  onEdit(data);
-  //}
-
-
-
   render() {
-    const task = this.props.data;
+    const task = this.props.task;
     const { disabled } = this.props;
     const { selected } = this.state;
 
@@ -77,7 +70,7 @@ class Task extends Component {
 }
 
 Task.propTypes = {
-  data: PropTypes.object.isRequired,
+  task: PropTypes.object.isRequired,
   onSelect: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired,
   onDelete: PropTypes.func.isRequired,
