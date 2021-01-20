@@ -4,9 +4,11 @@ import PropTypes from 'prop-types';
 
 class ModalEdit extends Component {
 
-  state = {
-    title: this.props.task.title,
-    discription: this.props.task.discription,
+  constructor(props) {
+    super(props);
+    this.state = {
+      ...props.task,
+    }
   }
 
   setValue = (e) => {
@@ -17,13 +19,12 @@ class ModalEdit extends Component {
   }
 
   editTask = () => {
-
     const title = this.state.title.trim();
     const discription = this.state.discription.trim();
-    const { task, onEdit } = this.props;
-    const id = task.id;
+    const id = this.state.id;
+    const { onEdit } = this.props;
 
-    if (!title || !discription) return;
+    if (!title) return;
 
     const editedTask = {
       title,
@@ -44,55 +45,52 @@ class ModalEdit extends Component {
     const { title, discription } = this.state;
 
     return (
-      <>
-        <Modal
-          show={true}
-          onHide={onClose}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-              Task editor
+      <Modal
+        show={true}
+        onHide={onClose}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Task editor
             </Modal.Title>
-          </Modal.Header>
+        </Modal.Header>
 
-          <Modal.Body>
-            <Form.Control
-              value={title}
-              type="text"
-              className={"mb-2"}
-              onChange={this.setValue}
-              onKeyPress={this.editTaskByEnter}
-              name="title"
-            />
-            <Form.Control
-              value={discription}
-              as="textarea"
-              rows={3}
-              className={"mb-2"}
-              onChange={this.setValue}
-              onKeyPress={this.editTaskByEnter}
-              name="discription"
-            />
-          </Modal.Body>
+        <Modal.Body>
+          <Form.Control
+            value={title}
+            type="text"
+            className={"mb-2"}
+            onChange={this.setValue}
+            onKeyPress={this.editTaskByEnter}
+            name="title"
+          />
+          <Form.Control
+            value={discription}
+            as="textarea"
+            rows={3}
+            className={"mb-2"}
+            onChange={this.setValue}
+            onKeyPress={this.editTaskByEnter}
+            name="discription"
+          />
+        </Modal.Body>
 
-          <Modal.Footer>
-            <Button
-              variant={"success"}
-              onClick={this.editTask}
-            >
-              Edit
+        <Modal.Footer>
+          <Button
+            variant={"success"}
+            onClick={this.editTask}
+          >
+            Edit
            </Button>
-            <Button
-              variant="warning"
-              onClick={onClose}
-            >Cancel</Button>
-          </Modal.Footer>
-
-        </Modal>
-      </>
+          <Button
+            variant="warning"
+            onClick={onClose}
+          >Cancel</Button>
+        </Modal.Footer>
+      </Modal>
     )
 
   }

@@ -90,8 +90,8 @@ export class ToDo extends Component {
     const index = copyTasks.findIndex((elem) => {
       return elem.id === editedTask.id
     });
-
-    copyTasks.splice(index, 1, editedTask);
+    //copyTasks.splice(index, 1, editedTask);
+    copyTasks[index] = editedTask;
 
     this.setState({
       tasks: copyTasks,
