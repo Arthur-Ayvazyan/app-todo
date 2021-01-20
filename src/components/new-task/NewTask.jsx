@@ -20,7 +20,7 @@ class NewTask extends Component {
   createTask = () => {
     const title = this.state.title.trim();
     const discription = this.state.discription.trim();
-    if (!title || !discription) return;
+    if (!title) return;
 
     const task = {
       title,
@@ -41,59 +41,55 @@ class NewTask extends Component {
 
     const { onClose } = this.props;
     return (
-      <>
-        <Modal
-          show={true}
-          onHide={onClose}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-              Task creator
+      <Modal
+        show={true}
+        onHide={onClose}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Task creator
             </Modal.Title>
-          </Modal.Header>
+        </Modal.Header>
 
-          <Modal.Body>
-            <Form.Control
-              type="text"
-              className={"mb-2"}
-              onChange={this.setValue}
-              onKeyPress={this.createTaskByEnter}
-              placeholder="Set task title"
-              name="title"
-            />
-            <Form.Control
-              as="textarea"
-              rows={3}
-              className={"mb-2"}
-              onChange={this.setValue}
-              onKeyPress={this.createTaskByEnter}
-              placeholder="Create new task..."
-              name="discription"
-            />
-          </Modal.Body>
+        <Modal.Body>
+          <Form.Control
+            type="text"
+            className={"mb-2"}
+            onChange={this.setValue}
+            onKeyPress={this.createTaskByEnter}
+            placeholder="Set task title"
+            name="title"
+          />
+          <Form.Control
+            as="textarea"
+            rows={3}
+            className={"mb-2"}
+            onChange={this.setValue}
+            onKeyPress={this.createTaskByEnter}
+            placeholder="Create new task..."
+            name="discription"
+          />
+        </Modal.Body>
 
-          <Modal.Footer>
-            <Button
-              variant={"success"}
-              onClick={this.createTask}
-            >
-              Add Task
+        <Modal.Footer>
+          <Button
+            variant={"success"}
+            onClick={this.createTask}
+          >
+            Add Task
            </Button>
-            <Button
-              variant="warning"
-              onClick={onClose}
-            >
-              Cancel
+          <Button
+            variant="warning"
+            onClick={onClose}
+          >
+            Cancel
             </Button>
-          </Modal.Footer>
-
-        </Modal>
-      </>
+        </Modal.Footer>
+      </Modal>
     )
-
   }
 }
 
