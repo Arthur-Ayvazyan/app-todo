@@ -3,13 +3,17 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import Task from '../task/Task';
 import NewTask from '../new-task/NewTask';
 import Confirm from '../confirm';
+import ModalEdit from '../modal/ModalEdit';
 
 export class ToDo extends Component {
+
   state = {
     tasks: [],
     selectedTasks: new Set(),
     showConfirm: false,
     showTaskCreator: false,
+    showTaskEditor: false,
+    editableTask: null,
   }
 
   addTask = (task) => {
@@ -19,7 +23,7 @@ export class ToDo extends Component {
     });
   }
 
-  selectTasks = (taskId) => {
+  selectTask = (taskId) => {
     const copySelectedTasks = new Set(this.state.selectedTasks);
     copySelectedTasks.has(taskId) ? copySelectedTasks.delete(taskId) : copySelectedTasks.add(taskId);
     this.setState({
@@ -27,7 +31,22 @@ export class ToDo extends Component {
     });
   }
 
-  deleteCurrentTask = (taskId) => {
+  selectAll = () => {
+    const taskIds = this.state.tasks.map((task) => {
+      return task.id;
+    })
+    this.setState({
+      selectedTasks: new Set(taskIds),
+    });
+  }
+
+  unselectAll = () => {
+    this.setState({
+      selectedTasks: new Set(),
+    });
+  }
+
+  deleteTask = (taskId) => {
     const { tasks } = this.state;
     const copyTasks = tasks.filter((task) => {
       return taskId !== task.id;
@@ -37,14 +56,7 @@ export class ToDo extends Component {
     });
   }
 
-  resetAllTasks = () => {
-    this.setState({
-      tasks: [],
-      selectedTasks: new Set()
-    });
-  }
-
-  deleteSelectedTasks = () => {
+  deleteSelected = () => {
     const { tasks, selectedTasks } = this.state;
     const restTasks = tasks.filter((task) => {
       return !selectedTasks.has(task.id);
@@ -57,20 +69,60 @@ export class ToDo extends Component {
     });
   }
 
+  deleteAllTasks = () => {
+    this.setState({
+      tasks: [],
+      selectedTasks: new Set()
+    });
+  }
+
+
+  getEditableTask = (task) => {
+    this.setState({
+      editableTask: task,
+    })
+  }
+
+  editTask = (editedTask) => {
+    const { tasks } = this.state;
+    const copyTasks = [...tasks];
+
+    const index = copyTasks.findIndex((elem) => {
+      return elem.id === editedTask.id
+    });
+
+    copyTasks.splice(index, 1, editedTask);
+
+    this.setState({
+      tasks: copyTasks,
+      showTaskEditor: false,
+      editableTask: null,
+    });
+  }
+
+  editTaskHendle = () => {
+    this.setState({
+      showTaskEditor: !this.state.showTaskEditor,
+      editableTask: null,
+    });
+  }
+
   confirmHendle = () => {
     this.setState({
       showConfirm: !this.state.showConfirm,
     })
   }
+
   newTaskHendle = () => {
     this.setState({
       showTaskCreator: !this.state.showTaskCreator,
     })
   }
 
+
   render() {
 
-    const { tasks, selectedTasks, showConfirm, showTaskCreator } = this.state;
+    const { tasks, selectedTasks, editableTask, showConfirm, showTaskCreator, showTaskEditor } = this.state;
     const list = tasks.map((task) => {
       return (
         <Col
@@ -82,10 +134,13 @@ export class ToDo extends Component {
           key={task.id}
         >
           <Task
-            data={task}
-            onSelect={this.selectTasks}
+            task={task}
+            onSelect={this.selectTask}
+            selected={selectedTasks.has(task.id)}
             disabled={!!selectedTasks.size}
-            onDelete={this.deleteCurrentTask}
+            onDelete={this.deleteTask}
+            onShow={this.editTaskHendle}
+            onEdit={this.getEditableTask}
           />
         </Col >
       )
@@ -105,8 +160,9 @@ export class ToDo extends Component {
               <Button
                 className={"w-100"}
                 variant={"danger"}
-                onClick={this.resetAllTasks}
-                disabled={!!selectedTasks.size || !tasks.length}>
+                onClick={this.deleteAllTasks}
+                disabled={!!selectedTasks.size || !tasks.length}
+              >
                 Reset All Tasks
             </Button>
             </Col>
@@ -115,11 +171,34 @@ export class ToDo extends Component {
                 className={"w-100"}
                 variant={"warning"}
                 onClick={this.confirmHendle}
-                disabled={!selectedTasks.size}>
+                disabled={!selectedTasks.size}
+              >
                 delete selected
             </Button>
             </Col >
+            <Col>
+              <Button
+                className={"w-100"}
+                variant={"warning"}
+                onClick={this.selectAll}
+                disabled={!tasks.length && !selectedTasks.size}
+              //disabled={!(tasks.length > 1) && !selectedTasks.size}
+              >
+                Select All
+            </Button>
+            </Col >
+            <Col>
+              <Button
+                className={"w-100"}
+                variant={"warning"}
+                onClick={this.unselectAll}
+                disabled={!selectedTasks.size}
+              >
+                Unselect All
+            </Button>
+            </Col >
           </Row>
+
           <Row className={"justify-content-end"}>
             <Col xs="auto mb-3">
               <Button
@@ -130,6 +209,7 @@ export class ToDo extends Component {
                 Create Task
               </Button>
             </Col>
+
           </Row>
           <Row>
             {list}
@@ -138,7 +218,7 @@ export class ToDo extends Component {
           {
             showConfirm && <Confirm
               onClose={this.confirmHendle}
-              onDeleteTasks={this.deleteSelectedTasks}
+              onDeleteTasks={this.deleteSelected}
               deletableTasksSize={selectedTasks.size} />
           }
 
@@ -147,6 +227,15 @@ export class ToDo extends Component {
             <NewTask
               addTask={this.addTask}
               onClose={this.newTaskHendle}
+            />
+          }
+          {
+            showTaskEditor &&
+            <ModalEdit
+              task={editableTask}
+              onEdit={this.editTask}
+              onClose={this.editTaskHendle}
+
             />
           }
 
