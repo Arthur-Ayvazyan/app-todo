@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
@@ -31,4 +31,4 @@ Confirm.propTypes = {
   deletableTasksSize: PropTypes.number.isRequired,
 }
 
-export default Confirm;
+export default memo(Confirm);
