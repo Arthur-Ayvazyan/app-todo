@@ -9,12 +9,12 @@ class Task extends PureComponent {
 
   hendleSelect = () => {
     const { onSelect, task } = this.props;
-    onSelect(task.id);
+    onSelect(task._id);
   }
 
   hendleDelete = () => {
     const { onDelete, task } = this.props;
-    onDelete(task.id);
+    onDelete(task._id);
   }
 
   hendleShowEdit = () => {
@@ -38,7 +38,7 @@ class Task extends PureComponent {
             checked={selected}
           />
           <Card.Title>{task.title}</Card.Title>
-          <Card.Text>{task.discription}</Card.Text>
+          <Card.Text>{task.description}</Card.Text>
           <Button
             className="m-1"
             variant="danger"

@@ -16,11 +16,59 @@ export class ToDo extends PureComponent {
     editableTask: null,
   }
 
+  componentDidMount() {
+
+    fetch('http://localhost:3001/task', {
+
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(async (response) => {
+
+        const res = await response.json();
+
+        if (response.status >= 400 && response.status < 600) {
+          if (res.error) {
+            throw res.error;
+          }
+        }
+        this.setState({
+          tasks: res,
+        });
+      })
+
+  }
+
   addTask = (task) => {
-    this.setState({
-      tasks: [...this.state.tasks, task],
-      showTaskCreator: false
-    });
+
+    fetch('http://localhost:3001/task', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(task),
+    })
+      .then(async (response) => {
+
+        const res = await response.json();
+
+        if (response.status >= 400 && response.status < 600) {
+          if (res.error) {
+            throw res.error;
+          }
+        }
+        this.setState({
+          tasks: [...this.state.tasks, res],
+          showTaskCreator: false
+        });
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
+
+
   }
 
   selectTask = (taskId) => {
@@ -33,7 +81,7 @@ export class ToDo extends PureComponent {
 
   selectAll = () => {
     const taskIds = this.state.tasks.map((task) => {
-      return task.id;
+      return task._id;
     })
     this.setState({
       selectedTasks: new Set(taskIds),
@@ -46,36 +94,78 @@ export class ToDo extends PureComponent {
     });
   }
 
+
+
+
   deleteTask = (taskId) => {
-    const { tasks } = this.state;
-    const copyTasks = tasks.filter((task) => {
-      return taskId !== task.id;
-    });
-    this.setState({
-      tasks: copyTasks,
-    });
+
+    fetch(`http://localhost:3001/task/${taskId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+
+      .then(async (response) => {
+
+        const res = await response.json();
+
+        if (response.status >= 400 && response.status < 600) {
+          if (res.error) {
+            throw res.error;
+          }
+        }
+
+        const { tasks } = this.state;
+        const copyTasks = tasks.filter((task) => {
+          return taskId !== task._id;
+        });
+
+        this.setState({
+          tasks: copyTasks,
+        });
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
   }
 
   deleteSelected = () => {
+
     const { tasks, selectedTasks } = this.state;
-    const restTasks = tasks.filter((task) => {
-      return !selectedTasks.has(task.id);
+    const deletableTasks = [...selectedTasks];
+
+    fetch(`http://localhost:3001/task`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ tasks: deletableTasks })
     })
+      .then(async (response) => {
 
-    this.setState({
-      tasks: restTasks,
-      selectedTasks: new Set(),
-      showConfirm: false
-    });
+        const res = await response.json();
+
+        if (response.status >= 400 && response.status < 600) {
+          if (res.error) {
+            throw res.error;
+          }
+        }
+
+        const restTasks = tasks.filter((task) => {
+          return !selectedTasks.has(task._id);
+        })
+
+        this.setState({
+          tasks: restTasks,
+          selectedTasks: new Set(),
+          showConfirm: false
+        });
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
   }
-
-  deleteAllTasks = () => {
-    this.setState({
-      tasks: [],
-      selectedTasks: new Set()
-    });
-  }
-
 
   getEditableTask = (task) => {
     this.setState({
@@ -84,20 +174,43 @@ export class ToDo extends PureComponent {
   }
 
   editTask = (editedTask) => {
-    const { tasks } = this.state;
-    const copyTasks = [...tasks];
 
-    const index = copyTasks.findIndex((elem) => {
-      return elem.id === editedTask.id
-    });
-    //copyTasks.splice(index, 1, editedTask);
-    copyTasks[index] = editedTask;
+    fetch(`http://localhost:3001/task/${editedTask._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(editedTask)
+    })
 
-    this.setState({
-      tasks: copyTasks,
-      showTaskEditor: false,
-      editableTask: null,
-    });
+      .then(async (response) => {
+
+        const res = await response.json();
+
+        if (response.status >= 400 && response.status < 600) {
+          if (res.error) {
+            throw res.error;
+          }
+        }
+
+        const { tasks } = this.state;
+        const copyTasks = [...tasks];
+
+        const index = copyTasks.findIndex((elem) => {
+          return elem.id === editedTask.id
+        });
+        //copyTasks.splice(index, 1, editedTask);
+        copyTasks[index] = editedTask;
+
+        this.setState({
+          tasks: copyTasks,
+          showTaskEditor: false,
+          editableTask: null,
+        });
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
   }
 
   editTaskHendle = () => {
@@ -130,13 +243,13 @@ export class ToDo extends PureComponent {
           md={4}
           lg={4}
           xl={3}
-          id={task.id}
-          key={task.id}
+          id={task._id}
+          key={task._id}
         >
           <Task
             task={task}
             onSelect={this.selectTask}
-            selected={selectedTasks.has(task.id)}
+            selected={selectedTasks.has(task._id)}
             disabled={!!selectedTasks.size}
             onDelete={this.deleteTask}
             onShow={this.editTaskHendle}
@@ -156,16 +269,6 @@ export class ToDo extends PureComponent {
             </Col>
           </Row>
           <Row className="justify-content-center mb-5">
-            <Col>
-              <Button
-                className={"w-100"}
-                variant={"danger"}
-                onClick={this.deleteAllTasks}
-                disabled={!!selectedTasks.size || !tasks.length}
-              >
-                Reset All Tasks
-            </Button>
-            </Col>
             <Col>
               <Button
                 className={"w-100"}
