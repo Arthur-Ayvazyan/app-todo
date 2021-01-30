@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Task from '../task/Task';
 import NewTask from '../new-task/NewTask';
 import Confirm from '../confirm';
 import ModalEdit from '../modal/ModalEdit';
 
-export class ToDo extends Component {
+export class ToDo extends PureComponent {
 
   state = {
     tasks: [],

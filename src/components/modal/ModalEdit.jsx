@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-class ModalEdit extends Component {
+class ModalEdit extends PureComponent {
 
   constructor(props) {
     super(props);
@@ -83,7 +83,7 @@ class ModalEdit extends Component {
             variant={"success"}
             onClick={this.editTask}
           >
-            Edit
+            Save
            </Button>
           <Button
             variant="warning"

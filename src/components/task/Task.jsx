@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Card, Button, Form } from 'react-bootstrap';
 import styles from './task.module.scss';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
-class Task extends Component {
+class Task extends PureComponent {
 
   hendleSelect = () => {
     const { onSelect, task } = this.props;
