@@ -197,7 +197,7 @@ export class ToDo extends PureComponent {
         const copyTasks = [...tasks];
 
         const index = copyTasks.findIndex((elem) => {
-          return elem.id === editedTask.id
+          return elem._id === editedTask._id
         });
         //copyTasks.splice(index, 1, editedTask);
         copyTasks[index] = editedTask;

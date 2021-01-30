@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-class ModalEdit extends PureComponent {
+class ModalEdit extends Component {
 
   constructor(props) {
     super(props);
