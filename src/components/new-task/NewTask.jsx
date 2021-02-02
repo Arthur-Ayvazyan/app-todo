@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { formatDate } from '../../helpers/utils';
 
 class NewTask extends Component {
 
   state = {
     title: '',
     description: '',
+    date: new Date()
   }
 
   setValue = (e) => {
@@ -16,14 +20,24 @@ class NewTask extends Component {
     });
   }
 
+  setDateValue = (value) => {
+    this.setState({
+      date: value || new Date()
+    })
+  }
+
   createTask = () => {
     const title = this.state.title.trim();
     const description = this.state.description.trim();
     if (!title) return;
 
+    const { date } = this.state;
+
     const task = {
       title,
       description,
+      date: formatDate(date.toISOString())
+      //date: this.state.date.toISOString().slice(0, 10)
     };
     this.props.addTask(task);
 
@@ -69,6 +83,11 @@ class NewTask extends Component {
             onKeyPress={this.createTaskByEnter}
             placeholder="Create new task..."
             name="description"
+          />
+          <DatePicker
+            minDate={new Date()}
+            selected={this.state.date}
+            onChange={this.setDateValue}
           />
         </Modal.Body>
 

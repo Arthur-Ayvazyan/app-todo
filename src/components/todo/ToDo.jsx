@@ -272,7 +272,7 @@ export class ToDo extends PureComponent {
             <Col>
               <Button
                 className={"w-100"}
-                variant={"warning"}
+                variant={"danger"}
                 onClick={this.confirmHendle}
                 disabled={!selectedTasks.size}
               >
