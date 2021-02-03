@@ -1,13 +1,12 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
-import idGenerator from '../../helpers/idGenerator';
 import PropTypes from 'prop-types';
 
-class NewTask extends PureComponent {
+class NewTask extends Component {
 
   state = {
     title: '',
-    discription: '',
+    description: '',
   }
 
   setValue = (e) => {
@@ -19,13 +18,12 @@ class NewTask extends PureComponent {
 
   createTask = () => {
     const title = this.state.title.trim();
-    const discription = this.state.discription.trim();
+    const description = this.state.description.trim();
     if (!title) return;
 
     const task = {
       title,
-      discription,
-      id: idGenerator(),
+      description,
     };
     this.props.addTask(task);
 
@@ -70,7 +68,7 @@ class NewTask extends PureComponent {
             onChange={this.setValue}
             onKeyPress={this.createTaskByEnter}
             placeholder="Create new task..."
-            name="discription"
+            name="description"
           />
         </Modal.Body>
 

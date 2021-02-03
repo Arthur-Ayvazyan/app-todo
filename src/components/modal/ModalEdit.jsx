@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-class ModalEdit extends PureComponent {
+class ModalEdit extends Component {
 
   constructor(props) {
     super(props);
@@ -20,16 +20,16 @@ class ModalEdit extends PureComponent {
 
   editTask = () => {
     const title = this.state.title.trim();
-    const discription = this.state.discription.trim();
-    const id = this.state.id;
+    const description = this.state.description.trim();
+    const { _id } = this.state;
     const { onEdit } = this.props;
 
     if (!title) return;
 
     const editedTask = {
       title,
-      discription,
-      id,
+      description,
+      _id
     };
     onEdit(editedTask);
   }
@@ -42,7 +42,7 @@ class ModalEdit extends PureComponent {
 
   render() {
     const { onClose } = this.props;
-    const { title, discription } = this.state;
+    const { title, description } = this.state;
 
     return (
       <Modal
@@ -68,13 +68,13 @@ class ModalEdit extends PureComponent {
             name="title"
           />
           <Form.Control
-            value={discription}
+            value={description}
             as="textarea"
             rows={3}
             className={"mb-2"}
             onChange={this.setValue}
             onKeyPress={this.editTaskByEnter}
-            name="discription"
+            name="description"
           />
         </Modal.Body>
 
