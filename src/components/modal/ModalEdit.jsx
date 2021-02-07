@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { formatDate } from '../../helpers/utils';
 
 class ModalEdit extends Component {
 
   constructor(props) {
     super(props);
+    const { date } = props.task;
     this.state = {
       ...props.task,
+      date: date ? new Date(date) : new Date()
     }
   }
 
@@ -18,10 +23,16 @@ class ModalEdit extends Component {
     });
   }
 
+  setDateValue = (value) => {
+    this.setState({
+      date: value || new Date()
+    })
+  }
+
   editTask = () => {
     const title = this.state.title.trim();
     const description = this.state.description.trim();
-    const { _id } = this.state;
+    const { _id, date } = this.state;
     const { onEdit } = this.props;
 
     if (!title) return;
@@ -29,7 +40,8 @@ class ModalEdit extends Component {
     const editedTask = {
       title,
       description,
-      _id
+      _id,
+      date: formatDate(date.toISOString())
     };
     onEdit(editedTask);
   }
@@ -75,6 +87,11 @@ class ModalEdit extends Component {
             onChange={this.setValue}
             onKeyPress={this.editTaskByEnter}
             name="description"
+          />
+          <DatePicker
+            minDate={new Date()}
+            selected={this.state.date}
+            onChange={this.setDateValue}
           />
         </Modal.Body>
 
