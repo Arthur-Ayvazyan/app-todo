@@ -109,7 +109,6 @@ class ModalEdit extends Component {
         </Modal.Footer>
       </Modal>
     )
-
   }
 }
 
