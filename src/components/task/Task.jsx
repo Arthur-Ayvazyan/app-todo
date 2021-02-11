@@ -4,6 +4,8 @@ import styles from './task.module.scss';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { formatDate, textCutter } from '../../helpers/utils';
+import { Link } from 'react-router-dom';
 
 class Task extends PureComponent {
 
@@ -37,8 +39,13 @@ class Task extends PureComponent {
             onChange={this.hendleSelect}
             checked={selected}
           />
-          <Card.Title>{task.title}</Card.Title>
-          <Card.Text>{task.description}</Card.Text>
+          <Link to={`/task${task._id}`} >
+            <Card.Title>{textCutter(task.title, 30)}</Card.Title>
+          </Link>
+          <Card.Text>Description: {textCutter(task.description, 50)}</Card.Text>
+          <Card.Text>
+            Date: {formatDate(task.date)}
+          </Card.Text>
           <Button
             className="m-1"
             variant="danger"

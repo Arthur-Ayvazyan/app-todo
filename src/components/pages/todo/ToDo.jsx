@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import Task from '../task/Task';
-import NewTask from '../new-task/NewTask';
-import Confirm from '../confirm';
-import ModalEdit from '../modal/ModalEdit';
+import Task from '../../task/Task';
+import NewTask from '../../new-task/NewTask';
+import Confirm from '../../confirm';
+import ModalEdit from '../../modal/ModalEdit';
 
-export class ToDo extends PureComponent {
+
+
+export default class ToDo extends PureComponent {
 
   state = {
     tasks: [],
@@ -272,12 +274,12 @@ export class ToDo extends PureComponent {
             <Col>
               <Button
                 className={"w-100"}
-                variant={"warning"}
+                variant={"danger"}
                 onClick={this.confirmHendle}
                 disabled={!selectedTasks.size}
               >
                 delete selected
-            </Button>
+             </Button>
             </Col >
             <Col>
               <Button
@@ -288,7 +290,7 @@ export class ToDo extends PureComponent {
               //disabled={!(tasks.length > 1) && !selectedTasks.size}
               >
                 Select All
-            </Button>
+             </Button>
             </Col >
             <Col>
               <Button
@@ -298,7 +300,7 @@ export class ToDo extends PureComponent {
                 disabled={!selectedTasks.size}
               >
                 Unselect All
-            </Button>
+             </Button>
             </Col >
           </Row>
 
@@ -310,7 +312,7 @@ export class ToDo extends PureComponent {
                 disabled={selectedTasks.size}
               >
                 Create Task
-              </Button>
+               </Button>
             </Col>
 
           </Row>
