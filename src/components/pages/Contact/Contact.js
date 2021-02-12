@@ -27,7 +27,10 @@ export default function Contact() {
 
       const { name, email, message } = formValues;
 
-      if (!(name && email && message)) return;
+      if (!(name && email && message)) {
+         alert('empty field(s)');
+         return;
+      }
 
       fetch('http://localhost:3001/form', {
          method: 'POST',
