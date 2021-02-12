@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from "react-datepicker";
@@ -7,10 +7,19 @@ import { formatDate } from '../../helpers/utils';
 
 class NewTask extends Component {
 
-  state = {
-    title: '',
-    description: '',
-    date: new Date()
+  constructor(props) {
+    super(props);
+    this.textInput = createRef();
+
+    this.state = {
+      title: '',
+      description: '',
+      date: new Date()
+    }
+  }
+
+  componentDidMount() {
+    this.textInput.current.focus();
   }
 
   setValue = (e) => {
@@ -68,6 +77,7 @@ class NewTask extends Component {
 
         <Modal.Body>
           <Form.Control
+            ref={this.textInput}
             type="text"
             className={"mb-2"}
             onChange={this.setValue}

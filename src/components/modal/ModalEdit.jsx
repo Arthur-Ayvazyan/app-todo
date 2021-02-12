@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from "react-datepicker";
@@ -10,10 +10,17 @@ class ModalEdit extends Component {
   constructor(props) {
     super(props);
     const { date } = props.task;
+
+    this.textInput = createRef();
+
     this.state = {
       ...props.task,
       date: date ? new Date(date) : new Date()
     }
+  }
+
+  componentDidMount() {
+    this.textInput.current.focus();
   }
 
   setValue = (e) => {
@@ -55,7 +62,7 @@ class ModalEdit extends Component {
   render() {
     const { onClose } = this.props;
     const { title, description } = this.state;
-
+    this.textInput.current && this.textInput.current.focus();
     return (
       <Modal
         show={true}
@@ -72,6 +79,7 @@ class ModalEdit extends Component {
 
         <Modal.Body>
           <Form.Control
+            ref={this.textInput}
             value={title}
             type="text"
             className={"mb-2"}
@@ -87,6 +95,7 @@ class ModalEdit extends Component {
             onChange={this.setValue}
             onKeyPress={this.editTaskByEnter}
             name="description"
+
           />
           <DatePicker
             minDate={new Date()}
