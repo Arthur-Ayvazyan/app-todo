@@ -1,0 +1,19 @@
+.spinnerWrapper{
+   position: fixed;
+   left: 0;
+   top:0;
+   z-index: 9999;
+   width: 100vw;
+   height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background: rgba(0,0,0, .6);
+}
+
+.customSpinner{
+   width: 6em;
+   height: 6em;
+   border-width: 7px;
+   color: #c1ac2c;
+}
