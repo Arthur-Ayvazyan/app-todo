@@ -26,3 +26,4 @@ yarn-error.log*
 .eslintcache
 .idea
 package-lock.json
+extensions.json
