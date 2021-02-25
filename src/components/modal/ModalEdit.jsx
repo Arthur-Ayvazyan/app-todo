@@ -52,7 +52,7 @@ class ModalEdit extends Component {
       _id,
       date: formatDate(date.toISOString())
     };
-    this.props.editTask(editedTask);
+     this.props.editTask(editedTask, this.props.from);
   }
 
   editTaskByEnter = (e) => {

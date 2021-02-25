@@ -4,42 +4,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '../../../helpers/utils';
 import ModalEdit from '../../modal/ModalEdit';
+import { connect } from 'react-redux';
+import { getTask } from '../../../store/actions';
+ 
+class SingleTask extends Component {
 
-export default class SingleTask extends Component {
+   state = {
+      showModal: false,
+   }
 
-  state = {
-    task: null,
-    showModal: false,
-  }
+   componentDidMount() {
+      const taskId = this.props.match.params.taskId;
+      this.props.getTask(taskId);
+   }
 
-  componentDidMount() {
+   componentDidUpdate(prevProps) {
 
-    const taskId = this.props.match.params.taskId;
+      if (!prevProps.editSingleTaskSuccess && this.props.editSingleTaskSuccess) {
+         this.toggleModalEdit();
+         return;
+      }
 
-    fetch(`http://localhost:3001/task/${taskId}`, {
-
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(async (response) => {
-
-        const res = await response.json();
-
-        if (response.status >= 400 && response.status < 600) {
-          if (res.error) {
-            throw res.error;
-          }
-        }
-        this.setState({
-          task: res,
-        });
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
-  }
+   }
 
   hendleDelete = () => {
     const taskId = this.state.task._id;
@@ -72,40 +58,11 @@ export default class SingleTask extends Component {
 
   }
 
-  hendleEdit = (editedTask) => {
-
-    fetch(`http://localhost:3001/task/${editedTask._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-
-      body: JSON.stringify(editedTask)
-    })
-
-      .then(async (response) => {
-
-        const res = await response.json();
-
-        if (response.status >= 400 && response.status < 600) {
-          if (res.error) {
-            throw res.error;
-          }
-        }
-        this.setState({
-          task: res,
-          showModal: false,
-        });
-
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
-  }
 
   render() {
-
-    const { task, showModal } = this.state;
+     const { showModal } = this.state;
+     const { task } = this.props;
+     console.log(this.props);
 
     return (
       <div>
@@ -143,10 +100,10 @@ export default class SingleTask extends Component {
         }
         {
           showModal &&
-          <ModalEdit
-            task={task}
-            onEdit={this.hendleEdit}
+            <ModalEdit
+                task={task}
             onClose={this.toggleModalEdit}
+                from='single'
 
           />
         }
@@ -155,3 +112,16 @@ export default class SingleTask extends Component {
     )
   }
 }
+
+const mapSateToProps = (state) => {
+   return {
+      task: state.task,
+      editSingleTaskSuccess: state.editSingleTaskSuccess,
+   };
+}
+
+const mapDispatchToProps = {
+   getTask,
+}
+
+export default connect(mapSateToProps, mapDispatchToProps)(SingleTask)

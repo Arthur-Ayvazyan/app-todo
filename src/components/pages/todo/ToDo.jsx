@@ -24,7 +24,6 @@ class ToDo extends PureComponent {
    }
 
    componentDidUpdate(prevProps) {
-      console.log(prevProps)
 
       if (!prevProps.addTaskSuccess && this.props.addTaskSuccess) {
          this.setState({
