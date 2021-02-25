@@ -10,56 +10,67 @@ import { Container } from 'react-bootstrap';
 
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-function App() {
+import Spinner from './components/spinner/spinner';
+import { connect } from 'react-redux';
 
-  return (
+function App({ showSpinner }) {
 
-    <div className="App">
-      <Container>
-        <BrowserRouter>
-          <NavMenu />
+   return (
 
-          <Switch>
-            <Route
-              path='/'
-              component={ToDo}
-              exact
-            />
-            <Route
-              path='/home'
-              component={ToDo}
-              exact
-            />
-            <Route
-              path='/task:taskId'
-              component={SingleTask}
-              exact
-            />
-            <Route
-              path='/about'
-              component={About}
-              exact
-            />
-            <Route
-              path='/contact'
-              component={Contact}
-              exact
-            />
-            <Route
-              path='/not-found'
-              component={NotFound}
-              exact
-            />
-            <Redirect to='/not-found' />
+      <div className="App">
+         <Container>
+            <BrowserRouter>
+               <NavMenu />
 
-          </Switch>
+               <Switch>
+                  <Route
+                     path='/'
+                     component={ToDo}
+                     exact
+                  />
+                  <Route
+                     path='/home'
+                     component={ToDo}
+                     exact
+                  />
+                  <Route
+                     path='/task:taskId'
+                     component={SingleTask}
+                     exact
+                  />
+                  <Route
+                     path='/about'
+                     component={About}
+                     exact
+                  />
+                  <Route
+                     path='/contact'
+                     component={Contact}
+                     exact
+                  />
+                  <Route
+                     path='/not-found'
+                     component={NotFound}
+                     exact
+                  />
+                  <Redirect to='/not-found' />
 
-        </BrowserRouter>
-      </Container>
+               </Switch>
 
-    </div>
-  );
+            </BrowserRouter>
+         </Container>
+         {
+            showSpinner && <Spinner />
+
+         }
+      </div >
+   );
 }
 
+const mapSateToProps = (state) => {
+   return {
+      showSpinner: state.showSpinner
+   };
+}
 
-export default App;
+export default connect(mapSateToProps, null)(App);
