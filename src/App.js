@@ -9,65 +9,56 @@ import NavMenu from './components/NavMenu/NavMenu';
 import { Container } from 'react-bootstrap';
 
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-const str =
-   ` 
-      some
-      text some text   
-               q  some text
-   `;
+
 function App() {
 
-   return (
+  return (
 
-      <div className="App">
-         <Container>
-            <BrowserRouter>
-               <NavMenu />
+    <div className="App">
+      <Container>
+        <BrowserRouter>
+          <NavMenu />
 
-               <Switch>
-                  <Route
-                     path='/'
-                     component={ToDo}
-                     exact
-                  />
-                  <Route
-                     path='/home'
-                     component={ToDo}
-                     exact
-                  />
-                  <Route
-                     path='/task:taskId'
-                     component={SingleTask}
-                     exact
-                  />
-                  <Route
-                     path='/about'
-                     component={About}
-                     exact
-                  />
-                  <Route
-                     path='/contact'
-                     component={Contact}
-                     exact
-                  />
-                  <Route
-                     path='/not-found'
-                     component={NotFound}
-                     exact
-                  />
-                  <Redirect to='/not-found' />
+          <Switch>
+            <Route
+              path='/'
+              component={ToDo}
+              exact
+            />
+            <Route
+              path='/home'
+              component={ToDo}
+              exact
+            />
+            <Route
+              path='/task:taskId'
+              component={SingleTask}
+              exact
+            />
+            <Route
+              path='/about'
+              component={About}
+              exact
+            />
+            <Route
+              path='/contact'
+              component={Contact}
+              exact
+            />
+            <Route
+              path='/not-found'
+              component={NotFound}
+              exact
+            />
+            <Redirect to='/not-found' />
 
-               </Switch>
+          </Switch>
 
-            </BrowserRouter>
-            <p>
+        </BrowserRouter>
+      </Container>
 
-               {str}
-            </p>
-         </Container>
-
-      </div>
-   );
+    </div>
+  );
 }
 
 
