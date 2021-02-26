@@ -1,3 +1,4 @@
+import * as actionType from './actionTypes';
 
 const defaultState = {
    tasks: [],
@@ -25,14 +26,14 @@ export default function reducer(state = defaultState, action) {
    switch (action.type) {
 
 
-      case 'ERROR': {
+      case actionType.ERROR: {
          return {
             ...state,
             showSpinner: false,
             errorTaskMessage: action.error,
          }
       }
-      case 'PENDING': {
+      case actionType.PENDING: {
          return {
             ...state,
             addTaskSuccess: false,
@@ -45,7 +46,7 @@ export default function reducer(state = defaultState, action) {
          }
       }
 
-      case 'GET_TASKS': {
+      case actionType.GET_TASKS: {
          return {
             ...state,
             tasks: action.tasks,
@@ -53,7 +54,7 @@ export default function reducer(state = defaultState, action) {
          }
       }
 
-      case 'GET_TASK': {
+      case actionType.GET_TASK: {
          return {
             ...state,
             task: action.task,
@@ -61,7 +62,7 @@ export default function reducer(state = defaultState, action) {
          }
       }
 
-      case 'ADD_TASK': {
+      case actionType.ADD_TASK: {
          return {
             ...state,
             tasks: [...state.tasks, action.task],
@@ -72,7 +73,7 @@ export default function reducer(state = defaultState, action) {
          }
       }
 
-      case 'DELETE_TASK': {
+      case actionType.DELETE_TASK: {
          const newTasks = state.tasks.filter((task) => {
             return action.taskId !== task._id;
          });
@@ -84,7 +85,7 @@ export default function reducer(state = defaultState, action) {
          }
       }
 
-      case 'DELETE_TASKS': {
+      case actionType.DELETE_TASKS: {
          const restTasks = state.tasks.filter((task) => {
             return !action.taskIds.has(task._id);
          })
@@ -97,7 +98,7 @@ export default function reducer(state = defaultState, action) {
          }
       }
 
-      case 'EDIT_TASK': {
+      case actionType.EDIT_TASK: {
          if (action.from === 'single') {
             return {
                ...state,
