@@ -1,3 +1,41 @@
+
+.menuWrapper{
+   background-color: #343a40;
+   position: fixed;
+   width: 100%;
+   z-index: 10;
+   top: 0;
+}
+.linkWrapper{
+   padding: 8px 0;
+   width: 25%;
+   &:nth-child(2){
+      text-align: center;
+   }
+   &:nth-child(3){
+      text-align: right;
+   }
+}
+.linkStyles{
+   cursor: pointer;
+   font-size: 18px;
+   text-transform: uppercase;
+   transition: .3s;
+   letter-spacing: 1.1px;
+   font-weight: 500;
+   color: #fff;
+   &:hover{
+      color: lighten(blue, 25);
+      text-decoration: none;
+      letter-spacing: 1.7px;
+   }
+}
 .active {
-   color: #f00;
+   color: #dc3545;
+}
+.heightAuto{
+   height: auto;
+}
+.navbarStyles{
+   padding: 0;
 }

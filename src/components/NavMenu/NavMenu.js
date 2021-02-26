@@ -1,37 +1,51 @@
 
 import React from 'react';
-import { Nav, Navbar } from 'react-bootstrap'
+import { Nav, Navbar, Container } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom';
 import styles from './navLink.module.scss';
 
 export default function NavMenu() {
    return (
       <>
-         <Navbar bg="dark" variant="dark">
-            <Nav className="mr-auto">
-               <NavLink
-                  activeClassName={styles.active}
-                  to="/"
-                  exact
-               >
-                  Home
-               </NavLink>
-               <NavLink
-                  activeClassName={styles.active}
-                  to="/about"
-                  exact
-               >
-                  About
-               </NavLink>
-               <NavLink
-                  activeClassName={styles.active}
-                  to="/contact"
-                  exact
-               >
-                  Contact
-               </NavLink>
-            </Nav>
-         </Navbar>
+         <div className={styles.menuWrapper}>
+            <Container className={styles.heightAuto}>
+               <Navbar className={styles.navbarStyles}>
+                  <Nav className="w-100 justify-content-between">
+                     <div className={styles.linkWrapper}>
+                        <NavLink
+                           className={styles.linkStyles}
+                           activeClassName={styles.active}
+                           to="/"
+                           exact
+                           >
+                           Home
+                        </NavLink>
+                     </div>
+                     <div className={styles.linkWrapper}>
+                        <NavLink
+                           className={styles.linkStyles}
+                           activeClassName={styles.active}
+                           to="/about"
+                           exact
+                           >
+                           About
+                        </NavLink>
+                     </div>
+                     <div className={styles.linkWrapper}>
+                        <NavLink
+                           className={styles.linkStyles}
+                           activeClassName={styles.active}
+                           to="/contact"
+                           exact
+                        >
+                           Contact
+                        </NavLink>
+                     </div>
+
+                  </Nav>
+               </Navbar>
+            </Container>
+         </div>
       </>
    )
 }

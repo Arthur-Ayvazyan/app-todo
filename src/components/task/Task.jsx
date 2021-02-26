@@ -39,7 +39,7 @@ class Task extends PureComponent {
             onChange={this.hendleSelect}
             checked={selected}
           />
-          <Link to={`/task${task._id}`} >
+             <Link to={`/task${task._id}`} className={styles.linkStyles}>
             <Card.Title>{textCutter(task.title, 30)}</Card.Title>
           </Link>
           <Card.Text>Description: {textCutter(task.description, 50)}</Card.Text>

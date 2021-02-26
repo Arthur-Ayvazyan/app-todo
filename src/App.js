@@ -46,10 +46,8 @@ function App({ showSpinner, successTaskMessage, errorTaskMessage }) {
    return (
 
       <div className="App">
-         <Container>
             <BrowserRouter>
-               <NavMenu />
-
+            <NavMenu />
                <Switch>
                   <Route
                      path='/'
@@ -85,8 +83,7 @@ function App({ showSpinner, successTaskMessage, errorTaskMessage }) {
 
                </Switch>
 
-            </BrowserRouter>
-         </Container>
+         </BrowserRouter>
          {
             showSpinner && <Spinner />
 

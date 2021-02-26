@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button } from 'react-bootstrap';
+import { Container, Card, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '../../../helpers/utils';
@@ -19,12 +19,10 @@ class SingleTask extends Component {
    }
 
    componentDidUpdate(prevProps) {
-
       if (!prevProps.editSingleTaskSuccess && this.props.editSingleTaskSuccess) {
          this.toggleModalEdit();
          return;
       }
-
    }
 
   hendleDelete = () => {
@@ -35,10 +33,8 @@ class SingleTask extends Component {
         'Content-Type': 'application/json'
       },
     })
-      .then(async (response) => {
-
-        const res = await response.json();
-
+       .then(async (response) => {
+          const res = await response.json();
         if (response.status >= 400 && response.status < 600) {
           if (res.error) {
             throw res.error;
@@ -55,9 +51,7 @@ class SingleTask extends Component {
     this.setState({
       showModal: !this.state.showModal,
     })
-
   }
-
 
   render() {
      const { showModal } = this.state;
@@ -65,7 +59,8 @@ class SingleTask extends Component {
      console.log(this.props);
 
     return (
-      <div>
+       <div className="content">
+          <Container>
         {
           task ?
             <>
@@ -97,7 +92,8 @@ class SingleTask extends Component {
             :
             <p>loading... </p>
 
-        }
+         }
+          </Container>
         {
           showModal &&
             <ModalEdit
