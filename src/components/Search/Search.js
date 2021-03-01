@@ -1,43 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { InputGroup, FormControl, Button, DropdownButton, Dropdown } from 'react-bootstrap';
-import { textCutter } from '../../helpers/utils';
-import DatePicker from "react-datepicker";
+import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
-import { statusOptions, sortOptions, dateOptions } from './options';
+import ModalSearch from '../ModalSearch/ModalSearch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSlidersH } from '@fortawesome/free-solid-svg-icons';
 
 function Search(props) {
 
-  const [status, setStatus] = useState({
-    value: ''
-  });
+   const [visibleFilters, setVisibilityFilters] = useState(false);
 
-  const [sort, setSort] = useState({
-    value: ''
-  });
+   const [search, setSearch] = useState('');
 
-  const [search, setSearch] = useState('');
+   const [data, setData] = useState({
+      search,
+      status: null,
+      sort: null,
+      dates: null
+   });
+   
+   useEffect(() => {
+      setData({
+         ...data,
+         search
+      })
+   }, [search]);
 
-  const [dates, setDates] = useState({
-    create_lte: null,
-    create_gte: null,
-    complete_lte: null,
-    complete_gte: null,
-  });
+   const handleFilterModal = () => {
+      setVisibilityFilters(!visibleFilters)
+   };
 
-  const handleChangeDate = (value, name) => {
-    setDates({
-      ...dates,
-      [name]: value
-    })
-  };
+   const handleSubmit = () => {
+      console.log(data)
+      setData({
+         search,
+         status: null,
+         sort: null,
+         dates: null
+      })
 
-  const handleSubmit = () => {
-    console.log('status', status);
-    console.log('sort', sort);
-    console.log('searchs', search);
-    console.log('dates', dates);
-  }
+   };
+
+   const getData = (dataFromModal) => {
+      setData({
+         ...data,
+         ...dataFromModal,
+      })
+   };
 
   return (
     <div className="mb-3">
@@ -46,65 +55,30 @@ function Search(props) {
           placeholder="Search. . ."
           onChange={(event) => setSearch(event.target.value)}
         />
-
-        <DropdownButton
-          as={InputGroup.Prepend}
-          variant="outline-primary"
-          title={status.value ? status.label : 'Status'}
-          id="input-group-dropdown-1"
-        >
-          {
-            statusOptions.map((option, index) => (
-              <Dropdown.Item
-                key={index}
-                active={status.value === option.value}
-                onClick={() => setStatus(option)}
-              >{option.label}
-              </Dropdown.Item>)
-            )
-          }
-        </DropdownButton>
-
-        <DropdownButton
-          as={InputGroup.Prepend}
-          variant="outline-primary"
-          title={sort.value ? textCutter(sort.label, 6) : 'Status'}
-          id="input-group-dropdown-1"
-        >
-          {
-            sortOptions.map((option, index) => (
-              <Dropdown.Item
-                key={index}
-                active={sort.value === option.value}
-                onClick={() => setSort(option)}
-              >{option.label}
-              </Dropdown.Item>)
-            )
-          }
-        </DropdownButton>
-
-        <InputGroup.Append>
-          <Button
-            variant="outline-primary"
+           <InputGroup.Append>
+              <Button
+                 variant="outline-primary"
+                 onClick={handleFilterModal}
+              >
+                 <FontAwesomeIcon icon={faSlidersH} />
+              </Button>
+              <Button
+                 variant="outline-primary"
             onClick={handleSubmit}
           >
             Search
           </Button>
+
         </InputGroup.Append>
       </InputGroup>
-      {
-        dateOptions.map((option, index) => {
-          return (
-            <div key={index}>
-              <span>{option.label} </span>
-              <DatePicker
-                selected={dates[option.value]}
-                onChange={(value) => handleChangeDate(value, option.value)}
-              />
-            </div>
-          )
-        })
-      }
+        {
+           visibleFilters &&
+           <ModalSearch
+              onClose={handleFilterModal}
+              getData={getData}
+
+           />
+        }
     </div >
   )
 }

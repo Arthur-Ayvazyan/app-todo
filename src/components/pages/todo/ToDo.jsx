@@ -104,7 +104,7 @@ class ToDo extends PureComponent {
 
   render() {
 
-    const { selectedTasks, editableTask, showConfirm, showTaskCreator, showTaskEditor } = this.state;
+     const { selectedTasks, editableTask, showConfirm, showTaskCreator, showTaskEditor } = this.state;
     const { tasks } = this.props;
 
     const list = tasks.map((task) => {
@@ -212,12 +212,11 @@ class ToDo extends PureComponent {
             {
               showTaskEditor &&
               <ModalEdit
-                task={editableTask}
-                //onEdit={this.editTask}
+                      task={editableTask}
                 onClose={this.editTaskHendle}
               />
             }
-
+               
           </Container >
         </div>
       </>
