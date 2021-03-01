@@ -1,3 +1,13 @@
 .selected {
   border: 1px solid #f00;
 }
+
+.linkStyles{
+   color: lighten(#216ba5, 10);
+   transition: .3s;
+   &:hover{
+      letter-spacing: .3px;
+      color: #216ba5;
+      text-decoration: none;
+   }
+}

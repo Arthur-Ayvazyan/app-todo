@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import styles from './contact.module.scss';
 
 const validationErrors = {
@@ -112,73 +112,72 @@ export default function Contact() {
   }
 
   return (
-    <div>
-      <h1>Contact Us Page</h1>
-      <Row className="justify-content-center">
-        <Col xs={10}>
-          <Form>
-            <Row className="flex-column justify-content-end">
-              <Col>
-                <Form.Group>
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    className={errors.name ? styles.invalidInput : ''}
-                    ref={textInput}
-                    type="text"
-                    placeholder="Enter name"
-                    value={values.name}
-                    onChange={handleChange} name="name"
-                  />
-                  <Form.Text className="text-danger">
-                    {errors.name}
-                  </Form.Text>
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group>
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    className={errors.email ? styles.invalidInput : ''}
-                    type="email"
-                    name="email"
-                    placeholder="Enter email"
-                    value={values.email}
-                    onChange={handleChange}
-                  />
-                  <Form.Text className="text-danger">
-                    {errors.email}
-                  </Form.Text>
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group>
-                  <Form.Label>Message</Form.Label>
-                  <Form.Control
-                    className={errors.message ? styles.invalidInput : ''}
-                    as="textarea"
-                    rows={3}
-                    placeholder="Enter message"
-                    value={values.message}
-                    name="message"
-                    onChange={handleChange}
-                  />
-                  <Form.Text className="text-danger">
-                    {errors.message}
-                  </Form.Text>
-                </Form.Group>
-              </Col>
-              <Col>
-                <Button className="w-20" size="lg" variant="primary" onClick={handleSend}>
-                  Send
-                </Button>
-              </Col>
-            </Row>
-
-
-
-          </Form>
-        </Col>
-      </Row>
+     <div className="content">
+        <Container>
+         <h1>Contact Us Page</h1>
+         <Row className="justify-content-center">
+         <Col xs={10}>
+            <Form>
+               <Row className="flex-column justify-content-end">
+               <Col>
+                  <Form.Group>
+                     <Form.Label>Name</Form.Label>
+                     <Form.Control
+                     className={errors.name ? styles.invalidInput : ''}
+                     ref={textInput}
+                     type="text"
+                     placeholder="Enter name"
+                     value={values.name}
+                     onChange={handleChange} name="name"
+                     />
+                     <Form.Text className="text-danger">
+                     {errors.name}
+                     </Form.Text>
+                  </Form.Group>
+               </Col>
+               <Col>
+                  <Form.Group>
+                     <Form.Label>Email address</Form.Label>
+                     <Form.Control
+                     className={errors.email ? styles.invalidInput : ''}
+                     type="email"
+                     name="email"
+                     placeholder="Enter email"
+                     value={values.email}
+                     onChange={handleChange}
+                     />
+                     <Form.Text className="text-danger">
+                     {errors.email}
+                     </Form.Text>
+                  </Form.Group>
+               </Col>
+               <Col>
+                  <Form.Group>
+                     <Form.Label>Message</Form.Label>
+                     <Form.Control
+                     className={errors.message ? styles.invalidInput : ''}
+                     as="textarea"
+                     rows={3}
+                     placeholder="Enter message"
+                     value={values.message}
+                     name="message"
+                     onChange={handleChange}
+                     />
+                     <Form.Text className="text-danger">
+                     {errors.message}
+                     </Form.Text>
+                  </Form.Group>
+               </Col>
+               <Col>
+                  <Button className="w-20" size="lg" variant="primary" onClick={handleSend}>
+                     Send
+                  </Button>
+               </Col>
+                    </Row>
+            </Form>
+         </Col>
+         </Row>
+        </Container>
     </div >
 
   )

@@ -24,7 +24,6 @@ class ToDo extends PureComponent {
    }
 
    componentDidUpdate(prevProps) {
-      console.log(prevProps)
 
       if (!prevProps.addTaskSuccess && this.props.addTaskSuccess) {
          this.setState({
@@ -103,7 +102,6 @@ class ToDo extends PureComponent {
       })
    }
 
-
    render() {
 
       const { selectedTasks, editableTask, showConfirm, showTaskCreator, showTaskEditor } = this.state;
@@ -112,7 +110,7 @@ class ToDo extends PureComponent {
       const list = tasks.map((task) => {
          return (
             <Col
-               xs={6}
+               xs={12}
                md={4}
                lg={4}
                xl={3}
@@ -135,6 +133,7 @@ class ToDo extends PureComponent {
       return (
 
          <>
+            <div className="content">
             <Container>
                <Row className={"mt-2 mb-2"}>
                   <Col>
@@ -214,6 +213,7 @@ class ToDo extends PureComponent {
                }
 
             </Container >
+            </div>
          </>
       );
    }
