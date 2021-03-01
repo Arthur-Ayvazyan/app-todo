@@ -1,130 +1,138 @@
 import * as actionType from './actionTypes';
 
 const defaultState = {
-   tasks: [],
-   task: null,
-   addTaskSuccess: false,
-   deleteTasksSuccess: false,
-   editTaskSuccess: false,
-   editSingleTaskSuccess: false,
-   showSpinner: false,
-   errorTaskMessage: null,
-   successTaskMessage: null,
+  tasks: [],
+  task: null,
+  addTaskSuccess: false,
+  deleteTasksSuccess: false,
+  editTaskSuccess: false,
+  editSingleTaskSuccess: false,
+  showSpinner: false,
+  errorTaskMessage: null,
+  successTaskMessage: null,
 }
 
 const message = {
-   success: {
-      addedTask: 'Task added successfuly!',
-      editedTask: 'Task edited succesfuly',
-      deletedTask: 'Task deleted succesfuly',
-      deletedTasks: 'Tasks deleted succesfuly',
-   }
+  success: {
+    addedTask: 'Task added successfuly!',
+    editedTask: 'Task edited succesfuly',
+    deletedTask: 'Task deleted succesfuly',
+    deletedTasks: 'Tasks deleted succesfuly',
+  }
 }
 
 export default function reducer(state = defaultState, action) {
 
-   switch (action.type) {
+  switch (action.type) {
 
-
-      case actionType.ERROR: {
-         return {
-            ...state,
-            showSpinner: false,
-            errorTaskMessage: action.error,
-         }
+    case actionType.ERROR: {
+      return {
+        ...state,
+        showSpinner: false,
+        errorTaskMessage: action.error,
       }
-      case actionType.PENDING: {
-         return {
-            ...state,
-            addTaskSuccess: false,
-            deleteTasksSuccess: false,
-            editTaskSuccess: false,
-            editSingleTaskSuccess: false,
-            showSpinner: true,
-            errorTaskMessage: null,
-            successTaskMessage: null,
-         }
+    }
+
+    case actionType.PENDING: {
+      return {
+        ...state,
+        addTaskSuccess: false,
+        deleteTasksSuccess: false,
+        editTaskSuccess: false,
+        editSingleTaskSuccess: false,
+        showSpinner: true,
+        errorTaskMessage: null,
+        successTaskMessage: null,
       }
+    }
 
-      case actionType.GET_TASKS: {
-         return {
-            ...state,
-            tasks: action.tasks,
-            showSpinner: false,
-         }
+    case actionType.GET_TASKS: {
+      return {
+        ...state,
+        tasks: action.tasks,
+        showSpinner: false,
       }
+    }
 
-      case actionType.GET_TASK: {
-         return {
-            ...state,
-            task: action.task,
-            showSpinner: false,
-         }
+    case actionType.GET_TASK: {
+      return {
+        ...state,
+        task: action.task,
+        showSpinner: false,
       }
+    }
 
-      case actionType.ADD_TASK: {
-         return {
-            ...state,
-            tasks: [...state.tasks, action.task],
-            addTaskSuccess: true,
-            showSpinner: false,
-            successTaskMessage: message.success.addedTask,
-
-         }
+    case actionType.ADD_TASK: {
+      return {
+        ...state,
+        tasks: [...state.tasks, action.task],
+        addTaskSuccess: true,
+        showSpinner: false,
+        successTaskMessage: message.success.addedTask,
       }
+    }
 
-      case actionType.DELETE_TASK: {
-         const newTasks = state.tasks.filter((task) => {
-            return action.taskId !== task._id;
-         });
-         return {
-            ...state,
-            tasks: newTasks,
-            showSpinner: false,
-            successTaskMessage: message.success.deletedTask,
-         }
+    case actionType.DELETE_TASK: {
+      if (action.from === 'single') {
+        return {
+          ...state,
+          task: null,
+          showSpinner: false,
+          successTaskMessage: message.success.deletedTask,
+        }
       }
 
-      case actionType.DELETE_TASKS: {
-         const restTasks = state.tasks.filter((task) => {
-            return !action.taskIds.has(task._id);
-         })
-         return {
-            ...state,
-            tasks: restTasks,
-            deleteTasksSuccess: true,
-            showSpinner: false,
-            successTaskMessage: message.success.deletedTasks,
-         }
+      const newTasks = state.tasks.filter((task) => {
+        return action.taskId !== task._id;
+      });
+      return {
+        ...state,
+        tasks: newTasks,
+        showSpinner: false,
+        successTaskMessage: message.success.deletedTask,
+      }
+    }
+
+    case actionType.DELETE_TASKS: {
+      const restTasks = state.tasks.filter((task) => {
+        return !action.taskIds.has(task._id);
+      })
+      return {
+        ...state,
+        tasks: restTasks,
+        deleteTasksSuccess: true,
+        showSpinner: false,
+        successTaskMessage: message.success.deletedTasks,
+      }
+    }
+
+    case actionType.EDIT_TASK: {
+      if (action.from === 'single') {
+        return {
+          ...state,
+          task: action.editedTask,
+          editSingleTaskSuccess: true,
+          showSpinner: false,
+          successTaskMessage: message.success.editedTask,
+        }
       }
 
-      case actionType.EDIT_TASK: {
-         if (action.from === 'single') {
-            return {
-               ...state,
-               task: action.editedTask,
-               editSingleTaskSuccess: true,
-               showSpinner: false,
-               successTaskMessage: message.success.editedTask,
-            }
-         }
+      const newTasks = [...state.tasks];
+      const index = newTasks.findIndex((elem) => {
+        return elem._id === action.editedTask._id
+      });
 
-         const newTasks = [...state.tasks];
-         const index = newTasks.findIndex((elem) => {
-            return elem._id === action.editedTask._id
-         });
-
-         newTasks[index] = action.editedTask;
-         return {
-            ...state,
-            tasks: newTasks,
-            editTaskSuccess: true,
-            showSpinner: false,
-            successTaskMessage: message.success.editedTask,
-         }
+      newTasks[index] = action.editedTask;
+      return {
+        ...state,
+        tasks: newTasks,
+        editTaskSuccess: true,
+        showSpinner: false,
+        successTaskMessage: message.success.editedTask,
       }
+    }
 
-      default:
-         return state;
-   }
+    default:
+      return state;
+  }
 }
