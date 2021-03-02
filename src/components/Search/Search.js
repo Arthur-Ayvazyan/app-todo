@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
 import ModalSearch from '../ModalSearch/ModalSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSlidersH } from '@fortawesome/free-solid-svg-icons';
-
-function Search(props) {
+import { formatDate } from '../../helpers/utils';
+import { getTasks } from '../../store/actions';
+ 
+function Search({ getTasks }) {
 
    const [visibleFilters, setVisibilityFilters] = useState(false);
 
@@ -14,30 +16,39 @@ function Search(props) {
 
    const [data, setData] = useState({
       search,
-      status: null,
-      sort: null,
-      dates: null
+      status: {},
+      sort: {},
+      dates: {}
    });
-   
-   useEffect(() => {
-      setData({
-         ...data,
-         search
-      })
-   }, [search]);
 
    const handleFilterModal = () => {
       setVisibilityFilters(!visibleFilters)
    };
 
    const handleSubmit = () => {
-      console.log(data)
-      setData({
-         search,
-         status: null,
-         sort: null,
-         dates: null
-      })
+
+      const { status, sort, dates } = data;
+      let params = {};
+
+      search && (params.search = search);
+      sort.value && (params.sort = sort.value);
+      status.value && (params.status = status.value);
+
+      for (const key in dates) {
+         const value = dates[key];
+         if (value) {
+            params[key] = formatDate(value.toISOString());
+         }
+      }
+
+      getTasks(params);
+
+      //setData({
+      //   search,
+      //   status: {},
+      //   sort: {},
+      //   dates: {}
+      //})
 
    };
 
@@ -76,6 +87,7 @@ function Search(props) {
            <ModalSearch
               onClose={handleFilterModal}
               getData={getData}
+              
 
            />
         }
@@ -83,4 +95,8 @@ function Search(props) {
   )
 }
 
-export default connect()(Search);
+const mapDispatchToProps = {
+   getTasks,
+};
+
+export default connect(null, mapDispatchToProps)(Search);

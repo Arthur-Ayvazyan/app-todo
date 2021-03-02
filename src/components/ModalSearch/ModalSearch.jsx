@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button, Modal, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { textCutter } from '../../helpers/utils';
 import { statusOptions, sortOptions, dateOptions } from '../Search/options';
 
 function ModalSearch(props) {
@@ -75,7 +74,7 @@ function ModalSearch(props) {
             <DropdownButton
                as={InputGroup.Prepend}
                variant="outline-primary"
-               title={sort.value ? textCutter(sort.label, 6) : 'Status'}
+               title={sort.value ? sort.label : 'All'}
                id="input-group-dropdown-1"
             >
                {

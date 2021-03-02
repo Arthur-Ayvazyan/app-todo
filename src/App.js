@@ -14,31 +14,25 @@ import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { history } from './helpers/history';
 
+const toastConfig = {
+   position: "bottom-left",
+   autoClose: 5000,
+   hideProgressBar: false,
+   closeOnClick: true,
+   pauseOnHover: true,
+   draggable: true,
+   progress: undefined,
+}
+
 function App({ showSpinner, successTaskMessage, errorTaskMessage }) {
 
-  useEffect(() => {
-    if (successTaskMessage) {
-      toast.success(successTaskMessage, {
-        position: "bottom-left",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+   useEffect(() => {
+      if (successTaskMessage) {
+         toast.success(successTaskMessage, toastConfig);
     }
 
     if (errorTaskMessage) {
-      toast.error(errorTaskMessage, {
-        position: "bottom-left",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+       toast.error(errorTaskMessage, toastConfig);
     }
 
   }, [successTaskMessage, errorTaskMessage]);
