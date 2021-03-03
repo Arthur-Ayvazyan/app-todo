@@ -5,21 +5,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import { statusOptions, sortOptions, dateOptions } from '../Search/options';
 
 function ModalSearch(props) {
+   console.log(props);
 
-   const [status, setStatus] = useState({
-      value: ''
-   });
+   const [status, setStatus] = useState(props.setData.status);
 
-   const [sort, setSort] = useState({
-      value: ''
-   });
+   const [sort, setSort] = useState(props.setData.sort);
 
-   const [dates, setDates] = useState({
-      create_lte: null,
-      create_gte: null,
-      complete_lte: null,
-      complete_gte: null,
-   });
+   const [dates, setDates] = useState(props.setData.dates);
 
    const handleChangeDate = (value, name) => {
       setDates({

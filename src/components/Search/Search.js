@@ -16,9 +16,18 @@ function Search({ getTasks }) {
 
    const [data, setData] = useState({
       search,
-      status: {},
-      sort: {},
-      dates: {}
+      status: {
+         value: ''
+      },
+      sort: {
+         value: ''
+      },
+      dates: {
+         create_lte: null,
+         create_gte: null,
+         complete_lte: null,
+         complete_gte: null,
+      }
    });
 
    const handleFilterModal = () => {
@@ -42,13 +51,6 @@ function Search({ getTasks }) {
       }
 
       getTasks(params);
-
-      //setData({
-      //   search,
-      //   status: {},
-      //   sort: {},
-      //   dates: {}
-      //})
 
    };
 
@@ -87,6 +89,7 @@ function Search({ getTasks }) {
            <ModalSearch
               onClose={handleFilterModal}
               getData={getData}
+              setData={data}
               
 
            />
