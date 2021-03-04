@@ -5,7 +5,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { statusOptions, sortOptions, dateOptions } from '../Search/options';
 
 function ModalSearch(props) {
-   console.log(props);
 
    const [status, setStatus] = useState(props.setData.status);
 
@@ -26,6 +25,7 @@ function ModalSearch(props) {
          sort,
          dates,
       }
+      console.log('data from modal', data);
       props.getData(data);
       props.onClose();
 

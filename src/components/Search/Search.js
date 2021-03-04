@@ -7,7 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSlidersH } from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '../../helpers/utils';
 import { getTasks } from '../../store/actions';
- 
+import styles from './search.module.scss';
+
+
 function Search({ getTasks }) {
 
    const [visibleFilters, setVisibilityFilters] = useState(false);
@@ -30,12 +32,25 @@ function Search({ getTasks }) {
       }
    });
 
+   const [queryParams, setQueryParams] = useState({});
+
+   const [filterCount, setFilterCount] = useState(0);
+
+
    const handleFilterModal = () => {
       setVisibilityFilters(!visibleFilters)
    };
 
    const handleSubmit = () => {
+      getTasks(queryParams);
+   };
 
+
+   const getData = (dataFromModal) => {
+      setData({
+         ...data,
+         ...dataFromModal,
+      });
       const { status, sort, dates } = data;
       let params = {};
 
@@ -49,16 +64,9 @@ function Search({ getTasks }) {
             params[key] = formatDate(value.toISOString());
          }
       }
+      setQueryParams(params);
+      setFilterCount(Object.values(params).length)
 
-      getTasks(params);
-
-   };
-
-   const getData = (dataFromModal) => {
-      setData({
-         ...data,
-         ...dataFromModal,
-      })
    };
 
   return (
@@ -70,15 +78,24 @@ function Search({ getTasks }) {
         />
            <InputGroup.Append>
               <Button
+                 className={styles.filterButton}
                  variant="outline-primary"
                  onClick={handleFilterModal}
               >
+                 {
+                    filterCount ?
+                       <span className={styles.filterCount}>
+                          {filterCount}
+                       </span>
+                       : ''
+                 }
                  <FontAwesomeIcon icon={faSlidersH} />
               </Button>
               <Button
+                 className={styles.searchButton}
                  variant="outline-primary"
-            onClick={handleSubmit}
-          >
+                 onClick={handleSubmit}
+              >
             Search
           </Button>
 
@@ -90,7 +107,6 @@ function Search({ getTasks }) {
               onClose={handleFilterModal}
               getData={getData}
               setData={data}
-              
 
            />
         }
