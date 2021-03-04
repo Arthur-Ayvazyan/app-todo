@@ -28,8 +28,23 @@ function ModalSearch(props) {
       console.log('data from modal', data);
       props.getData(data);
       props.onClose();
-
    }
+
+   const handleResetFilters = () => {
+      setStatus({
+         value: ''
+      });
+      setSort({
+         value: ''
+      });
+      setDates({
+         create_lte: null,
+         create_gte: null,
+         complete_lte: null,
+         complete_gte: null,
+      });
+   }
+
    return (
       <Modal
          show={true}
@@ -97,6 +112,12 @@ function ModalSearch(props) {
 
 
          <Modal.Footer>
+            <Button
+               variant={"light"}
+               onClick={handleResetFilters}
+            >
+               Reset All
+           </Button>
             <Button
                variant={"success"}
 

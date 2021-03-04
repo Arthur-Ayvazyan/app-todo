@@ -32,27 +32,17 @@ function Search({ getTasks }) {
       }
    });
 
-   const [queryParams, setQueryParams] = useState({});
-
    const [filterCount, setFilterCount] = useState(0);
-
 
    const handleFilterModal = () => {
       setVisibilityFilters(!visibleFilters)
    };
 
    const handleSubmit = () => {
-      getTasks(queryParams);
-   };
 
-
-   const getData = (dataFromModal) => {
-      setData({
-         ...data,
-         ...dataFromModal,
-      });
-      const { status, sort, dates } = data;
       let params = {};
+
+      const { status, sort, dates } = data;
 
       search && (params.search = search);
       sort.value && (params.sort = sort.value);
@@ -64,9 +54,33 @@ function Search({ getTasks }) {
             params[key] = formatDate(value.toISOString());
          }
       }
-      setQueryParams(params);
-      setFilterCount(Object.values(params).length)
 
+      getTasks(params);
+
+   };
+
+   const getData = (dataFromModal) => {
+
+      let num = 0;
+
+      const { status, sort, dates } = dataFromModal;
+
+      sort.value && num++;
+      status.value && num++;
+
+      for (const key in dates) {
+         const value = dates[key];
+         if (value) {
+            num++;
+         }
+      }
+
+      setFilterCount(num);
+      
+      setData({
+         ...data,
+         ...dataFromModal,
+      });
    };
 
   return (
