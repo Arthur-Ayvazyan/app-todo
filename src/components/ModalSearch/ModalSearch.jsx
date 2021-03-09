@@ -30,12 +30,15 @@ function ModalSearch(props) {
    }
 
    const handleResetFilters = () => {
+
       setStatus({
          value: ''
       });
+
       setSort({
          value: ''
       });
+
       setDates({
          create_lte: null,
          create_gte: null,
