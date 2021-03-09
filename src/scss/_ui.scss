@@ -61,6 +61,7 @@ body {
    @include xs(font-size, $h1-tablet);
    @include sm(font-size, $h1-desktop);
 }
+
 .heading-2 {
    @extend .heading-styles;
    font-size: $h2-mobile;
