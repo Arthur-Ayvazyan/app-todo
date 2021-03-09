@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { Button, Modal, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import React, { useState } from 'react';
+import DatePicker from "react-datepicker";
+import { Button, Modal, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { statusOptions, sortOptions, dateOptions } from '../Search/options';
 
 function ModalSearch(props) {
 
-   const [status, setStatus] = useState(props.setData.status);
+   const [status, setStatus] = useState(props.filters.status);
 
-   const [sort, setSort] = useState(props.setData.sort);
+   const [sort, setSort] = useState(props.filters.sort);
 
-   const [dates, setDates] = useState(props.setData.dates);
+   const [dates, setDates] = useState(props.filters.dates);
 
    const handleChangeDate = (value, name) => {
       setDates({
@@ -20,13 +20,12 @@ function ModalSearch(props) {
    };
 
    const handleSendData = () => {
-      const data = {
+      const filteredData = {
          status,
          sort,
          dates,
       }
-      console.log('data from modal', data);
-      props.getData(data);
+      props.sendData(filteredData);
       props.onClose();
    }
 

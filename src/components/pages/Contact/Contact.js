@@ -1,6 +1,6 @@
+import styles from './contact.module.scss';
 import React, { useState, useRef, useEffect } from 'react';
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
-import styles from './contact.module.scss';
 
 const validationErrors = {
   requiredError: 'This field is required',
@@ -24,6 +24,9 @@ export default function Contact() {
   const textInput = useRef();
 
   useEffect(() => {
+     window.scrollTo({
+        top: 0,
+     });
     textInput.current.focus();
   }, []);
 
@@ -114,7 +117,7 @@ export default function Contact() {
   return (
      <div className="content">
         <Container>
-         <h1>Contact Us Page</h1>
+           <h1 className="heading-1">Contact Us</h1>
          <Row className="justify-content-center">
          <Col xs={10}>
             <Form>

@@ -1,13 +1,13 @@
+import styles from './search.module.scss';
+import "react-datepicker/dist/react-datepicker.css";
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
-import "react-datepicker/dist/react-datepicker.css";
 import ModalSearch from '../ModalSearch/ModalSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSlidersH } from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '../../helpers/utils';
 import { getTasks } from '../../store/actions';
-import styles from './search.module.scss';
 
 
 function Search({ getTasks }) {
@@ -59,27 +59,27 @@ function Search({ getTasks }) {
 
    };
 
-   const getData = (dataFromModal) => {
+   const getFilteredData = (filteredData) => {
 
-      let num = 0;
+      let countOfFilters = 0;
 
-      const { status, sort, dates } = dataFromModal;
+      const { status, sort, dates } = filteredData;
 
-      sort.value && num++;
-      status.value && num++;
+      sort.value && countOfFilters++;
+      status.value && countOfFilters++;
 
       for (const key in dates) {
          const value = dates[key];
          if (value) {
-            num++;
+            countOfFilters++;
          }
       }
 
-      setFilterCount(num);
+      setFilterCount(countOfFilters);
       
       setData({
          ...data,
-         ...dataFromModal,
+         ...filteredData,
       });
    };
 
@@ -119,9 +119,8 @@ function Search({ getTasks }) {
            visibleFilters &&
            <ModalSearch
               onClose={handleFilterModal}
-              getData={getData}
-              setData={data}
-
+              sendData={getFilteredData}
+              filters={data}
            />
         }
     </div >

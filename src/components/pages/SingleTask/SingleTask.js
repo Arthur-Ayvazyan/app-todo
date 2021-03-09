@@ -14,6 +14,9 @@ class SingleTask extends Component {
   }
 
   componentDidMount() {
+     window.scrollTo({
+        top: 0,
+     });
     const taskId = this.props.match.params.taskId;
     this.props.getTask(taskId);
   }
@@ -25,7 +28,7 @@ class SingleTask extends Component {
     }
   }
 
-  hendleDelete = () => {
+   handleDelete = () => {
     const taskId = this.props.task._id;
     this.props.deleteTask(taskId, 'single')
   }
@@ -57,7 +60,7 @@ class SingleTask extends Component {
                     <Button
                       className="m-1"
                       variant="danger"
-                      onClick={this.hendleDelete}
+                               onClick={this.handleDelete}
                     >
                       <FontAwesomeIcon icon={faTrash} />
                     </Button>
