@@ -1,43 +1,87 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { InputGroup, FormControl, Button, DropdownButton, Dropdown } from 'react-bootstrap';
-import { textCutter } from '../../helpers/utils';
-import DatePicker from "react-datepicker";
+import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
-import { statusOptions, sortOptions, dateOptions } from './options';
+import ModalSearch from '../ModalSearch/ModalSearch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSlidersH } from '@fortawesome/free-solid-svg-icons';
+import { formatDate } from '../../helpers/utils';
+import { getTasks } from '../../store/actions';
+import styles from './search.module.scss';
 
-function Search(props) {
 
-  const [status, setStatus] = useState({
-    value: ''
-  });
+function Search({ getTasks }) {
 
-  const [sort, setSort] = useState({
-    value: ''
-  });
+   const [visibleFilters, setVisibilityFilters] = useState(false);
 
-  const [search, setSearch] = useState('');
+   const [search, setSearch] = useState('');
 
-  const [dates, setDates] = useState({
-    create_lte: null,
-    create_gte: null,
-    complete_lte: null,
-    complete_gte: null,
-  });
+   const [data, setData] = useState({
+      search,
+      status: {
+         value: ''
+      },
+      sort: {
+         value: ''
+      },
+      dates: {
+         create_lte: null,
+         create_gte: null,
+         complete_lte: null,
+         complete_gte: null,
+      }
+   });
 
-  const handleChangeDate = (value, name) => {
-    setDates({
-      ...dates,
-      [name]: value
-    })
-  };
+   const [filterCount, setFilterCount] = useState(0);
 
-  const handleSubmit = () => {
-    console.log('status', status);
-    console.log('sort', sort);
-    console.log('searchs', search);
-    console.log('dates', dates);
-  }
+   const handleFilterModal = () => {
+      setVisibilityFilters(!visibleFilters)
+   };
+
+   const handleSubmit = () => {
+
+      let params = {};
+
+      const { status, sort, dates } = data;
+
+      search && (params.search = search);
+      sort.value && (params.sort = sort.value);
+      status.value && (params.status = status.value);
+
+      for (const key in dates) {
+         const value = dates[key];
+         if (value) {
+            params[key] = formatDate(value.toISOString());
+         }
+      }
+
+      getTasks(params);
+
+   };
+
+   const getData = (dataFromModal) => {
+
+      let num = 0;
+
+      const { status, sort, dates } = dataFromModal;
+
+      sort.value && num++;
+      status.value && num++;
+
+      for (const key in dates) {
+         const value = dates[key];
+         if (value) {
+            num++;
+         }
+      }
+
+      setFilterCount(num);
+      
+      setData({
+         ...data,
+         ...dataFromModal,
+      });
+   };
 
   return (
     <div className="mb-3">
@@ -46,67 +90,46 @@ function Search(props) {
           placeholder="Search. . ."
           onChange={(event) => setSearch(event.target.value)}
         />
-
-        <DropdownButton
-          as={InputGroup.Prepend}
-          variant="outline-primary"
-          title={status.value ? status.label : 'Status'}
-          id="input-group-dropdown-1"
-        >
-          {
-            statusOptions.map((option, index) => (
-              <Dropdown.Item
-                key={index}
-                active={status.value === option.value}
-                onClick={() => setStatus(option)}
-              >{option.label}
-              </Dropdown.Item>)
-            )
-          }
-        </DropdownButton>
-
-        <DropdownButton
-          as={InputGroup.Prepend}
-          variant="outline-primary"
-          title={sort.value ? textCutter(sort.label, 6) : 'Status'}
-          id="input-group-dropdown-1"
-        >
-          {
-            sortOptions.map((option, index) => (
-              <Dropdown.Item
-                key={index}
-                active={sort.value === option.value}
-                onClick={() => setSort(option)}
-              >{option.label}
-              </Dropdown.Item>)
-            )
-          }
-        </DropdownButton>
-
-        <InputGroup.Append>
-          <Button
-            variant="outline-primary"
-            onClick={handleSubmit}
-          >
+           <InputGroup.Append>
+              <Button
+                 className={styles.filterButton}
+                 variant="outline-primary"
+                 onClick={handleFilterModal}
+              >
+                 {
+                    filterCount ?
+                       <span className={styles.filterCount}>
+                          {filterCount}
+                       </span>
+                       : ''
+                 }
+                 <FontAwesomeIcon icon={faSlidersH} />
+              </Button>
+              <Button
+                 className={styles.searchButton}
+                 variant="outline-primary"
+                 onClick={handleSubmit}
+              >
             Search
           </Button>
+
         </InputGroup.Append>
       </InputGroup>
-      {
-        dateOptions.map((option, index) => {
-          return (
-            <div key={index}>
-              <span>{option.label} </span>
-              <DatePicker
-                selected={dates[option.value]}
-                onChange={(value) => handleChangeDate(value, option.value)}
-              />
-            </div>
-          )
-        })
-      }
+        {
+           visibleFilters &&
+           <ModalSearch
+              onClose={handleFilterModal}
+              getData={getData}
+              setData={data}
+
+           />
+        }
     </div >
   )
 }
 
-export default connect()(Search);
+const mapDispatchToProps = {
+   getTasks,
+};
+
+export default connect(null, mapDispatchToProps)(Search);

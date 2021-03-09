@@ -1,0 +1,24 @@
+.filterButton{
+   position: relative;
+   z-index: 1;
+}
+.filterCount{
+   position: absolute;
+   z-index: 2;
+   top: -11px;
+   right: -7px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 20px;
+   height: 20px;
+   background-color: #dc3545;
+   border-radius: 50%;
+   color: #fff;
+   font-size: 12px;
+   font-weight: bold;
+}
+.searchButton{
+   position: relative;
+   z-index: 1 !important;
+}
