@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 
 
 export default function About() {
+
+   useEffect(() => {
+      window.scrollTo({
+         top: 0,
+      });
+   }, [])
+
    return (
       <div className="content">
          <Container>
-            <h1>About Us Page</h1>
+            <h1 className="heading-1">About Us</h1>
          </Container>
       </div>
    )

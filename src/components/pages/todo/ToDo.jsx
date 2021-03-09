@@ -21,6 +21,9 @@ class ToDo extends PureComponent {
 
   componentDidMount() {
     this.props.getTasks();
+     window.scrollTo({
+        top: 0,
+     });
   }
 
   componentDidUpdate(prevProps) {
@@ -83,20 +86,20 @@ class ToDo extends PureComponent {
     })
   }
 
-  editTaskHendle = () => {
+   editTaskhandle = () => {
     this.setState({
       showTaskEditor: !this.state.showTaskEditor,
       editableTask: null,
     });
   }
 
-  confirmHendle = () => {
+   confirmhandle = () => {
     this.setState({
       showConfirm: !this.state.showConfirm,
     })
   }
 
-  newTaskHendle = () => {
+   newTaskhandle = () => {
     this.setState({
       showTaskCreator: !this.state.showTaskCreator,
     })
@@ -123,7 +126,7 @@ class ToDo extends PureComponent {
             selected={selectedTasks.has(task._id)}
             disabled={!!selectedTasks.size}
             onDelete={this.props.deleteTask}
-            onShow={this.editTaskHendle}
+               onShow={this.editTaskhandle}
             onEdit={this.getEditableTask}
           />
         </Col >
@@ -138,7 +141,7 @@ class ToDo extends PureComponent {
 
             <Row className={"mt-2 mb-2 flex-wrap"}>
               <Col size={12}>
-                <h1> Create To - Do list, be more productive!</h1>
+                      <h1 className="heading-1"> Create To - Do list, be more productive!</h1>
               </Col>
             </Row>
             <Row>
@@ -151,7 +154,7 @@ class ToDo extends PureComponent {
                 <Button
                   className={"w-100"}
                   variant={"danger"}
-                  onClick={this.confirmHendle}
+                         onClick={this.confirmhandle}
                   disabled={!selectedTasks.size}
                 >
                   delete selected
@@ -183,7 +186,7 @@ class ToDo extends PureComponent {
               <Col xs="auto mb-3">
                 <Button
                   variant="primary"
-                  onClick={this.newTaskHendle}
+                         onClick={this.newTaskhandle}
                   disabled={selectedTasks.size}
                 >
                   Create Task
@@ -197,7 +200,7 @@ class ToDo extends PureComponent {
 
             {
               showConfirm && <Confirm
-                onClose={this.confirmHendle}
+                      onClose={this.confirmhandle}
                 onDeleteTasks={this.deleteSelected}
                 deletableTasksSize={selectedTasks.size}
               />
@@ -206,14 +209,14 @@ class ToDo extends PureComponent {
             {
               showTaskCreator &&
               <NewTask
-                onClose={this.newTaskHendle}
+                      onClose={this.newTaskhandle}
               />
             }
             {
               showTaskEditor &&
               <ModalEdit
                       task={editableTask}
-                onClose={this.editTaskHendle}
+                      onClose={this.editTaskhandle}
               />
             }
                

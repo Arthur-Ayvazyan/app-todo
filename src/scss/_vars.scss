@@ -1,24 +1,39 @@
 $maxWidth: 1160px;
 
-//$body-color: #f0f2f5;
-//$blue: #1877f2;
-//$blue-dark: #0d6ae4;
-//$green: #42b72a;
-//$green-dark: #36a51f;
-//$shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
-// $white: #ffffff;
-// $black: #000000;
-// $pink: #f1cdb0;
-// $black-border: #000101;
-// $white-light: #f9f6f3;
-// $brown: #663d15;
-// $grey: #aba9a7;
+$text-color-main: rgba(45, 45, 45, 1);
+$text-color-light: rgba(45, 45, 45, 0.5);
+$text-color-middle: rgba(45, 45, 45, 0.7);
+$text-heading-color: #2d2d2d;
 
-// $main-bg-color: #373737;
-// $text-color: #ffffff;
-// // font-size
+$h1-mobile: 26px;
+$h1-tablet: 30px;
+$h1-desktop: 36px;
 
-// $heading-1: 30px;
-// $heading-2: 24px;
-// $heading-3: 20px;
-// $text: 14px;
+$h2-mobile: 24px;
+$h2-tablet: 28px;
+$h2-desktop: 32px;
+
+$h3-mobile: 20px;
+$h3-tablet: 24px;
+$h3-desktop: 28px;
+
+$h4-mobile: 18px;
+$h4-tablet: 20px;
+$h4-desktop: 24px;
+
+$h5-mobile: 18px;
+$h5-tablet: 18px;
+$h5-desktop: 18px;
+
+$h6-mobile: 16px;
+$h6-tablet: 16px;
+$h6-desktop: 16px;
+
+// ---- texts
+
+$text-subtitle-big: 18px;
+$text-subtitle-small: 16px;
+
+$text-big: 16px;
+$text-main: 14px;
+$text-small: 12px;

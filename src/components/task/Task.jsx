@@ -1,6 +1,6 @@
+import styles from './task.module.scss';
 import React, { PureComponent } from 'react';
 import { Card, Button, Form } from 'react-bootstrap';
-import styles from './task.module.scss';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -9,17 +9,17 @@ import { Link } from 'react-router-dom';
 
 class Task extends PureComponent {
 
-  hendleSelect = () => {
+   handleSelect = () => {
     const { onSelect, task } = this.props;
     onSelect(task._id);
   }
 
-  hendleDelete = () => {
+   handleDelete = () => {
     const { onDelete, task } = this.props;
     onDelete(task._id);
   }
 
-  hendleShowEdit = () => {
+   handleShowEdit = () => {
     const { onShow, onEdit, task } = this.props;
     onShow();
     onEdit(task);
@@ -36,7 +36,7 @@ class Task extends PureComponent {
         <Card.Body>
           <Form.Check
             type="checkbox"
-            onChange={this.hendleSelect}
+                onChange={this.handleSelect}
             checked={selected}
           />
              <Link to={`/task${task._id}`} className={styles.linkStyles}>
@@ -49,7 +49,7 @@ class Task extends PureComponent {
           <Button
             className="m-1"
             variant="danger"
-            onClick={this.hendleDelete}
+                onClick={this.handleDelete}
             disabled={disabled}
           >
             <FontAwesomeIcon icon={faTrash} />
@@ -57,7 +57,7 @@ class Task extends PureComponent {
           <Button
             className="m-1"
             variant="warning"
-            onClick={this.hendleShowEdit}
+                onClick={this.handleShowEdit}
             disabled={disabled}
           >
             <FontAwesomeIcon icon={faEdit} />
