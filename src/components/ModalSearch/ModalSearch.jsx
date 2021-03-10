@@ -1,7 +1,7 @@
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
-import { Button, Modal, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Button, Modal, InputGroup, DropdownButton, Dropdown, Form, Col } from 'react-bootstrap';
 import { statusOptions, sortOptions, dateOptions } from '../Search/options';
 
 function ModalSearch(props) {
@@ -61,24 +61,22 @@ function ModalSearch(props) {
             </Modal.Title>
          </Modal.Header>
          <Modal.Body>
-
-            <DropdownButton
-               as={InputGroup.Prepend}
-               variant="outline-primary"
-               title={status.value ? status.label : 'Status'}
-               id="input-group-dropdown-1"
-            >
-               {
-                  statusOptions.map((option, index) => (
-                     <Dropdown.Item
+         <span>status</span>
+            {
+                 statusOptions.map((option, index) => {
+                  return (
+                     <Form.Check
                         key={index}
-                        active={status.value === option.value}
-                        onClick={() => setStatus(option)}
-                     >{option.label}
-                     </Dropdown.Item>)
+                        type="radio"
+                        label={option.label}
+                        name="status"
+                        id={`status${index}`}
+                        onChange={() => setStatus(option)}
+                        checked={option.value === status.value}
+                     />
                   )
-               }
-            </DropdownButton>
+               })
+            }
 
             <DropdownButton
                as={InputGroup.Prepend}
