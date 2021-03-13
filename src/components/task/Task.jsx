@@ -3,23 +3,26 @@ import React, { PureComponent } from 'react';
 import { Card, Button, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit, faCheck, faRedo } from '@fortawesome/free-solid-svg-icons';
 import { formatDate, textCutter } from '../../helpers/utils';
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import { editTask } from '../../store/actions';
+
 class Task extends PureComponent {
 
-   handleSelect = () => {
+  handleSelect = () => {
     const { onSelect, task } = this.props;
     onSelect(task._id);
   }
 
-   handleDelete = () => {
+  handleDelete = () => {
     const { onDelete, task } = this.props;
     onDelete(task._id);
   }
 
-   handleShowEdit = () => {
+  handleShowEdit = () => {
     const { onShow, onEdit, task } = this.props;
     onShow();
     onEdit(task);
@@ -27,7 +30,7 @@ class Task extends PureComponent {
 
   render() {
     const task = this.props.task;
-    const { disabled, selected } = this.props;
+    const { disabled, selected, editTask } = this.props;
 
     return (
       <Card
@@ -36,20 +39,48 @@ class Task extends PureComponent {
         <Card.Body>
           <Form.Check
             type="checkbox"
-                onChange={this.handleSelect}
+            onChange={this.handleSelect}
             checked={selected}
           />
-             <Link to={`/task${task._id}`} className={styles.linkStyles}>
+          <Link to={`/task${task._id}`} className={styles.linkStyles}>
             <Card.Title>{textCutter(task.title, 30)}</Card.Title>
           </Link>
           <Card.Text>Description: {textCutter(task.description, 50)}</Card.Text>
-          <Card.Text>
-            Date: {formatDate(task.date)}
-          </Card.Text>
+          <Card.Text>Created at: {formatDate(task.created_at)}</Card.Text>
+          <Card.Text>Date: {formatDate(task.date)}</Card.Text>
+          <Card.Text>Status: {task.status}</Card.Text>
+          {
+            task.status === 'active' ?
+              <Button
+                className="m-1"
+                variant="success"
+                onClick={() => editTask({
+                  status: 'done',
+                  _id: task._id,
+                })}
+                disabled={disabled}
+              >
+                <FontAwesomeIcon icon={faCheck} />
+              </Button>
+              :
+              <Button
+                className="m-1"
+                variant="secondary"
+                onClick={() => editTask({
+                  status: 'active',
+                  _id: task._id,
+                })}
+                disabled={disabled}
+              >
+                <FontAwesomeIcon icon={faRedo} />
+              </Button>
+          }
+
+
           <Button
             className="m-1"
             variant="danger"
-                onClick={this.handleDelete}
+            onClick={this.handleDelete}
             disabled={disabled}
           >
             <FontAwesomeIcon icon={faTrash} />
@@ -57,7 +88,7 @@ class Task extends PureComponent {
           <Button
             className="m-1"
             variant="warning"
-                onClick={this.handleShowEdit}
+            onClick={this.handleShowEdit}
             disabled={disabled}
           >
             <FontAwesomeIcon icon={faEdit} />
@@ -77,4 +108,9 @@ Task.propTypes = {
   selected: PropTypes.bool.isRequired,
 }
 
-export default Task;
+
+const mapDispatchToProps = {
+  editTask,
+};
+
+export default connect(null, mapDispatchToProps)(Task);

@@ -18,6 +18,8 @@ const message = {
     editedTask: 'Task edited succesfuly',
     deletedTask: 'Task deleted succesfuly',
     deletedTasks: 'Tasks deleted succesfuly',
+    done: 'Congrats, the task has complated',
+    active: 'The task is active',
   }
 }
 
@@ -96,7 +98,7 @@ export default function reducer(state = defaultState, action) {
     case actionType.DELETE_TASKS: {
       const restTasks = state.tasks.filter((task) => {
         return !action.taskIds.has(task._id);
-      })
+      });
       return {
         ...state,
         tasks: restTasks,
@@ -107,13 +109,33 @@ export default function reducer(state = defaultState, action) {
     }
 
     case actionType.EDIT_TASK: {
-      if (action.from === 'single') {
+
+      let successTaskMessage = message.success.editedTask;
+
+      if (action.status) {
+
+        action.status === 'done'
+          ? successTaskMessage = message.success.done
+          : successTaskMessage = message.success.active;
+      }
+
+      if (action.from === 'single' && !action.status) {
         return {
           ...state,
           task: action.editedTask,
           editSingleTaskSuccess: true,
           showSpinner: false,
-          successTaskMessage: message.success.editedTask,
+          successTaskMessage: successTaskMessage,
+        }
+      }
+
+      if (action.from === 'single' && action.status) {
+        return {
+          ...state,
+          task: action.editedTask,
+          editSingleTaskSuccess: false,
+          showSpinner: false,
+          successTaskMessage: successTaskMessage,
         }
       }
 
@@ -128,7 +150,7 @@ export default function reducer(state = defaultState, action) {
         tasks: newTasks,
         editTaskSuccess: true,
         showSpinner: false,
-        successTaskMessage: message.success.editedTask,
+        successTaskMessage: successTaskMessage,
       }
     }
 
