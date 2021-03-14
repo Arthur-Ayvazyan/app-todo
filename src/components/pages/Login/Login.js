@@ -1,24 +1,23 @@
-import styles from './contact.module.scss';
+import styles from './login.module.scss';
 import React, { useState, useRef, useEffect } from 'react';
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { Link } from 'react-router-dom';
 
 const validationErrors = {
   requiredError: 'This field is required',
   emailError: 'incorrect email'
 };
 
-export default function Contact() {
+export default function Login() {
 
   const [values, setValues] = useState({
-    name: '',
     email: '',
-    message: ''
+    password: ''
   });
 
   const [errors, setErrors] = useState({
-    name: null,
     email: null,
-    message: null
+    password: null
   });
 
   const textInput = useRef();
@@ -74,8 +73,9 @@ export default function Contact() {
     const trimedValues = valuesArr.map(value => value.trim());
     const errorsExist = errorArr.some(error => error !== null);
     const valuesExist = trimedValues.every(value => value !== '');
+
     if (valuesExist && !errorsExist) {
-      fetch('http://localhost:3001/form', {
+      fetch('http://localhost:3001/sign-in', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -90,14 +90,13 @@ export default function Contact() {
             }
           }
           setValues({
-            name: '',
             email: '',
-            message: '',
+            password: '',
           });
           alert('sent succesfully');
         })
         .catch((error) => {
-          alert('something went wrong, try again!');
+          alert('incorrect email or password');
           console.log('error', error);
         });
       return;
@@ -106,9 +105,8 @@ export default function Contact() {
     if (!valuesExist && !errorsExist) {
       if (!values.email) {
         setErrors({
-          name: requiredError,
           email: requiredError,
-          message: requiredError
+          password: requiredError
         })
       }
     }
@@ -117,32 +115,17 @@ export default function Contact() {
   return (
     <div className="content">
       <Container>
-        <h1 className="heading-1">Contact Us</h1>
+        <h1 className="heading-1">Login</h1>
         <Row className="justify-content-center">
           <Col xs={10}>
             <Form>
               <Row className="flex-column justify-content-end">
                 <Col>
                   <Form.Group>
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control
-                      className={errors.name ? styles.invalidInput : ''}
-                      ref={textInput}
-                      type="text"
-                      placeholder="Enter name"
-                      value={values.name}
-                      onChange={handleChange} name="name"
-                    />
-                    <Form.Text className="text-danger">
-                      {errors.name}
-                    </Form.Text>
-                  </Form.Group>
-                </Col>
-                <Col>
-                  <Form.Group>
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
                       className={errors.email ? styles.invalidInput : ''}
+                      ref={textInput}
                       type="email"
                       name="email"
                       placeholder="Enter email"
@@ -156,18 +139,18 @@ export default function Contact() {
                 </Col>
                 <Col>
                   <Form.Group>
-                    <Form.Label>Message</Form.Label>
+                    <Form.Label>password</Form.Label>
                     <Form.Control
-                      className={errors.message ? styles.invalidInput : ''}
-                      as="textarea"
-                      rows={3}
-                      placeholder="Enter message"
-                      value={values.message}
-                      name="message"
+                      className={errors.password ? styles.invalidInput : ''}
+                      ref={textInput}
+                      type="password"
+                      name="password"
+                      placeholder="Enter password"
+                      value={values.password}
                       onChange={handleChange}
                     />
                     <Form.Text className="text-danger">
-                      {errors.message}
+                      {errors.password}
                     </Form.Text>
                   </Form.Group>
                 </Col>
@@ -176,6 +159,7 @@ export default function Contact() {
                     Send
                   </Button>
                 </Col>
+                <Link to={`/registration`} className="text-right">Go to registration page</Link>
               </Row>
             </Form>
           </Col>

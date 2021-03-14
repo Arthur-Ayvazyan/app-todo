@@ -1,24 +1,31 @@
-import styles from './contact.module.scss';
+import styles from './registration.module.scss';
 import React, { useState, useRef, useEffect } from 'react';
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { Link } from 'react-router-dom';
 
 const validationErrors = {
   requiredError: 'This field is required',
-  emailError: 'incorrect email'
+  emailError: 'Incorrect email',
+  passwordError: 'Your password must be at least 8 characters',
+  confirmPasswordError: 'Your password and confirmation password do not match',
 };
 
-export default function Contact() {
+export default function Registration() {
 
   const [values, setValues] = useState({
     name: '',
+    surname: '',
     email: '',
-    message: ''
+    password: '',
+    confirmPassword: '',
   });
 
   const [errors, setErrors] = useState({
     name: null,
+    surname: null,
     email: null,
-    message: null
+    password: null,
+    confirmPassword: null,
   });
 
   const textInput = useRef();
@@ -32,7 +39,7 @@ export default function Contact() {
 
   const handleChange = ({ target: { name, value } }) => {
 
-    const { requiredError, emailError } = validationErrors;
+    const { requiredError, emailError, passwordError, confirmPasswordError } = validationErrors;
 
     if (!value) {
       setErrors({
@@ -48,13 +55,48 @@ export default function Contact() {
     }
 
     if (name === "email" && value) {
-
       const emailPattern = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-
       if (!emailPattern.test(value)) {
         setErrors({
           ...errors,
           email: emailError
+        })
+      }
+    }
+
+    if (name === "password" && value) {
+      const confirmPassword = values.confirmPassword;
+      if (confirmPassword && confirmPasswordError) {
+        if (value === confirmPassword) {
+          setErrors({
+            ...errors,
+            confirmPassword: null
+          })
+        }
+
+        else {
+          setErrors({
+            ...errors,
+            confirmPassword: confirmPasswordError
+          })
+        }
+      }
+
+      if (value.length < 8) {
+        setErrors({
+          ...errors,
+          password: passwordError
+        })
+
+      }
+    }
+
+    if (name === "confirmPassword" && value) {
+      const password = values.password;
+      if (value !== password) {
+        setErrors({
+          ...errors,
+          confirmPassword: confirmPasswordError
         })
       }
     }
@@ -74,8 +116,9 @@ export default function Contact() {
     const trimedValues = valuesArr.map(value => value.trim());
     const errorsExist = errorArr.some(error => error !== null);
     const valuesExist = trimedValues.every(value => value !== '');
+
     if (valuesExist && !errorsExist) {
-      fetch('http://localhost:3001/form', {
+      fetch('http://localhost:3001/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -91,13 +134,15 @@ export default function Contact() {
           }
           setValues({
             name: '',
+            surname: '',
             email: '',
-            message: '',
+            password: '',
+            confirmPassword: '',
           });
-          alert('sent succesfully');
+          alert('success');
         })
         .catch((error) => {
-          alert('something went wrong, try again!');
+          alert('error');
           console.log('error', error);
         });
       return;
@@ -107,8 +152,10 @@ export default function Contact() {
       if (!values.email) {
         setErrors({
           name: requiredError,
+          surname: requiredError,
           email: requiredError,
-          message: requiredError
+          password: requiredError,
+          confirmPassword: requiredError,
         })
       }
     }
@@ -117,7 +164,7 @@ export default function Contact() {
   return (
     <div className="content">
       <Container>
-        <h1 className="heading-1">Contact Us</h1>
+        <h1 className="heading-1">Registration</h1>
         <Row className="justify-content-center">
           <Col xs={10}>
             <Form>
@@ -131,10 +178,27 @@ export default function Contact() {
                       type="text"
                       placeholder="Enter name"
                       value={values.name}
-                      onChange={handleChange} name="name"
+                      onChange={handleChange}
+                      name="name"
                     />
                     <Form.Text className="text-danger">
                       {errors.name}
+                    </Form.Text>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Surname</Form.Label>
+                    <Form.Control
+                      className={errors.surname ? styles.invalidInput : ''}
+                      type="text"
+                      placeholder="Enter surname"
+                      value={values.surname}
+                      onChange={handleChange}
+                      name="surname"
+                    />
+                    <Form.Text className="text-danger">
+                      {errors.surname}
                     </Form.Text>
                   </Form.Group>
                 </Col>
@@ -156,18 +220,33 @@ export default function Contact() {
                 </Col>
                 <Col>
                   <Form.Group>
-                    <Form.Label>Message</Form.Label>
+                    <Form.Label>Password</Form.Label>
                     <Form.Control
-                      className={errors.message ? styles.invalidInput : ''}
-                      as="textarea"
-                      rows={3}
-                      placeholder="Enter message"
-                      value={values.message}
-                      name="message"
+                      className={errors.password ? styles.invalidInput : ''}
+                      type="password"
+                      name="password"
+                      placeholder="Enter password"
+                      value={values.password}
                       onChange={handleChange}
                     />
                     <Form.Text className="text-danger">
-                      {errors.message}
+                      {errors.password}
+                    </Form.Text>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Confirm password</Form.Label>
+                    <Form.Control
+                      className={errors.confirmPassword ? styles.invalidInput : ''}
+                      type="password"
+                      name="confirmPassword"
+                      placeholder="Enter confirm password"
+                      value={values.confirmPassword}
+                      onChange={handleChange}
+                    />
+                    <Form.Text className="text-danger">
+                      {errors.confirmPassword}
                     </Form.Text>
                   </Form.Group>
                 </Col>
@@ -176,6 +255,7 @@ export default function Contact() {
                     Send
                   </Button>
                 </Col>
+                <Link to={`/login`} className="text-right">Go to log in page</Link>
               </Row>
             </Form>
           </Col>
