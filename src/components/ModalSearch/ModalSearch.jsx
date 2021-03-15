@@ -1,7 +1,7 @@
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
-import { Button, Modal, InputGroup, DropdownButton, Dropdown, Form, Col } from 'react-bootstrap';
+import { Button, Modal, InputGroup, DropdownButton, Dropdown, Form } from 'react-bootstrap';
 import { statusOptions, sortOptions, dateOptions } from '../Search/options';
 
 function ModalSearch(props) {
