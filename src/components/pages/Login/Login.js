@@ -156,10 +156,10 @@ export default function Login() {
                 </Col>
                 <Col>
                   <Button className="w-20" size="lg" variant="primary" onClick={handleSend}>
-                    Send
+                             Sign in
                   </Button>
                 </Col>
-                <Link to={`/registration`} className="text-right">Go to registration page</Link>
+                       <Link to={`/registration`} className="text-right">Create an account</Link>
               </Row>
             </Form>
           </Col>
