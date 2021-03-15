@@ -1,6 +1,6 @@
 export const statusOptions = [
   {
-    label: 'Unset',
+      label: 'All',
     value: ''
   },
   {

@@ -7,6 +7,8 @@ import About from './components/pages/About/About';
 import Contact from './components/pages/Contact/Contact';
 import NotFound from './components/pages/NotFound/NotFound';
 import SingleTask from './components/pages/SingleTask/SingleTask';
+import Login from './components/pages/Login/Login';
+import Registration from './components/pages/Registration/Registration';
 import NavMenu from './components/NavMenu/NavMenu';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import Spinner from './components/spinner/spinner';
@@ -15,24 +17,24 @@ import { ToastContainer, toast } from 'react-toastify';
 import { history } from './helpers/history';
 
 const toastConfig = {
-   position: "bottom-left",
-   autoClose: 5000,
-   hideProgressBar: false,
-   closeOnClick: true,
-   pauseOnHover: true,
-   draggable: true,
-   progress: undefined,
+  position: "bottom-left",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
 }
 
 function App({ showSpinner, successTaskMessage, errorTaskMessage }) {
 
-   useEffect(() => {
-      if (successTaskMessage) {
-         toast.success(successTaskMessage, toastConfig);
+  useEffect(() => {
+    if (successTaskMessage) {
+      toast.success(successTaskMessage, toastConfig);
     }
 
     if (errorTaskMessage) {
-       toast.error(errorTaskMessage, toastConfig);
+      toast.error(errorTaskMessage, toastConfig);
     }
 
   }, [successTaskMessage, errorTaskMessage]);
@@ -66,6 +68,16 @@ function App({ showSpinner, successTaskMessage, errorTaskMessage }) {
           <Route
             path='/contact'
             component={Contact}
+            exact
+          />
+          <Route
+            path='/login'
+            component={Login}
+            exact
+          />
+          <Route
+            path='/registration'
+            component={Registration}
             exact
           />
           <Route
