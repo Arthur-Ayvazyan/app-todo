@@ -228,11 +228,11 @@ function Registration({ registration }) {
                 </Col>
                 <Col>
                   <Button className="w-20" size="lg" variant="primary" onClick={handleSend}>
-                    Send
+                             Create Account
                   </Button>
                 </Col>
-                <Link to={`/login`} className="text-right">Go to log in page</Link>
-              </Row>
+                       <Link to={`/login`} className="text-right">Already have an account ?</Link>
+              </Row> 
             </Form>
           </Col>
         </Row>
