@@ -10,6 +10,7 @@ const defaultState = {
   showSpinner: false,
   errorTaskMessage: null,
   successTaskMessage: null,
+  messageSendSuccess: false,
 }
 
 const message = {
@@ -20,6 +21,9 @@ const message = {
     deletedTasks: 'Tasks deleted succesfuly',
     done: 'Congrats, the task has complated',
     active: 'The task is active',
+    sentMessage: 'Your message was sent succesfuly',
+    registration: 'Congrats, you are a member',
+    authentication: 'Hello, have a nice day )',
   }
 }
 
@@ -35,6 +39,7 @@ export default function reducer(state = defaultState, action) {
       }
     }
 
+
     case actionType.PENDING: {
       return {
         ...state,
@@ -45,7 +50,37 @@ export default function reducer(state = defaultState, action) {
         showSpinner: true,
         errorTaskMessage: null,
         successTaskMessage: null,
+        messageSendSuccess: false,
       }
+    }
+
+    case actionType.SEND_MESSAGE: {
+      if (action.messageSuccess) {
+        return {
+          ...state,
+          showSpinner: false,
+          messageSendSuccess: true,
+          successTaskMessage: message.success.sentMessage,
+        }
+      }
+      break;
+    }
+
+    case actionType.REGISTER: {
+      return {
+        ...state,
+        showSpinner: false,
+        successTaskMessage: message.success.registration,
+      }
+    }
+
+    case actionType.AUTHENTICATE: {
+      return {
+        ...state,
+        showSpinner: false,
+        successTaskMessage: message.success.authentication,
+      }
+      break;
     }
 
     case actionType.GET_TASKS: {
@@ -74,6 +109,8 @@ export default function reducer(state = defaultState, action) {
       }
     }
 
+
+
     case actionType.DELETE_TASK: {
       if (action.from === 'single') {
         return {
@@ -87,6 +124,7 @@ export default function reducer(state = defaultState, action) {
       const newTasks = state.tasks.filter((task) => {
         return action.taskId !== task._id;
       });
+
       return {
         ...state,
         tasks: newTasks,

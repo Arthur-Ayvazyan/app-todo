@@ -2,13 +2,15 @@ import styles from './login.module.scss';
 import React, { useState, useRef, useEffect } from 'react';
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { authentication } from '../../../store/actions';
 
 const validationErrors = {
   requiredError: 'This field is required',
   emailError: 'incorrect email'
 };
 
-export default function Login() {
+function Login({ authentication }) {
 
   const [values, setValues] = useState({
     email: '',
@@ -75,30 +77,7 @@ export default function Login() {
     const valuesExist = trimedValues.every(value => value !== '');
 
     if (valuesExist && !errorsExist) {
-      fetch('http://localhost:3001/sign-in', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(values),
-      })
-        .then(async (response) => {
-          const res = await response.json();
-          if (response.status >= 400 && response.status < 600) {
-            if (res.error) {
-              throw res.error;
-            }
-          }
-          setValues({
-            email: '',
-            password: '',
-          });
-          alert('sent succesfully');
-        })
-        .catch((error) => {
-          alert('incorrect email or password');
-          console.log('error', error);
-        });
+      authentication(values);
       return;
     }
 
@@ -169,3 +148,10 @@ export default function Login() {
 
   )
 }
+
+
+const mapDispatchToProps = {
+  authentication
+}
+
+export default connect(null, mapDispatchToProps)(Login);

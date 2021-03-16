@@ -1,4 +1,7 @@
 export const ERROR = 'ERROR';
+export const REGISTER = 'REGISTER';
+export const AUTHENTICATE = 'AUTHENTICATE';
+export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const PENDING = 'PENDING';
 export const GET_TASK = 'GET_TASK';
 export const GET_TASKS = 'GET_TASKS';

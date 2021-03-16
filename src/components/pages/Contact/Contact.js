@@ -1,13 +1,15 @@
 import styles from './contact.module.scss';
 import React, { useState, useRef, useEffect } from 'react';
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { connect } from 'react-redux';
+import { sendMessage } from '../../../store/actions';
 
 const validationErrors = {
   requiredError: 'This field is required',
   emailError: 'incorrect email'
 };
 
-export default function Contact() {
+function Contact({ sendMessage, messageSendSuccess }) {
 
   const [values, setValues] = useState({
     name: '',
@@ -29,6 +31,14 @@ export default function Contact() {
     });
     textInput.current.focus();
   }, []);
+
+  useEffect(() => {
+    setValues({
+      name: '',
+      email: '',
+      message: '',
+    });
+  }, [messageSendSuccess]);
 
   const handleChange = ({ target: { name, value } }) => {
 
@@ -74,32 +84,9 @@ export default function Contact() {
     const trimedValues = valuesArr.map(value => value.trim());
     const errorsExist = errorArr.some(error => error !== null);
     const valuesExist = trimedValues.every(value => value !== '');
+
     if (valuesExist && !errorsExist) {
-      fetch('http://localhost:3001/form', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(values),
-      })
-        .then(async (response) => {
-          const res = await response.json();
-          if (response.status >= 400 && response.status < 600) {
-            if (res.error) {
-              throw res.error;
-            }
-          }
-          setValues({
-            name: '',
-            email: '',
-            message: '',
-          });
-          alert('sent succesfully');
-        })
-        .catch((error) => {
-          alert('something went wrong, try again!');
-          console.log('error', error);
-        });
+      sendMessage(values);
       return;
     }
 
@@ -185,3 +172,16 @@ export default function Contact() {
 
   )
 }
+
+const mapSateToProps = (state) => {
+  return {
+    messageSendSuccess: state.messageSendSuccess,
+  };
+}
+
+
+const mapDispatchToProps = {
+  sendMessage
+}
+
+export default connect(mapSateToProps, mapDispatchToProps)(Contact);

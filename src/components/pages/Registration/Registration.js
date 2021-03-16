@@ -2,6 +2,8 @@ import styles from './registration.module.scss';
 import React, { useState, useRef, useEffect } from 'react';
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { registration } from '../../../store/actions';
 
 const validationErrors = {
   requiredError: 'This field is required',
@@ -10,7 +12,7 @@ const validationErrors = {
   confirmPasswordError: 'Your password and confirmation password do not match',
 };
 
-export default function Registration() {
+function Registration({ registration }) {
 
   const [values, setValues] = useState({
     name: '',
@@ -118,33 +120,7 @@ export default function Registration() {
     const valuesExist = trimedValues.every(value => value !== '');
 
     if (valuesExist && !errorsExist) {
-      fetch('http://localhost:3001/user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(values),
-      })
-        .then(async (response) => {
-          const res = await response.json();
-          if (response.status >= 400 && response.status < 600) {
-            if (res.error) {
-              throw res.error;
-            }
-          }
-          setValues({
-            name: '',
-            surname: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-          });
-          alert('success');
-        })
-        .catch((error) => {
-          alert('error');
-          console.log('error', error);
-        });
+      registration(values)
       return;
     }
 
@@ -265,3 +241,9 @@ export default function Registration() {
 
   )
 }
+
+const mapDispatchToProps = {
+  registration
+}
+
+export default connect(null, mapDispatchToProps)(Registration);
