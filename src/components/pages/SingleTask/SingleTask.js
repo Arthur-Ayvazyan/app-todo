@@ -124,7 +124,7 @@ class SingleTask extends Component {
   }
 }
 
-const mapSateToProps = (state) => {
+const mapStateToProps = (state) => {
   return {
     task: state.task,
     editSingleTaskSuccess: state.editSingleTaskSuccess,
@@ -137,4 +137,4 @@ const mapDispatchToProps = {
   editTask,
 }
 
-export default connect(mapSateToProps, mapDispatchToProps)(SingleTask)
+export default connect(mapStateToProps, mapDispatchToProps)(SingleTask)

@@ -228,7 +228,7 @@ class ToDo extends PureComponent {
 }
 
 
-const mapSateToProps = (state) => {
+const mapStateToProps = (state) => {
   return {
     tasks: state.tasks,
     addTaskSuccess: state.addTaskSuccess,
@@ -243,4 +243,4 @@ const mapDispatchToProps = {
   deleteTasks,
 }
 
-export default connect(mapSateToProps, mapDispatchToProps)(ToDo);
+export default connect(mapStateToProps, mapDispatchToProps)(ToDo);

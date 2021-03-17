@@ -1,4 +1,5 @@
 import * as actionType from './actionTypes';
+import { checkLoginStatus } from '../helpers/storage';
 
 const defaultState = {
   tasks: [],
@@ -11,6 +12,7 @@ const defaultState = {
   errorTaskMessage: null,
   successTaskMessage: null,
   messageSendSuccess: false,
+  isAuthenticated: checkLoginStatus(),
 }
 
 const message = {
@@ -78,9 +80,9 @@ export default function reducer(state = defaultState, action) {
       return {
         ...state,
         showSpinner: false,
-        successTaskMessage: message.success.authentication,
+        //  successTaskMessage: message.success.authentication,
+        isAuthenticated: true,
       }
-      break;
     }
 
     case actionType.GET_TASKS: {

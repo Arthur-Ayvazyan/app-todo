@@ -173,15 +173,14 @@ function Contact({ sendMessage, messageSendSuccess }) {
   )
 }
 
-const mapSateToProps = (state) => {
+const mapStateToProps = (state) => {
   return {
     messageSendSuccess: state.messageSendSuccess,
   };
 }
 
-
 const mapDispatchToProps = {
   sendMessage
 }
 
-export default connect(mapSateToProps, mapDispatchToProps)(Contact);
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);

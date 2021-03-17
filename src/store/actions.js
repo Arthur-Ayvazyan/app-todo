@@ -23,6 +23,7 @@ export function registration(user) {
     request(`${apiHost}/user`, 'POST', user)
       .then(() => {
         dispatch({ type: actionType.REGISTER });
+         history.push('/login');
       })
       .catch((error) => {
         dispatch({ type: actionType.ERROR, error: error.message });
@@ -34,8 +35,10 @@ export function authentication(member) {
   return (dispatch) => {
     dispatch({ type: actionType.PENDING });
     request(`${apiHost}/user/sign-in`, 'POST', member)
-      .then(() => {
-        dispatch({ type: actionType.AUTHENTICATE });
+       .then((jwt) => {
+          localStorage.setItem('token', JSON.stringify(jwt));
+          dispatch({ type: actionType.AUTHENTICATE, });
+          history.push('/');
       })
       .catch((error) => {
         dispatch({ type: actionType.ERROR, error: error.message });

@@ -120,8 +120,7 @@ function Login({ authentication }) {
                   <Form.Group>
                     <Form.Label>password</Form.Label>
                     <Form.Control
-                      className={errors.password ? styles.invalidInput : ''}
-                      ref={textInput}
+                                className={errors.password ? styles.invalidInput : ''}
                       type="password"
                       name="password"
                       placeholder="Enter password"

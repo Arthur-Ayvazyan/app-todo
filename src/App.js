@@ -26,7 +26,17 @@ const toastConfig = {
   progress: undefined,
 }
 
-function App({ showSpinner, successTaskMessage, errorTaskMessage }) {
+function AuthRoute({ path, component }) {
+  return (
+    <Route
+      path={path}
+      component={component}
+      exact
+    />
+  )
+}
+
+function App({ showSpinner, successTaskMessage, errorTaskMessage, isAuthenticated }) {
 
   useEffect(() => {
     if (successTaskMessage) {
@@ -45,42 +55,36 @@ function App({ showSpinner, successTaskMessage, errorTaskMessage }) {
       <Router history={history}>
         <NavMenu />
         <Switch>
-          <Route
+
+          <AuthRoute
             path='/'
             component={ToDo}
-            exact
           />
-          <Route
+          <AuthRoute
             path='/home'
             component={ToDo}
-            exact
           />
-          <Route
+          <AuthRoute
             path='/task:taskId'
             component={SingleTask}
-            exact
           />
-          <Route
+          <AuthRoute
             path='/about'
             component={About}
-            exact
           />
-          <Route
+          <AuthRoute
             path='/contact'
             component={Contact}
-            exact
           />
-          <Route
+          <AuthRoute
             path='/login'
             component={Login}
-            exact
           />
-          <Route
+          <AuthRoute
             path='/registration'
             component={Registration}
-            exact
           />
-          <Route
+          <AuthRoute
             path='/not-found'
             component={NotFound}
             exact
@@ -99,13 +103,13 @@ function App({ showSpinner, successTaskMessage, errorTaskMessage }) {
   );
 }
 
-const mapSateToProps = (state) => {
+const mapStateToProps = (state) => {
   return {
     showSpinner: state.showSpinner,
     successTaskMessage: state.successTaskMessage,
     errorTaskMessage: state.errorTaskMessage,
-
+    isAuthenticated: state.isAuthenticated,
   };
 }
 
-export default connect(mapSateToProps)(App);
+export default connect(mapStateToProps)(App);
