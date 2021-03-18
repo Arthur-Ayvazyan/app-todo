@@ -1,6 +1,7 @@
 export const ERROR = 'ERROR';
 export const REGISTER = 'REGISTER';
 export const AUTHENTICATE = 'AUTHENTICATE';
+export const SIGN_OUT = 'SIGN_OUT';
 export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const PENDING = 'PENDING';
 export const GET_TASK = 'GET_TASK';

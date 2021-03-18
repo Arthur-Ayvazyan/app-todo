@@ -6,6 +6,15 @@ export function saveToken(token) {
    localStorage.setItem('token', JSON.stringify(token));
 }
 
+export function removeToken(token) {
+   localStorage.removeItem(token);
+}
+
+export function getJWT() {
+   const token = localStorage.getItem('token');
+   return JSON.parse(token).jwt;
+}
+
 export const getToken = () => {
 
    const token = localStorage.getItem('token');

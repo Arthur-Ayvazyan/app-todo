@@ -85,6 +85,14 @@ export default function reducer(state = defaultState, action) {
       }
     }
 
+     case actionType.SIGN_OUT: {
+        return {
+           ...state,
+           showSpinner: false,
+           isAuthenticated: false,
+        }
+     }
+
     case actionType.GET_TASKS: {
       return {
         ...state,
