@@ -1,6 +1,7 @@
 import request from '../helpers/request';
 import * as actionType from './actionTypes';
 import { history } from '../helpers/history';
+import { saveToken } from '../helpers/auth';
 
 const apiHost = process.env.REACT_APP_API_HOST;
 
@@ -36,7 +37,7 @@ export function authentication(member) {
     dispatch({ type: actionType.PENDING });
     request(`${apiHost}/user/sign-in`, 'POST', member)
        .then((jwt) => {
-          localStorage.setItem('token', JSON.stringify(jwt));
+          saveToken(jwt);
           dispatch({ type: actionType.AUTHENTICATE, });
           history.push('/');
       })

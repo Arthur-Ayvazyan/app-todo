@@ -1,5 +1,5 @@
 import * as actionType from './actionTypes';
-import { checkLoginStatus } from '../helpers/storage';
+import { checkLoginStatus } from '../helpers/auth';
 
 const defaultState = {
   tasks: [],
