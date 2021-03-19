@@ -1,4 +1,5 @@
 import request from '../helpers/request';
+import { requestWithoutToken } from '../helpers/auth';
 import * as actionType from './actionTypes';
 import { history } from '../helpers/history';
 import { saveToken, removeToken, getJWT } from '../helpers/auth';
@@ -21,7 +22,7 @@ export function sendMessage(message) {
 export function registration(user) {
   return (dispatch) => {
     dispatch({ type: actionType.PENDING });
-    request(`${apiHost}/user`, 'POST', user)
+     requestWithoutToken(`${apiHost}/user`, 'POST', user)
       .then(() => {
         dispatch({ type: actionType.REGISTER });
          history.push('/login');
@@ -35,7 +36,7 @@ export function registration(user) {
 export function authentication(member) {
   return (dispatch) => {
     dispatch({ type: actionType.PENDING });
-    request(`${apiHost}/user/sign-in`, 'POST', member)
+     requestWithoutToken(`${apiHost}/user/sign-in`, 'POST', member)
        .then((jwt) => {
           saveToken(jwt);
           dispatch({ type: actionType.AUTHENTICATE, });
