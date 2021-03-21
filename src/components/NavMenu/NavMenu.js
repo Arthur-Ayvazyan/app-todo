@@ -1,10 +1,17 @@
 import React from 'react';
-import { Nav, Navbar, Container, Button } from 'react-bootstrap'
+import { Nav, Navbar, Container } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom';
 import styles from './navLink.module.scss';
 import { connect } from 'react-redux';
+import { signOut } from "../../store/actions";
 
-function NavMenu({ isAuthenticated }) {
+function NavMenu({ isAuthenticated, signOut }) {
+
+   const logOut = (e) => {
+      e.preventDefault();
+      signOut();
+   }
+
   return (
     <>
       <div className={styles.menuWrapper}>
@@ -48,17 +55,16 @@ function NavMenu({ isAuthenticated }) {
                     {
                        isAuthenticated
                           ?
-                          <Button >Log out</Button>
-                          //  <div className={styles.linkWrapper}>
-                          //     <NavLink
-                          //        className={styles.linkStyles}
-                          //        activeClassName={styles.active}
-                          //        to="/login"
-                          //        exact
-                          //     >
-                          //        Log out
-                          //      </NavLink>
-                          //  </div>
+                          <div className={styles.linkWrapper}>
+                             <NavLink
+                                className={styles.linkStyles}
+                                to="/login"
+                                onClick={(e) => logOut(e)}
+                             >
+                                Log out
+                                
+                            </NavLink>
+                          </div>
                           : <>
                               <div className={styles.linkWrapper}>
                                  <NavLink
@@ -98,4 +104,7 @@ const mapStateToProps = (state) => {
    };
 }
 
-export default connect(mapStateToProps)(NavMenu);
+const mapDispatchToProps = {
+   signOut
+ }
+export default connect(mapStateToProps, mapDispatchToProps)(NavMenu);

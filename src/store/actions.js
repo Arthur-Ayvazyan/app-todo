@@ -1,6 +1,7 @@
 import request from '../helpers/request';
 import * as actionType from './actionTypes';
 import { history } from '../helpers/history';
+import { saveToken, removeToken, getJWT } from '../helpers/auth';
 
 const apiHost = process.env.REACT_APP_API_HOST;
 
@@ -36,7 +37,7 @@ export function authentication(member) {
     dispatch({ type: actionType.PENDING });
     request(`${apiHost}/user/sign-in`, 'POST', member)
        .then((jwt) => {
-          localStorage.setItem('token', JSON.stringify(jwt));
+          saveToken(jwt);
           dispatch({ type: actionType.AUTHENTICATE, });
           history.push('/');
       })
@@ -44,6 +45,22 @@ export function authentication(member) {
         dispatch({ type: actionType.ERROR, error: error.message });
       })
   }
+}
+export function signOut() {
+   const jwt = getJWT();
+   console.log(jwt);
+   return (dispatch) => {
+      dispatch({ type: actionType.PENDING });
+      request(`${apiHost}/user/sign-out`, 'POST', { jwt })
+         .then(() => {
+            removeToken('token');
+            dispatch({ type: actionType.SIGN_OUT, });
+            history.push('/login');
+         })
+         .catch((error) => {
+            dispatch({ type: actionType.ERROR, error: error.message });
+         })
+   }
 }
 
 export function getTasks(params = {}) {

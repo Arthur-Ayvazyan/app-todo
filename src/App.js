@@ -11,6 +11,7 @@ import Login from './components/pages/Login/Login';
 import Registration from './components/pages/Registration/Registration';
 import NavMenu from './components/NavMenu/NavMenu';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import AuthRoute from './components/AuthRoute';
 import Spinner from './components/spinner/spinner';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
@@ -26,19 +27,10 @@ const toastConfig = {
   progress: undefined,
 }
 
-function AuthRoute({ path, component }) {
-  return (
-    <Route
-      path={path}
-      component={component}
-      exact
-    />
-  )
-}
-
-function App({ showSpinner, successTaskMessage, errorTaskMessage, isAuthenticated }) {
+function App({ showSpinner, successTaskMessage, errorTaskMessage }) {
 
   useEffect(() => {
+
     if (successTaskMessage) {
       toast.success(successTaskMessage, toastConfig);
     }
@@ -59,36 +51,48 @@ function App({ showSpinner, successTaskMessage, errorTaskMessage, isAuthenticate
           <AuthRoute
             path='/'
             component={ToDo}
-          />
+                 type='private'
+                 exact
+            />
           <AuthRoute
             path='/home'
             component={ToDo}
-          />
+                 type='private'
+                 exact
+            />
           <AuthRoute
             path='/task:taskId'
             component={SingleTask}
-          />
+                 type='private'
+                 exact
+            />
           <AuthRoute
             path='/about'
             component={About}
-          />
+                 exact
+            />
           <AuthRoute
             path='/contact'
             component={Contact}
-          />
+                 exact
+            />
           <AuthRoute
             path='/login'
             component={Login}
-          />
+                 type='public'
+                 exact
+            />
           <AuthRoute
             path='/registration'
             component={Registration}
-          />
-          <AuthRoute
+                 type='public'
+                 exact
+            />
+              <Route
             path='/not-found'
             component={NotFound}
             exact
-          />
+            />
           <Redirect to='/not-found' />
 
         </Switch>
@@ -107,8 +111,7 @@ const mapStateToProps = (state) => {
   return {
     showSpinner: state.showSpinner,
     successTaskMessage: state.successTaskMessage,
-    errorTaskMessage: state.errorTaskMessage,
-    isAuthenticated: state.isAuthenticated,
+     errorTaskMessage: state.errorTaskMessage,
   };
 }
 
