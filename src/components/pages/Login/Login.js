@@ -82,12 +82,10 @@ function Login({ authentication }) {
     }
 
     if (!valuesExist && !errorsExist) {
-      if (!values.email) {
-        setErrors({
-          email: requiredError,
-          password: requiredError
-        })
-      }
+      setErrors({
+        email: requiredError,
+        password: requiredError
+      })
     }
   }
 
@@ -120,7 +118,7 @@ function Login({ authentication }) {
                   <Form.Group>
                     <Form.Label>password</Form.Label>
                     <Form.Control
-                                className={errors.password ? styles.invalidInput : ''}
+                      className={errors.password ? styles.invalidInput : ''}
                       type="password"
                       name="password"
                       placeholder="Enter password"
@@ -134,10 +132,10 @@ function Login({ authentication }) {
                 </Col>
                 <Col>
                   <Button className="w-20" size="lg" variant="primary" onClick={handleSend}>
-                             Sign in
+                    Sign in
                   </Button>
                 </Col>
-                       <Link to={`/registration`} className="text-right">Create an account</Link>
+                <Link to={`/registration`} className="text-right">Create an account</Link>
               </Row>
             </Form>
           </Col>

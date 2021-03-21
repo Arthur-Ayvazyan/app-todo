@@ -85,13 +85,13 @@ export default function reducer(state = defaultState, action) {
       }
     }
 
-     case actionType.SIGN_OUT: {
-        return {
-           ...state,
-           showSpinner: false,
-           isAuthenticated: false,
-        }
-     }
+    case actionType.SIGN_OUT: {
+      return {
+        ...state,
+        showSpinner: false,
+        isAuthenticated: false,
+      }
+    }
 
     case actionType.GET_TASKS: {
       return {
@@ -118,8 +118,6 @@ export default function reducer(state = defaultState, action) {
         successTaskMessage: message.success.addedTask,
       }
     }
-
-
 
     case actionType.DELETE_TASK: {
       if (action.from === 'single') {
