@@ -4,6 +4,48 @@ import { history } from '../helpers/history';
 
 const apiHost = process.env.REACT_APP_API_HOST;
 
+export function sendMessage(message) {
+  return (dispatch) => {
+    dispatch({ type: actionType.PENDING });
+    request(`${apiHost}/form`, 'POST', message)
+      .then(() => {
+        dispatch({ type: actionType.SEND_MESSAGE, messageSuccess: true });
+      })
+      .catch((error) => {
+        dispatch({ type: actionType.ERROR, error: error.message });
+      })
+  }
+}
+
+export function registration(user) {
+  return (dispatch) => {
+    dispatch({ type: actionType.PENDING });
+    request(`${apiHost}/user`, 'POST', user)
+      .then(() => {
+        dispatch({ type: actionType.REGISTER });
+         history.push('/login');
+      })
+      .catch((error) => {
+        dispatch({ type: actionType.ERROR, error: error.message });
+      })
+  }
+}
+
+export function authentication(member) {
+  return (dispatch) => {
+    dispatch({ type: actionType.PENDING });
+    request(`${apiHost}/user/sign-in`, 'POST', member)
+       .then((jwt) => {
+          localStorage.setItem('token', JSON.stringify(jwt));
+          dispatch({ type: actionType.AUTHENTICATE, });
+          history.push('/');
+      })
+      .catch((error) => {
+        dispatch({ type: actionType.ERROR, error: error.message });
+      })
+  }
+}
+
 export function getTasks(params = {}) {
 
   const query = Object.entries(params).map(([key, value]) => `${key}=${value}`).join('&');
@@ -19,6 +61,7 @@ export function getTasks(params = {}) {
       })
   }
 }
+
 export function getTask(taskId) {
   return (dispatch) => {
     dispatch({ type: actionType.PENDING });
