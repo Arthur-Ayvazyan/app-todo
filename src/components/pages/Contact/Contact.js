@@ -33,11 +33,14 @@ function Contact({ sendMessage, messageSendSuccess }) {
   }, []);
 
   useEffect(() => {
-    setValues({
-      name: '',
-      email: '',
-      message: '',
-    });
+     if (messageSendSuccess) {
+      setValues({
+         name: '',
+         email: '',
+         message: '',
+       });
+     }
+
   }, [messageSendSuccess]);
 
   const handleChange = ({ target: { name, value } }) => {
