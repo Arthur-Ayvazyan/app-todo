@@ -2,3 +2,22 @@
 .invalidInput:focus {
   border: 1px solid #f00;
 }
+
+.sendButton{
+   width: 100%;
+}
+
+.sendButtonWrapper{
+   display: flex;
+   flex-wrap: wrap;
+}
+
+@media screen and (min-width: 560px){
+   .sendButton{
+      max-width: 110px;
+   };
+   .sendButtonWrapper{
+      display: flex;
+      justify-content: flex-end;
+   }
+}

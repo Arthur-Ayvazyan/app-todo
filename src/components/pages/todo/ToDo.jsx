@@ -1,3 +1,4 @@
+import styles from './todo.module.scss';
 import React, { PureComponent } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Task from '../../task/Task';
@@ -7,6 +8,8 @@ import ModalEdit from '../../modal/ModalEdit';
 import Serach from '../../Search/Search';
 import { connect } from 'react-redux';
 import { getTasks, deleteTask, deleteTasks } from '../../../store/actions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 class ToDo extends PureComponent {
 
@@ -17,6 +20,7 @@ class ToDo extends PureComponent {
     showTaskCreator: false,
     showTaskEditor: false,
     editableTask: null,
+    toggleSelect: true
   }
 
   componentDidMount() {
@@ -60,19 +64,23 @@ class ToDo extends PureComponent {
     });
   }
 
-  selectAll = () => {
-    const taskIds = this.props.tasks.map((task) => {
-      return task._id;
-    })
-    this.setState({
-      selectedTasks: new Set(taskIds),
-    });
-  }
-
-  unselectAll = () => {
+  selectAllToggle = () => {
+    const { toggleSelect } = this.state;
+    if (toggleSelect) {
+      const taskIds = this.props.tasks.map((task) => {
+        return task._id;
+      })
+      this.setState({
+        selectedTasks: new Set(taskIds),
+        toggleSelect: !toggleSelect
+      });
+      return;
+    }
     this.setState({
       selectedTasks: new Set(),
+      toggleSelect: !toggleSelect
     });
+
   }
 
   deleteSelected = () => {
@@ -86,20 +94,20 @@ class ToDo extends PureComponent {
     })
   }
 
-   editTaskhandle = () => {
+  editTaskHandle = () => {
     this.setState({
       showTaskEditor: !this.state.showTaskEditor,
       editableTask: null,
     });
   }
 
-   confirmhandle = () => {
+  confirmHandle = () => {
     this.setState({
       showConfirm: !this.state.showConfirm,
     })
   }
 
-   newTaskhandle = () => {
+  newTaskHandle = () => {
     this.setState({
       showTaskCreator: !this.state.showTaskCreator,
     })
@@ -107,14 +115,15 @@ class ToDo extends PureComponent {
 
   render() {
 
-     const { selectedTasks, editableTask, showConfirm, showTaskCreator, showTaskEditor } = this.state;
+    const { selectedTasks, editableTask, showConfirm, showTaskCreator, showTaskEditor, toggleSelect } = this.state;
     const { tasks } = this.props;
 
     const list = tasks.map((task) => {
       return (
         <Col
           xs={12}
-          md={4}
+          sm={6}
+          md={6}
           lg={4}
           xl={3}
           id={task._id}
@@ -126,7 +135,7 @@ class ToDo extends PureComponent {
             selected={selectedTasks.has(task._id)}
             disabled={!!selectedTasks.size}
             onDelete={this.props.deleteTask}
-               onShow={this.editTaskhandle}
+            onShow={this.editTaskHandle}
             onEdit={this.getEditableTask}
           />
         </Col >
@@ -141,7 +150,7 @@ class ToDo extends PureComponent {
 
             <Row className={"mt-2 mb-2 flex-wrap"}>
               <Col size={12}>
-                      <h1 className="heading-1"> Create To - Do list, be more productive!</h1>
+                <h1 className="heading-1"> Create To - Do list, be more productive!</h1>
               </Col>
             </Row>
             <Row>
@@ -154,73 +163,68 @@ class ToDo extends PureComponent {
                 <Button
                   className={"w-100"}
                   variant={"danger"}
-                         onClick={this.confirmhandle}
+                  onClick={this.confirmHandle}
                   disabled={!selectedTasks.size}
                 >
-                  delete selected
+                  Delete All
              </Button>
-              </Col >
+              </Col>
               <Col>
                 <Button
                   className={"w-100"}
                   variant={"warning"}
-                  onClick={this.selectAll}
-                  disabled={!tasks.length && !selectedTasks.size}
-                >
-                  Select All
-             </Button>
-              </Col >
-              <Col>
+                  onClick={this.selectAllToggle}
+                  >
+                  {toggleSelect ? 'Select All' : 'Unselect All'}
+                </Button>
+              </Col>
+              <Col className={styles.dnMobile}>
                 <Button
-                  className={"w-100"}
-                  variant={"warning"}
-                  onClick={this.unselectAll}
-                  disabled={!selectedTasks.size}
-                >
-                  Unselect All
-             </Button>
-              </Col >
-            </Row>
-
-            <Row className={"justify-content-end"}>
-              <Col xs="auto mb-3">
-                <Button
+                  className="w-100"
                   variant="primary"
-                         onClick={this.newTaskhandle}
+                  onClick={this.newTaskHandle}
                   disabled={selectedTasks.size}
                 >
                   Create Task
                </Button>
               </Col>
-
             </Row>
+
             <Row>
               {list}
             </Row>
 
             {
               showConfirm && <Confirm
-                      onClose={this.confirmhandle}
-                onDeleteTasks={this.deleteSelected}
-                deletableTasksSize={selectedTasks.size}
+                onClose={this.confirmHandle}
+                     onDeleteTasks={this.deleteSelected}
+                     deletableTasksSize={selectedTasks.size}
               />
             }
 
             {
               showTaskCreator &&
               <NewTask
-                      onClose={this.newTaskhandle}
+                onClose={this.newTaskHandle}
               />
             }
             {
               showTaskEditor &&
               <ModalEdit
-                      task={editableTask}
-                      onClose={this.editTaskhandle}
+                  task={editableTask}
+                onClose={this.editTaskHandle}
               />
             }
                
           </Container >
+          <Button
+            className={styles.newTaskMobile}
+            variant="primary"
+            onClick={this.newTaskHandle}
+            disabled={selectedTasks.size}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </Button>
         </div>
       </>
     );

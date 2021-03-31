@@ -140,9 +140,9 @@ function Registration({ registration }) {
   return (
     <div className="content">
       <Container>
-        <h1 className="heading-1">Registration</h1>
         <Row className="justify-content-center">
-          <Col xs={10}>
+          <Col sm={12} md={8} className="mt-4">
+            <h1 className="heading-1  mb-3">Registration</h1>
             <Form>
               <Row className="flex-column justify-content-end">
                 <Col>
@@ -226,12 +226,12 @@ function Registration({ registration }) {
                     </Form.Text>
                   </Form.Group>
                 </Col>
-                <Col>
-                  <Button className="w-20" size="lg" variant="primary" onClick={handleSend}>
-                             Create Account
+                <Col className={styles.sendButtonWrapper}>
+                  <Button className={styles.sendButton} variant="primary" onClick={handleSend}>
+                    Create Account
                   </Button>
+                  <Link to={`/login`} className={styles.redirectLink}>Already have an account ?</Link>
                 </Col>
-                       <Link to={`/login`} className="text-right">Already have an account ?</Link>
               </Row> 
             </Form>
           </Col>

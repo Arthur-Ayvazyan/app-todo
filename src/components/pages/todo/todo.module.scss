@@ -2,3 +2,23 @@
   text-decoration: line-through;
   color: red;
 }
+
+.newTaskMobile{
+   position: fixed;
+   font-size: 22px;
+   bottom: 20px;
+   right: 15px;
+   z-index: 5;
+}
+.dnMobile{
+   display: none;
+}
+
+@media screen and (min-width: 560px){
+   .newTaskMobile{
+      display: none;
+   }
+   .dnMobile{
+      display: block;
+   }
+}

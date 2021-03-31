@@ -1,6 +1,6 @@
 export const statusOptions = [
   {
-      label: 'All',
+    label: 'All',
     value: ''
   },
   {
@@ -44,21 +44,41 @@ export const sortOptions = [
   },
 ];
 
+//export const dateOptions = [
+//  {
+//    label: 'Created early then',
+//    value: 'create_lte',
+//  },
+//  {
+//    label: 'Created late then',
+//    value: 'create_gte',
+//  },
+//  {
+//    label: 'Completed early then',
+//    value: 'complete_lte',
+//  },
+//  {
+//    label: 'Completed late then',
+//    value: 'complete_gte',
+//  },
+//];
+
+
 export const dateOptions = [
   {
-    label: 'Created early then',
+    label: 'Created',
     value: 'create_lte',
   },
   {
-    label: 'Created late then',
+    label: 'Created',
     value: 'create_gte',
   },
   {
-    label: 'Completed early then',
+    label: 'Completed',
     value: 'complete_lte',
   },
   {
-    label: 'Completed late then',
+    label: 'Completed',
     value: 'complete_gte',
   },
 ];
