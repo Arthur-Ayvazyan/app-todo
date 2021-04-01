@@ -11,10 +11,10 @@ export default function About() {
    }, [])
 
    return (
-      <div className="content">
-         <Container>
-            <h1 className="heading-1">About Us</h1>
-         </Container>
-      </div>
+
+      <Container>
+         <h1 className="heading-1">About Us</h1>
+      </Container>
+
    )
 }

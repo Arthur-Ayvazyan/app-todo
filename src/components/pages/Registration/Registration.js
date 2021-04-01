@@ -138,7 +138,7 @@ function Registration({ registration }) {
   }
 
   return (
-    <div className="content">
+
       <Container>
         <Row className="justify-content-center">
           <Col sm={12} md={8} className="mt-4">
@@ -236,8 +236,7 @@ function Registration({ registration }) {
             </Form>
           </Col>
         </Row>
-      </Container>
-    </div >
+     </Container>
 
   )
 }

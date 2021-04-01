@@ -48,6 +48,7 @@ td {
 body {
   margin: 0;
   font-family: Helvetica, sans-serif;
+  height: 100vh;
 }
 
 .heading-styles {
@@ -130,5 +131,10 @@ body {
 }
 
 .content{
-   padding-top: 43px;
+   padding-top: 40px;
+   min-height: calc(100vh - 90px);
+}
+
+.container{
+   height: auto;
 }

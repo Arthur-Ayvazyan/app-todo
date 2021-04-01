@@ -44,7 +44,8 @@ class SingleTask extends Component {
     const { task, editTask } = this.props;
 
     return (
-      <div className="content">
+
+       <>
         <Container>
           {
             task ?
@@ -118,8 +119,8 @@ class SingleTask extends Component {
 
           />
         }
-      </div>
-
+       </>
+       
     )
   }
 }
