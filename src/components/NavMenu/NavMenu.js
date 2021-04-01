@@ -18,18 +18,19 @@ function NavMenu({ isAuthenticated, signOut }) {
         <Container className={styles.heightAuto}>
           <Navbar className={styles.navbarStyles}>
             <Nav className="w-100 justify-content-between">
+
                     {
                        isAuthenticated &&
-                  <div className={styles.linkWrapper}>
-                  <NavLink
-                    className={styles.linkStyles}
-                    activeClassName={styles.active}
-                    to="/"
-                    exact
-                  >
-                    Home
-                  </NavLink>
-                </div>
+                        <div className={styles.linkWrapper}>
+                           <NavLink
+                              className={styles.linkStyles}
+                              activeClassName={styles.active}
+                              to="/"
+                              exact
+                           >
+                           Home
+                           </NavLink>
+                        </div>
                     }
 
               <div className={styles.linkWrapper}>
@@ -83,13 +84,11 @@ function NavMenu({ isAuthenticated, signOut }) {
                                     to="/registration"
                                     exact
                                  >
-                                    registration
+                                 registration
                               </NavLink>
                               </div>
                           </>
                     }
-
-
             </Nav>
           </Navbar>
         </Container>

@@ -10,6 +10,7 @@ import SingleTask from './components/pages/SingleTask/SingleTask';
 import Login from './components/pages/Login/Login';
 import Registration from './components/pages/Registration/Registration';
 import NavMenu from './components/NavMenu/NavMenu';
+import Footer from './components/Footer/Footer';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import AuthRoute from './components/AuthRoute';
 import Spinner from './components/spinner/spinner';
@@ -46,6 +47,7 @@ function App({ showSpinner, successTaskMessage, errorTaskMessage }) {
     <div className="App">
       <Router history={history}>
         <NavMenu />
+        <div className="content">
         <Switch>
 
           <AuthRoute
@@ -95,8 +97,9 @@ function App({ showSpinner, successTaskMessage, errorTaskMessage }) {
             />
           <Redirect to='/not-found' />
 
-        </Switch>
-
+           </Switch>
+        </div>
+        <Footer />
       </Router>
       {
         showSpinner && <Spinner />

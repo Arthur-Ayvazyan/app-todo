@@ -144,10 +144,8 @@ class ToDo extends PureComponent {
 
     return (
 
-      <>
-        <div className="content">
+       <>
           <Container>
-
             <Row className={"mt-2 mb-2 flex-wrap"}>
               <Col size={12}>
                 <h1 className="heading-1"> Create To - Do list, be more productive!</h1>
@@ -197,8 +195,8 @@ class ToDo extends PureComponent {
             {
               showConfirm && <Confirm
                 onClose={this.confirmHandle}
-                     onDeleteTasks={this.deleteSelected}
-                     deletableTasksSize={selectedTasks.size}
+                onDeleteTasks={this.deleteSelected}
+                deletableTasksSize={selectedTasks.size}
               />
             }
 
@@ -208,15 +206,17 @@ class ToDo extends PureComponent {
                 onClose={this.newTaskHandle}
               />
             }
+
             {
               showTaskEditor &&
               <ModalEdit
-                  task={editableTask}
+                task={editableTask}
                 onClose={this.editTaskHandle}
               />
             }
                
           </Container >
+
           <Button
             className={styles.newTaskMobile}
             variant="primary"
@@ -225,7 +225,6 @@ class ToDo extends PureComponent {
           >
             <FontAwesomeIcon icon={faPlus} />
           </Button>
-        </div>
       </>
     );
   }

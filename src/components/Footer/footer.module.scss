@@ -1,0 +1,17 @@
+.footer{
+   height: 90px;
+   display: flex;
+   align-items: center;
+   background: #343a40;
+   color: #fff;
+   text-align: center;
+}
+.socialIcon{
+   font-size: 30px;
+   margin: 0 15px;
+   color: #fff;
+   transition: .2s;
+   &:hover{
+      color: darkgrey
+   }
+}

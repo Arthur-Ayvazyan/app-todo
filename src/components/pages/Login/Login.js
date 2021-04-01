@@ -89,8 +89,8 @@ function Login({ authentication }) {
     }
   }
 
-  return (
-    <div className="content">
+   return (
+
       <Container>
         <Row className="justify-content-center">
           <Col sm={12} md={8} className="mt-4">
@@ -141,7 +141,6 @@ function Login({ authentication }) {
           </Col>
         </Row>
       </Container>
-    </div >
 
   )
 }
