@@ -1,7 +1,8 @@
 import "react-datepicker/dist/react-datepicker.css";
+import styles from "./modalSearch.module.scss";
 import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
-import { Button, Modal, InputGroup, DropdownButton, Dropdown, Form } from 'react-bootstrap';
+import { Row, Col, Button, Modal, InputGroup, DropdownButton, Dropdown, Form } from 'react-bootstrap';
 import { statusOptions, sortOptions, dateOptions } from '../Search/options';
 
 function ModalSearch(props) {
@@ -51,7 +52,7 @@ function ModalSearch(props) {
       <Modal
          show={true}
          onHide={props.onClose}
-         size="lg"
+       size="md"
          aria-labelledby="contained-modal-title-vcenter"
          centered
       >
@@ -61,53 +62,75 @@ function ModalSearch(props) {
             </Modal.Title>
          </Modal.Header>
          <Modal.Body>
-            <span>status</span>
+         <span className={`${styles.greyText}`}>Status</span>
+         <Row className="mt-1 mb-4 justify-content-center">
             {
                statusOptions.map((option, index) => {
                   return (
-                     <Form.Check
-                        key={index}
-                        type="radio"
-                        label={option.label}
-                        name="status"
-                        id={`status${index}`}
-                        onChange={() => setStatus(option)}
-                        checked={option.value === status.value}
-                     />
+                    <Col key={index}>
+                        <Form.Check
+                        className={styles.greyText}
+                           type="radio"
+                           label={option.label}
+                           name="status"
+                           id={`status${index}`}
+                           onChange={() => setStatus(option)}
+                           checked={option.value === status.value}
+                        />
+                    </Col>
                   )
                  })
             }
-
-            <DropdownButton
-               as={InputGroup.Prepend}
-               variant="outline-primary"
-               title={sort.value ? sort.label : 'All'}
-               id="input-group-dropdown-1"
-            >
-               {
-                  sortOptions.map((option, index) => (
-                     <Dropdown.Item
-                        key={index}
-                        active={sort.value === option.value}
-                        onClick={() => setSort(option)}
-                     >{option.label}
-                     </Dropdown.Item>)
-                  )
-               }
-            </DropdownButton>
+         </Row>
+         <Row>
+           <Col>
+             <span className={styles.greyText} title="sort by"> Sort by</span>
+              <DropdownButton
+               className={`w-100 mt-2 mb-4 ${styles.dropdown}`}
+                as={InputGroup.Prepend}
+               variant="outline-secondary"
+                title={sort.value ? sort.label : 'All'}
+                id="input-group-dropdown-1"
+              >
+                {
+                    sortOptions.map((option, index) => (
+                      <Dropdown.Item
+                          key={index}
+                          active={sort.value === option.value}
+                          onClick={() => setSort(option)}
+                      >
+                        {option.label}
+                      </Dropdown.Item>)
+                    )
+                }
+              </DropdownButton>
+           </Col>
+         </Row>
+         <Row>
+           <Col className={styles.dataPicerRow}>
             {
                dateOptions.map((option, index) => {
+
+                 const bool = index % 2;
+
                   return (
-                     <div key={index}>
-                        <span>{option.label} </span>
-                        <DatePicker
-                           selected={dates[option.value]}
-                           onChange={(value) => handleChangeDate(value, option.value)}
-                        />
-                     </div>
+                    <div key={index} className={styles.dataPicerBlock}>
+                      {
+                        !bool &&
+                        <span className={styles.dataPicerTitile}>{option.label}</span>
+                      }
+                           <DatePicker
+                        className={styles.dataPicer}
+                              selected={dates[option.value]}
+                              onChange={(value) => handleChangeDate(value, option.value)}
+                        placeholderText={bool ? 'To' : 'From'}
+                           />
+                        </div>
                   )
                })
             }
+           </Col>
+         </Row>
          </Modal.Body>
 
 

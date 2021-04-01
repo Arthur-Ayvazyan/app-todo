@@ -92,9 +92,9 @@ function Login({ authentication }) {
   return (
     <div className="content">
       <Container>
-        <h1 className="heading-1">Login</h1>
         <Row className="justify-content-center">
-          <Col xs={10}>
+          <Col sm={12} md={8} className="mt-4">
+            <h1 className="heading-1 mb-3">Login</h1>
             <Form>
               <Row className="flex-column justify-content-end">
                 <Col>
@@ -130,12 +130,12 @@ function Login({ authentication }) {
                     </Form.Text>
                   </Form.Group>
                 </Col>
-                <Col>
-                  <Button className="w-20" size="lg" variant="primary" onClick={handleSend}>
+                <Col className={styles.sendButtonWrapper}>
+                  <Button className={styles.sendButton} variant="primary" onClick={handleSend}>
                     Sign in
                   </Button>
+                  <Link to={`/registration`} className={styles.redirectLink}>Create an account ?</Link>
                 </Col>
-                <Link to={`/registration`} className="text-right">Create an account</Link>
               </Row>
             </Form>
           </Col>

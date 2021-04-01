@@ -106,10 +106,10 @@ function Contact({ sendMessage, messageSendSuccess }) {
 
   return (
     <div className="content">
-      <Container>
-        <h1 className="heading-1">Contact Us</h1>
+        <Container>
         <Row className="justify-content-center">
-          <Col xs={10}>
+              <Col sm={12} md={8} className="mt-4">
+                 <h1 className="heading-1 mb-3">Contact Us</h1>
             <Form>
               <Row className="flex-column justify-content-end">
                 <Col>
@@ -161,8 +161,8 @@ function Contact({ sendMessage, messageSendSuccess }) {
                     </Form.Text>
                   </Form.Group>
                 </Col>
-                <Col>
-                  <Button className="w-20" size="lg" variant="primary" onClick={handleSend}>
+                       <Col className={styles.sendButtonWrapper}>
+                          <Button className={styles.sendButton} variant="primary" onClick={handleSend}>
                     Send
                   </Button>
                 </Col>

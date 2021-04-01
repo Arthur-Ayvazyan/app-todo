@@ -9,7 +9,7 @@ function Confirm(props) {
     <Modal
       show={true}
       onHide={props.onClose}
-      size="lg"
+        size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
