@@ -38,6 +38,7 @@ class Task extends PureComponent {
       >
         <Card.Body>
           <Form.Check
+            className={styles.checkBox}
             type="checkbox"
             onChange={this.handleSelect}
             checked={selected}
@@ -49,50 +50,52 @@ class Task extends PureComponent {
           <Card.Text>Created at: {formatDate(task.created_at)}</Card.Text>
           <Card.Text>Date: {formatDate(task.date)}</Card.Text>
           <Card.Text>Status: {task.status}</Card.Text>
-          {
-            task.status === 'active' ?
-              <Button
-                className="m-1"
-                variant="success"
-                onClick={() => editTask({
-                  status: 'done',
-                  _id: task._id,
-                })}
-                disabled={disabled}
-              >
-                <FontAwesomeIcon icon={faCheck} />
-              </Button>
-              :
-              <Button
-                className="m-1"
-                variant="secondary"
-                onClick={() => editTask({
-                  status: 'active',
-                  _id: task._id,
-                })}
-                disabled={disabled}
-              >
-                <FontAwesomeIcon icon={faRedo} />
-              </Button>
-          }
+          <div className={styles.taskControls}>
+            {
+              task.status === 'active' ?
+                <Button
+                  className={styles.controlBtn}
+                  variant="success"
+                  onClick={() => editTask({
+                    status: 'done',
+                    _id: task._id,
+                  })}
+                  disabled={disabled}
+                >
+                  <FontAwesomeIcon icon={faCheck} />
+                </Button>
+                :
+                <Button
+                  className={styles.controlBtn}
+                  variant="secondary"
+                  onClick={() => editTask({
+                    status: 'active',
+                    _id: task._id,
+                  })}
+                  disabled={disabled}
+                >
+                  <FontAwesomeIcon icon={faRedo} />
+                </Button>
+            }
 
 
-          <Button
-            className="m-1"
-            variant="danger"
-            onClick={this.handleDelete}
-            disabled={disabled}
-          >
-            <FontAwesomeIcon icon={faTrash} />
-          </Button>
-          <Button
-            className="m-1"
-            variant="warning"
-            onClick={this.handleShowEdit}
-            disabled={disabled}
-          >
-            <FontAwesomeIcon icon={faEdit} />
-          </Button>
+            <Button
+              className={styles.controlBtn}
+              variant="danger"
+              onClick={this.handleDelete}
+              disabled={disabled}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </Button>
+            <Button
+              className={styles.controlBtn}
+              variant="warning"
+              onClick={this.handleShowEdit}
+              disabled={disabled}
+            >
+              <FontAwesomeIcon icon={faEdit} />
+            </Button>
+          </div>
         </Card.Body>
       </Card >
     )
