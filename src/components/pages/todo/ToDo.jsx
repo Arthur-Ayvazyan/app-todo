@@ -1,13 +1,13 @@
 import styles from './todo.module.scss';
 import React, { PureComponent } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import Task from '../../Task/Task';
-import NewTask from '../../NewTask/NewTask';
-import Confirm from '../../Modals/ModalDelete/ModalDelete';
-import ModalEdit from '../../Modals/ModalEdit/ModalEdit';
+import Task from '../../task/Task';
+import NewTask from '../../new-task/NewTask';
+import Confirm from '../../confirm';
+import ModalEdit from '../../modal/ModalEdit';
 import Serach from '../../Search/Search';
 import { connect } from 'react-redux';
-import { getTasks, deleteTask, deleteTasks, getUser } from '../../../store/actions';
+import { getTasks, deleteTask, deleteTasks } from '../../../store/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -25,10 +25,9 @@ class ToDo extends PureComponent {
 
   componentDidMount() {
     this.props.getTasks();
-    this.props.getUser();
-    window.scrollTo({
-      top: 0,
-    });
+     window.scrollTo({
+        top: 0,
+     });
   }
 
   componentDidUpdate(prevProps) {
@@ -139,93 +138,93 @@ class ToDo extends PureComponent {
             onShow={this.editTaskHandle}
             onEdit={this.getEditableTask}
           />
-        </Col>
+        </Col >
       )
     });
 
     return (
 
-      <>
-        <Container>
-          <Row className={"mt-4 mb-2 flex-wrap"}>
-            <Col size={12}>
-              <h1 className="heading-3"> Create To - Do list, be more productive!</h1>
-            </Col>
-          </Row>
-          <Row>
-            <Col size={12}>
-              <Serach />
-            </Col>
-          </Row>
-          <Row className="justify-content-center mb-5">
-            <Col>
-              <Button
-                className={"w-100"}
-                variant={"danger"}
-                onClick={this.confirmHandle}
-                disabled={!selectedTasks.size}
-              >
-                Delete All
+       <>
+          <Container>
+            <Row className={"mt-2 mb-2 flex-wrap"}>
+              <Col size={12}>
+                <h1 className="heading-1"> Create To - Do list, be more productive!</h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col size={12}>
+                <Serach />
+              </Col>
+            </Row>
+            <Row className="justify-content-center mb-5">
+              <Col>
+                <Button
+                  className={"w-100"}
+                  variant={"danger"}
+                  onClick={this.confirmHandle}
+                  disabled={!selectedTasks.size}
+                >
+                  Delete All
              </Button>
-            </Col>
-            <Col>
-              <Button
-                className={"w-100"}
-                variant={"warning"}
-                onClick={this.selectAllToggle}
-              >
-                {toggleSelect ? 'Select All' : 'Unselect All'}
-              </Button>
-            </Col>
-            <Col className={styles.dnMobile}>
-              <Button
-                className="w-100"
-                variant="primary"
-                onClick={this.newTaskHandle}
-                disabled={selectedTasks.size}
-              >
-                Create Task
+              </Col>
+              <Col>
+                <Button
+                  className={"w-100"}
+                  variant={"warning"}
+                  onClick={this.selectAllToggle}
+                  >
+                  {toggleSelect ? 'Select All' : 'Unselect All'}
+                </Button>
+              </Col>
+              <Col className={styles.dnMobile}>
+                <Button
+                  className="w-100"
+                  variant="primary"
+                  onClick={this.newTaskHandle}
+                  disabled={selectedTasks.size}
+                >
+                  Create Task
                </Button>
-            </Col>
-          </Row>
+              </Col>
+            </Row>
 
-          <Row>
-            {list}
-          </Row>
+            <Row>
+              {list}
+            </Row>
 
-          {
-            showConfirm && <Confirm
-              onClose={this.confirmHandle}
-              onDeleteTasks={this.deleteSelected}
-              deletableTasksSize={selectedTasks.size}
-            />
-          }
+            {
+              showConfirm && <Confirm
+                onClose={this.confirmHandle}
+                onDeleteTasks={this.deleteSelected}
+                deletableTasksSize={selectedTasks.size}
+              />
+            }
 
-          {
-            showTaskCreator &&
-            <NewTask
-              onClose={this.newTaskHandle}
-            />
-          }
+            {
+              showTaskCreator &&
+              <NewTask
+                onClose={this.newTaskHandle}
+              />
+            }
 
-          {
-            showTaskEditor &&
-            <ModalEdit
-              task={editableTask}
-              onClose={this.editTaskHandle}
-            />
-          }
+            {
+              showTaskEditor &&
+              <ModalEdit
+                task={editableTask}
+                onClose={this.editTaskHandle}
+              />
+            }
+               
+          </Container >
 
-        </Container >
-
-        <Button
-          className={styles.newTaskMobile}
-          variant="primary"
-          onClick={this.newTaskHandle}
-          disabled={selectedTasks.size}
-        >
-          <FontAwesomeIcon icon={faPlus} />
-        </Button>
+          <Button
+            className={styles.newTaskMobile}
+            variant="primary"
+            onClick={this.newTaskHandle}
+            disabled={selectedTasks.size}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </Button>
       </>
     );
   }
@@ -245,7 +244,6 @@ const mapDispatchToProps = {
   getTasks,
   deleteTask,
   deleteTasks,
-  getUser,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDo);

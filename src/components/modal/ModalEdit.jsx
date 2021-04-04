@@ -3,9 +3,9 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { formatDate } from '../../../helpers/utils';
+import { formatDate } from '../../helpers/utils';
 import { connect } from 'react-redux';
-import { editTask } from '../../../store/actions';
+import { editTask } from '../../store/actions';
 
 
 class ModalEdit extends Component {
@@ -52,7 +52,7 @@ class ModalEdit extends Component {
       _id,
       date: formatDate(date.toISOString())
     };
-    this.props.editTask(editedTask, this.props.from);
+     this.props.editTask(editedTask, this.props.from);
   }
 
   editTaskByEnter = (e) => {

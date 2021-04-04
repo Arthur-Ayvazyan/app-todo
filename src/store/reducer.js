@@ -13,7 +13,6 @@ const defaultState = {
   successTaskMessage: null,
   messageSendSuccess: false,
   isAuthenticated: checkLoginStatus(),
-  user: null,
 }
 
 const message = {
@@ -86,19 +85,11 @@ export default function reducer(state = defaultState, action) {
       }
     }
 
-    case actionType.GET_USER_FULLNAME: {
-      return {
-        ...state,
-        user: action.user,
-      }
-    }
-
     case actionType.SIGN_OUT: {
       return {
         ...state,
         showSpinner: false,
         isAuthenticated: false,
-        user: null,
       }
     }
 

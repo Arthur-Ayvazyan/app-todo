@@ -3,7 +3,7 @@ import { Container, Card, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faCheck, faRedo } from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '../../../helpers/utils';
-import ModalEdit from '../../Modals/ModalEdit/ModalEdit';
+import ModalEdit from '../../modal/ModalEdit';
 import { connect } from 'react-redux';
 import { getTask, deleteTask, editTask } from '../../../store/actions';
 
@@ -45,7 +45,7 @@ class SingleTask extends Component {
 
     return (
 
-      <>
+       <>
         <Container>
           {
             task ?
@@ -119,8 +119,8 @@ class SingleTask extends Component {
 
           />
         }
-      </>
-
+       </>
+       
     )
   }
 }

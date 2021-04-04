@@ -48,20 +48,6 @@ export function authentication(member) {
   }
 }
 
-export function getUser() {
-  return (dispatch) => {
-    //dispatch({ type: actionType.PENDING });
-    requestWithToken(`${apiHost}/user`)
-      .then((user) => {
-        if (!user) return;
-        dispatch({ type: actionType.GET_USER_FULLNAME, user });
-      })
-      .catch((error) => {
-        dispatch({ type: actionType.ERROR, error: error.message });
-      })
-  }
-}
-
 export function signOut() {
 
   const jwt = getJWT();
@@ -98,7 +84,7 @@ export function getTasks(params = {}) {
     requestWithToken(`${apiHost}/task?${query}`)
       .then((tasks) => {
         if (!tasks) return;
-        dispatch({ type: actionType.GET_TASKS, tasks });
+        dispatch({ type: actionType.GET_TASKS, tasks: tasks });
       })
       .catch((error) => {
         dispatch({ type: actionType.ERROR, error: error.message });
