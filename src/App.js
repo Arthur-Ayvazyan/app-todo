@@ -13,7 +13,7 @@ import NavMenu from './components/NavMenu/NavMenu';
 import Footer from './components/Footer/Footer';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import AuthRoute from './components/AuthRoute';
-import Spinner from './components/spinner/Spinner';
+import Spinner from './components/Spinner/Spinner';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { history } from './helpers/history';
