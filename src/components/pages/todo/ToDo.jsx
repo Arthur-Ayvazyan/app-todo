@@ -1,7 +1,7 @@
 import styles from './todo.module.scss';
 import React, { PureComponent } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import Task from '../../Task/Task';
+import Task from '../../task/Task';
 import NewTask from '../../NewTask/NewTask';
 import Confirm from '../../Modals/ModalDelete/ModalDelete';
 import ModalEdit from '../../Modals/ModalEdit/ModalEdit';
