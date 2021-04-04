@@ -132,9 +132,6 @@ body {
 .content {
   padding-top: 40px;
   min-height: calc(100vh - 90px);
-  @media (max-width: 767px) {
-    padding-top: 0;
-  }
 }
 
 .container {
