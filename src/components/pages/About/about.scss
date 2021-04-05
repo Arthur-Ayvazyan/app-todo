@@ -1,0 +1,58 @@
+.about-block{
+   margin-top: 40px;
+   &__heading{
+      margin-bottom: 12px;
+
+   }
+   &__text{
+      font-size: 18px;
+   }
+}
+
+.technologies{}
+.technology {
+   font-size: 20px;
+  
+   &--sass{
+      color: #cf649a;
+      &:hover{
+         color: #cf649a;
+      }
+   }
+   &--bootstrap{
+      color: #7952b3;
+      &:hover{
+         color: #7952b3;
+      }
+   }
+   &--javascript{
+      color: #efd81d;
+      &:hover{
+         color: #efd81d;
+      }
+   }
+   &--react{
+      color: #61dafb;
+      &:hover{
+         color: #61dafb;
+      }
+   }
+   &--redux{
+      color: #764abc;
+      &:hover{
+         color: #764abc;
+      }
+   }
+   &--node{
+      color: #3e863e;
+      &:hover{
+         color: #3e863e;
+      }
+   }
+   &--express{
+      color: #6da55f;
+      &:hover{
+         color: #6da55f;
+      }
+   }
+}

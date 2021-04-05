@@ -151,8 +151,7 @@ function Registration({ registration }) {
                     <Form.Control
                       className={errors.name ? styles.invalidInput : ''}
                       ref={textInput}
-                      type="text"
-                      placeholder="Enter name"
+                             type="text"
                       value={values.name}
                       onChange={handleChange}
                       name="name"
@@ -167,8 +166,7 @@ function Registration({ registration }) {
                     <Form.Label>Surname</Form.Label>
                     <Form.Control
                       className={errors.surname ? styles.invalidInput : ''}
-                      type="text"
-                      placeholder="Enter surname"
+                             type="text"
                       value={values.surname}
                       onChange={handleChange}
                       name="surname"
@@ -184,8 +182,7 @@ function Registration({ registration }) {
                     <Form.Control
                       className={errors.email ? styles.invalidInput : ''}
                       type="email"
-                      name="email"
-                      placeholder="Enter email"
+                             name="email"
                       value={values.email}
                       onChange={handleChange}
                     />
@@ -201,7 +198,7 @@ function Registration({ registration }) {
                       className={errors.password ? styles.invalidInput : ''}
                       type="password"
                       name="password"
-                      placeholder="Enter password"
+
                       value={values.password}
                       onChange={handleChange}
                     />
@@ -217,7 +214,7 @@ function Registration({ registration }) {
                       className={errors.confirmPassword ? styles.invalidInput : ''}
                       type="password"
                       name="confirmPassword"
-                      placeholder="Enter confirm password"
+
                       value={values.confirmPassword}
                       onChange={handleChange}
                     />
