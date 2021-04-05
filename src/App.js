@@ -17,6 +17,7 @@ import Spinner from './components/Spinner/Spinner';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { history } from './helpers/history';
+import { getUser } from './store/actions'
 
 const toastConfig = {
   position: "bottom-left",
@@ -28,7 +29,7 @@ const toastConfig = {
   progress: undefined,
 }
 
-function App({ showSpinner, successTaskMessage, errorTaskMessage }) {
+function App({ showSpinner, successTaskMessage, errorTaskMessage, isAuthenticated, getUser }) {
 
   useEffect(() => {
 
@@ -41,6 +42,13 @@ function App({ showSpinner, successTaskMessage, errorTaskMessage }) {
     }
 
   }, [successTaskMessage, errorTaskMessage]);
+  
+	useEffect(() => {
+		if (isAuthenticated) {
+			getUser();
+		}
+
+	}, [isAuthenticated, getUser]);
 
   return (
 
@@ -115,7 +123,12 @@ const mapStateToProps = (state) => {
     showSpinner: state.showSpinner,
     successTaskMessage: state.successTaskMessage,
     errorTaskMessage: state.errorTaskMessage,
+		isAuthenticated: state.isAuthenticated,
   };
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = {
+	getUser,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

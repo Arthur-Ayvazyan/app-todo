@@ -7,7 +7,7 @@ import Confirm from '../../Modals/ModalDelete/ModalDelete';
 import ModalEdit from '../../Modals/ModalEdit/ModalEdit';
 import Serach from '../../Search/Search';
 import { connect } from 'react-redux';
-import { getTasks, deleteTask, deleteTasks, getUser } from '../../../store/actions';
+import { getTasks, deleteTask, deleteTasks } from '../../../store/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -25,7 +25,6 @@ class ToDo extends PureComponent {
 
   componentDidMount() {
     this.props.getTasks();
-    this.props.getUser();
     window.scrollTo({
       top: 0,
     });
@@ -245,7 +244,6 @@ const mapDispatchToProps = {
   getTasks,
   deleteTask,
   deleteTasks,
-  getUser,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDo);
