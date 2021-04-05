@@ -104,8 +104,7 @@ function Login({ authentication }) {
                       className={errors.email ? styles.invalidInput : ''}
                       ref={textInput}
                       type="email"
-                      name="email"
-                      placeholder="Enter email"
+										name="email"
                       value={values.email}
                       onChange={handleChange}
                     />
@@ -120,8 +119,7 @@ function Login({ authentication }) {
                     <Form.Control
                       className={errors.password ? styles.invalidInput : ''}
                       type="password"
-                      name="password"
-                      placeholder="Enter password"
+										name="password"
                       value={values.password}
                       onChange={handleChange}
                     />

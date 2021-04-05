@@ -117,8 +117,7 @@ function Contact({ sendMessage, messageSendSuccess }) {
                         <Form.Control
                            className={errors.name ? styles.invalidInput : ''}
                            ref={textInput}
-                           type="text"
-                           placeholder="Enter name"
+										type="text"
                            value={values.name}
                            onChange={handleChange} name="name"
                         />
@@ -133,8 +132,7 @@ function Contact({ sendMessage, messageSendSuccess }) {
                         <Form.Control
                            className={errors.email ? styles.invalidInput : ''}
                            type="email"
-                           name="email"
-                           placeholder="Enter email"
+										name="email"
                            value={values.email}
                            onChange={handleChange}
                         />
@@ -149,8 +147,7 @@ function Contact({ sendMessage, messageSendSuccess }) {
                         <Form.Control
                            className={errors.message ? styles.invalidInput : ''}
                            as="textarea"
-                           rows={3}
-                           placeholder="Enter message"
+										rows={3}
                            value={values.message}
                            name="message"
                            onChange={handleChange}
