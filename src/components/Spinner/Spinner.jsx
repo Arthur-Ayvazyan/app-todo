@@ -2,11 +2,6 @@ import React, { useEffect } from 'react';
 import { Spinner as BSpinner } from 'react-bootstrap';
 import styles from "./spinner.module.scss";
 
-<BSpinner animation="border" role="status">
-   <span className="sr-only">Loading...</span>
-</BSpinner>
-
-
 export default function Spinner() {
 
    useEffect(() => {

@@ -15,7 +15,7 @@ function Confirm(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Are you shure to delete {props.deletableTasksSize} task(s) ?
+          Are you sure to delete {props.deletableTasksSize} task(s) ?
         </Modal.Title>
       </Modal.Header>
       <Modal.Footer>

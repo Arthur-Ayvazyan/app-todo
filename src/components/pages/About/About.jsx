@@ -17,8 +17,8 @@ export default function About() {
          <Row className="justify-content-center">
             <Col sm={12} md={8} className="mt-4">
                <h1 className="heading-1">About</h1>
-               <div className="about-block fuctionality">
-                  <h4 className="about-block__heading">Fuctionality</h4>
+               <div className="about-block functionality">
+                  <h4 className="about-block__heading">Functionality</h4>
                   <p className="about-block__text">
                      A simple, but usable tool for keeping your to-do lists and tasks tidy and organized. You can create, delete, edit your tasks, marks as done, for more advanced users we have a filter option which can help find the needed task.
                </p>
