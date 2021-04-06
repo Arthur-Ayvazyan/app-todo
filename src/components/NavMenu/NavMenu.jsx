@@ -20,12 +20,12 @@ function NavMenu({ isAuthenticated, signOut, user }) {
     
   }, [burger]);
   
-  const handleBuger = () => switchBurger(!burger);
+  const handleBurger = () => switchBurger(!burger);
 
   const logOut = (e) => {
     e.preventDefault();
     signOut();
-    handleBuger();
+    handleBurger();
   }
 
   return (
@@ -33,7 +33,7 @@ function NavMenu({ isAuthenticated, signOut, user }) {
       <div className={styles.menuWrapper}>
         <div
           className={ `${styles.iconMenu} ${burger ? styles.iconMenuActive : ''}`}
-          onClick={handleBuger}
+          onClick={handleBurger}
         >
           <span></span>
           <span></span>
@@ -58,7 +58,7 @@ function NavMenu({ isAuthenticated, signOut, user }) {
                         activeClassName={styles.active}
                         to="/"
                         exact
-                        onClick={handleBuger}
+                        onClick={handleBurger}
                       >
                       Home
                       </NavLink>
@@ -71,7 +71,7 @@ function NavMenu({ isAuthenticated, signOut, user }) {
                   activeClassName={styles.active}
                   to="/about"
                   exact
-                  onClick={handleBuger}
+                  onClick={handleBurger}
                 >
                   About
                </NavLink>
@@ -82,7 +82,7 @@ function NavMenu({ isAuthenticated, signOut, user }) {
                   activeClassName={styles.active}
                   to="/contact"
                   exact
-                  onClick={handleBuger}
+                  onClick={handleBurger}
                 >
                   Contact
                 </NavLink>
@@ -113,7 +113,7 @@ function NavMenu({ isAuthenticated, signOut, user }) {
                               activeClassName={styles.active}
                               to="/login"
                               exact
-                              onClick={handleBuger}
+                              onClick={handleBurger}
                             >
                             login
                             </NavLink>
@@ -124,7 +124,7 @@ function NavMenu({ isAuthenticated, signOut, user }) {
                               activeClassName={styles.active}
                               to="/registration"
                               exact
-                              onClick={handleBuger}
+                              onClick={handleBurger}
                             >
                             registration
                         </NavLink>

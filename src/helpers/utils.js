@@ -5,3 +5,4 @@ export function formatDate(dateStr = "") {
 export function textCutter(str, letterCount) {
   return str.length < letterCount ? str : str.slice(0, letterCount) + "...";
 }
+
