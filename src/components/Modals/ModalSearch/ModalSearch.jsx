@@ -107,20 +107,21 @@ function ModalSearch(props) {
           </Col>
         </Row>
         <Row>
-          <Col className={styles.dataPicerRow}>
+          <Col className={styles.dataPickerRow}>
             {
               dateOptions.map((option, index) => {
 
                 const bool = index % 2;
 
                 return (
-                  <div key={index} className={styles.dataPicerBlock}>
+                  <div key={index} className={styles.dataPickerBlock}>
+
                     {
                       !bool &&
-                      <span className={styles.dataPicerTitile}>{option.label}</span>
+                      <span className={styles.dataPickerTitle}>{option.label}</span>
                     }
                     <DatePicker
-                      className={styles.dataPicer}
+                      className={styles.dataPicker}
                       selected={dates[option.value]}
                       onChange={(value) => handleChangeDate(value, option.value)}
                       placeholderText={bool ? 'To' : 'From'}
@@ -132,7 +133,6 @@ function ModalSearch(props) {
           </Col>
         </Row>
       </Modal.Body>
-
 
       <Modal.Footer>
         <Button
@@ -150,10 +150,6 @@ function ModalSearch(props) {
            </Button>
       </Modal.Footer>
     </Modal>
-
-
-
-
 
   )
 }

@@ -4,22 +4,22 @@
 .dropdown button{
    min-width: 170px;
 }
-.dataPicerRow{
+.dataPickerRow{
    display: flex;
    flex-wrap: wrap;
    gap: 10px;
    
 }
-.dataPicerBlock{
+.dataPickerBlock{
    position: relative;
    width: calc(50% - 5px);
    
 }
-.dataPicerTitile{
+.dataPickerTitle{
    position: absolute;
    @extend .greyText;
 }
-.dataPicer{
+.dataPicker{
    padding: 7px;
    margin-top: 30px;
    width: 100%;
