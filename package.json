@@ -1,6 +1,8 @@
 {
-  "name": "react-demo",
-  "version": "0.1.0",
+  "name": "To-Do",
+  "version": "1.0.0",
+  "author": "Arthur Ayvazyan",
+  "description": "To-Do React.js aplication",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
